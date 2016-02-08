@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MotivationAdaptionAsset.cs" />
+    <Compile Include="MotivationAdaptionAssetFunctionality.cs" />
     <Compile Include="MotivationAdaptionAssetSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

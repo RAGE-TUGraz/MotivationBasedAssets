@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MotivationAssessmentAsset.cs" />
+    <Compile Include="MotivationAssessmentAssetFunctionality.cs" />
     <Compile Include="MotivationAssessmentAssetSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

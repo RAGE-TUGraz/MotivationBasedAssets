@@ -44,6 +44,9 @@
     <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\MotivationAdaptionAssetFunctionality.cs">
+      <Link>MotivationAdaptionAssetFunctionality.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\Resources\MotivationAdaptionAsset.VersionAndDependencies.xml">
