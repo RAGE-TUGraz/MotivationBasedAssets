@@ -75,6 +75,39 @@ namespace MotivationAssessmentAssetNameSpace
 
         // Your code goes here.
 
+        /*
+        public void test()
+        {
+            Console.WriteLine("MotivationAssessment method called! - calling Tests:");
+            MotivationAssessmentHandler.Instance.performAllTests();
+        }
+        */
+
+        /// <summary>
+        /// Returns the Motivation State of a player when provided with player-Id.
+        /// </summary>
+        /// 
+        /// <param name="playerId"> Identifier of the player. </param>
+        /// 
+        /// <returns> Motivation state of the specified player. </returns>
+        public Dictionary<string, double> getMotivationState(String playerId)
+        {
+            MotivationState ms = MotivationAssessmentHandler.Instance.getMotivationState(playerId);
+            return ms.getMotivation(); ;
+        }
+
+        /// <summary>
+        /// Method for adding a new motivation hint and processing aggregated hints in case a evidence can be calculated.
+        /// </summary>
+        /// 
+        ///<param name="hintId"> String specifying the hint. </param>
+        ///<param name="playerId"> String specifying the player. </param>
+        public void addMotivationHint(String hintId, String playerId)
+        {
+            MotivationAssessmentHandler.Instance.addMotivationHint(hintId, playerId);
+        }
+
+
         #endregion Methods
     }
 }

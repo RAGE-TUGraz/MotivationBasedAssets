@@ -75,6 +75,39 @@ namespace MotivationAdaptionAssetNameSpace
 
         // Your code goes here.
 
+        /*
+        public void test()
+        {
+            Console.WriteLine("MotivationAdaption method called!");
+            MotivationAdaptionHandler.Instance.performAllTests();
+        }
+        */
+
+        /// <summary>
+        /// Method returning all interventions appropriate for a player with given id.
+        /// </summary>
+        /// 
+        /// <param name="playerId"> Identification of the player. </param>
+        /// 
+        /// <returns> List containing all appropriate interventions at the moment. </returns>
+        public List<String> getInterventions(String playerId)
+        {
+            return MotivationAdaptionHandler.Instance.getInterventions(playerId);
+        }
+
+        /// <summary>
+        /// Method returning a least often used instance of an intervnention.
+        /// </summary>
+        /// 
+        /// <param name="intervention"> Intervention id for which the instance is requested. </param>
+        /// <param name="playerId"> Player Id for which the instance is requested. </param>
+        /// 
+        /// <returns> Intervention instance for the player. </returns>
+        public String getInstance(String intervention, String playerId)
+        {
+            return MotivationAdaptionHandler.Instance.getInstance(intervention, playerId);
+        }
+
         #endregion Methods
     }
 }
