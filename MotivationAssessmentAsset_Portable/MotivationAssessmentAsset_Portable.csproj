@@ -46,7 +46,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset.VersionAndDependencies.xml">
+    <Content Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\Resources\MotivationAssessmentAsset.VersionAndDependencies.xml">
       <Link>Resources\MotivationAssessmentAsset.VersionAndDependencies.xml</Link>
     </Content>
   </ItemGroup>
