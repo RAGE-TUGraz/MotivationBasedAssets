@@ -4,13 +4,14 @@
 // <author>mmaurer</author>
 // <date>08.02.2016 10:39:02</date>
 // <summary>Implements the MotivationAdaptionAsset class</summary>
-namespace AssetPackage
+namespace MotivationAdaptionAssetNameSpace
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using AssetManagerPackage;
+    using AssetPackage;
 
     /// <summary>
     /// An asset.
