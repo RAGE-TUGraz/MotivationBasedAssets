@@ -1,0 +1,9 @@
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\bin\Debug\MotivationAdaptionAsset.dll
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\bin\Debug\MotivationAdaptionAsset.pdb
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\bin\Debug\MotivationAssessmentAsset.dll
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\bin\Debug\RageAssetManager.dll
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\bin\Debug\MotivationAssessmentAsset.pdb
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\bin\Debug\RageAssetManager.pdb
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\obj\Debug\MotivationAdaptionAsset.csprojResolveAssemblyReference.cache
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\obj\Debug\MotivationAdaptionAsset.dll
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\obj\Debug\MotivationAdaptionAsset.pdb

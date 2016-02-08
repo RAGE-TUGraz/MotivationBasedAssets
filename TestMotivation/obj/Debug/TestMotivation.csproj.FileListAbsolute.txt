@@ -1,0 +1,11 @@
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\TestMotivation.exe
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\TestMotivation.pdb
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\MotivationAdaptionAsset.dll
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\MotivationAssessmentAsset.dll
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\RageAssetManager.dll
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\MotivationAdaptionAsset.pdb
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\MotivationAssessmentAsset.pdb
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\RageAssetManager.pdb
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\obj\Debug\TestMotivation.csprojResolveAssemblyReference.cache
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\obj\Debug\TestMotivation.exe
+c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\obj\Debug\TestMotivation.pdb
