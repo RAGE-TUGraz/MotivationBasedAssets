@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AssetManagerPackage;
+using AssetPackage;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace MotivationAssessmentAssetNameSpace
     /// <summary>
     /// Singelton Class for handling MotivationAssessment
     /// </summary>
-    public class MotivationAssessmentHandler
+    internal class MotivationAssessmentHandler
     {
         #region AlgorithParameters
 
@@ -65,6 +67,11 @@ namespace MotivationAssessmentAssetNameSpace
         #region Fields
 
         /// <summary>
+        /// Instance of the MotivationAssessmentAsset
+        /// </summary>
+        private MotivationAssessmentAsset motivationAssessmentAsset = null;
+
+        /// <summary>
         /// Instance of the class MotivationAssessmentHandler - Singelton pattern
         /// </summary>
         private static MotivationAssessmentHandler instance;
@@ -88,7 +95,7 @@ namespace MotivationAssessmentAssetNameSpace
         /// <summary>
         /// If true, logging is done.
         /// </summary>
-        private Boolean doLogging = false;
+        private Boolean doLogging = true;
 
         #endregion Fields
         #region Constructors
@@ -121,6 +128,18 @@ namespace MotivationAssessmentAssetNameSpace
         //TODO: WEB-requests via AssetManager interfaces
         //TODO: loading always the exampleMotivationModel
         #region InternalMethods
+
+
+        /// <summary>
+        /// Method returning an instance of the MotivationAssessmentAsset.
+        /// </summary>
+        /// <returns> Instance of the MotivationAssessmentAsset </returns>
+        internal MotivationAssessmentAsset getMAsA()
+        {
+            if (motivationAssessmentAsset == null)
+                motivationAssessmentAsset = (MotivationAssessmentAsset)AssetManager.Instance.findAssetByClass("MotivationAssessmentAsset");
+            return (motivationAssessmentAsset);
+        }
 
         /// <summary>
         /// Getter for primary motivation aspects.
@@ -565,10 +584,12 @@ namespace MotivationAssessmentAssetNameSpace
         /// </summary>
         /// 
         /// <param name="msg"> Message to be logged. </param>
-        internal void loggingMAs(String msg)
+        internal void loggingMAs(String msg, Severity severity = Severity.Information)
         {
             if (doLogging)
-                Console.WriteLine(msg);
+            {
+                getMAsA().Log(severity, "[MAsA]: " + msg);
+            }
         }
 
         /// <summary>

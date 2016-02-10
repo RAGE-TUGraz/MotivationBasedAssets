@@ -1,4 +1,6 @@
-﻿using MotivationAssessmentAssetNameSpace;
+﻿using AssetManagerPackage;
+using AssetPackage;
+using MotivationAssessmentAssetNameSpace;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +12,19 @@ namespace MotivationAdaptionAssetNameSpace
     /// <summary>
     /// Singelton Class for handling MotivationAdaptionHandler
     /// </summary>
-    class MotivationAdaptionHandler
+    internal class MotivationAdaptionHandler
     {
         #region Fields
+
+        /// <summary>
+        /// Instance of the MotivationAssessmentAsset
+        /// </summary>
+        private MotivationAssessmentAsset motivationAssessmentAsset = null;
+
+        /// <summary>
+        /// Instance of the MotivationAdaptionAsset
+        /// </summary>
+        private MotivationAdaptionAsset motivationAdaptionAsset = null;
 
         /// <summary>
         /// Instance of the class MotivationAdaptionHandler - Singelton pattern
@@ -27,7 +39,7 @@ namespace MotivationAdaptionAssetNameSpace
         /// <summary>
         /// If true, logging is done.
         /// </summary>
-        private Boolean doLogging = false;
+        private Boolean doLogging = true;
 
         #endregion Fields
         #region Constructors
@@ -58,6 +70,28 @@ namespace MotivationAdaptionAssetNameSpace
         #endregion Properties
         #region InternalMethods
 
+        /// <summary>
+        /// Method returning an instance of the MotivationAssessmentAsset.
+        /// </summary>
+        /// <returns> Instance of the MotivationAssessmentAsset </returns>
+        internal MotivationAssessmentAsset getMAsA()
+        {
+            if (motivationAssessmentAsset == null)
+                motivationAssessmentAsset = (MotivationAssessmentAsset)AssetManager.Instance.findAssetByClass("MotivationAssessmentAsset");
+            return (motivationAssessmentAsset);
+        }
+
+        /// <summary>
+        /// Method returning an instance of the MotivationAdaptionAsset.
+        /// </summary>
+        /// <returns> Instance of the MotivationAdaptionAsset </returns>
+        internal MotivationAdaptionAsset getMAdA()
+        {
+            if (motivationAdaptionAsset == null)
+                motivationAdaptionAsset = (MotivationAdaptionAsset)AssetManager.Instance.findAssetByClass("MotivationAdaptionAsset");
+            return (motivationAdaptionAsset);
+        }
+
         //TODO: Loading motivation state over the motivation assesment asset - loading via player model?
         /// <summary>
         /// Method loads the motivation state of a player.
@@ -66,9 +100,9 @@ namespace MotivationAdaptionAssetNameSpace
         /// <param name="playerId"> identification of the player fpr which the motivation state is loaded. </param>
         /// 
         /// <returns> Motivation state of a player. </returns>
-        internal MotivationState loadMotivationState(String playerId)
+        internal Dictionary<string, double> loadMotivationState(String playerId)
         {
-            return (MotivationAssessmentHandler.Instance.getMotivationState(playerId));
+            return (getMAsA().getMotivationState(playerId));
         }
 
         //TODO: Where to get the MM from? currently from MotivationAssessmentHandler
@@ -81,7 +115,7 @@ namespace MotivationAdaptionAssetNameSpace
         /// <returns> The motivation model for the specified player. </returns>
         internal MotivationModel loadMotivationModel(String playerId)
         {
-            return MotivationAssessmentHandler.Instance.getMotivationModel(playerId);
+            return getMAsA().loadMotivationModel(playerId);
         }
 
         /// <summary>
@@ -127,7 +161,6 @@ namespace MotivationAdaptionAssetNameSpace
             List<String> interventions = new List<String>();
 
             MotivationModel mm = loadMotivationModel(playerId);
-            MotivationState ms = loadMotivationState(playerId);
             Boolean val;
 
             foreach (Intervention iv in mm.motivationInterventions.motivationInterventionList)
@@ -218,10 +251,12 @@ namespace MotivationAdaptionAssetNameSpace
         /// </summary>
         /// 
         /// <param name="msg"> Message to be logged. </param>
-        internal void loggingMAd(String msg)
+        internal void loggingMAd(String msg, Severity severity = Severity.Information)
         {
             if (doLogging)
-                Console.WriteLine(msg);
+            {
+                getMAdA().Log(severity, "[MAdA]: " + msg);
+            }
         }
 
         /// <summary>
@@ -231,11 +266,13 @@ namespace MotivationAdaptionAssetNameSpace
         {
             loggingMAd("*****************************************************************");
             loggingMAd("Calling all tests (MAdA):");
-            performTest1();
+            //performTest1();
             loggingMAd("Tests - done!");
             loggingMAd("*****************************************************************");
+            throw new NotImplementedException();
         }
 
+        /*
         /// <summary>
         /// Method for performing a test. Setting Motivation State and getting Interventions.
         /// </summary>
@@ -280,6 +317,8 @@ namespace MotivationAdaptionAssetNameSpace
             }
 
         }
+
+        */
 
         /// <summary>
         /// Performing successive motivation update
@@ -399,11 +438,20 @@ namespace MotivationAdaptionAssetNameSpace
         /// <returns> String without any motivation component variables. </returns>
         private static String replaceVariables(String expression, String playerId)
         {
+            //OLD:
+            /*
             MotivationState ms = MotivationAdaptionHandler.Instance.loadMotivationState(playerId);
             MotivationModel mm = ms.getMotivationModel();
             foreach (MotivationAspect ma in mm.motivationAspects.motivationAspectList)
             {
                 expression = expression.Replace(ma.name, ms.getMotivationAspectValue(ma.name).ToString());
+            }
+            */
+            //NEW;
+            Dictionary<String,double> ms = MotivationAdaptionHandler.Instance.loadMotivationState(playerId);
+            foreach(KeyValuePair<String,double> pair in ms)
+            {
+                expression = expression.Replace(pair.Key, pair.Value.ToString());
             }
             MotivationAdaptionHandler.Instance.loggingMAd("FormulaInterpreter: expression to evaluate without variables=" + expression);
             return expression;

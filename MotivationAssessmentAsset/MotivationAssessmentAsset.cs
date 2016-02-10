@@ -38,6 +38,13 @@ namespace MotivationAssessmentAssetNameSpace
             //! Create Settings and let it's BaseSettings class assign Defaultvalues where it can.
             // 
             settings = new MotivationAssessmentAssetSettings();
+
+            //preventing multiple asset creation
+            if (AssetManager.Instance.findAssetsByClass(this.Class).Count > 1)
+            {
+                this.Log(Severity.Error, "There is only one instance of the MotivationAssessmentAsset permitted!");
+                throw new Exception("EXCEPTION: There is only one instance of the MotivationAssessmentAsset permitted!");
+            }
         }
 
         #endregion Constructors
@@ -107,6 +114,17 @@ namespace MotivationAssessmentAssetNameSpace
             MotivationAssessmentHandler.Instance.addMotivationHint(hintId, playerId);
         }
 
+        /// <summary>
+        /// Method for loading the motivation model for a certain player.
+        /// </summary>
+        /// 
+        /// <param name="playerId"> Identification of player for which the MM is loaded. </param>
+        /// 
+        /// <returns> The motivation model for the specified player. </returns>
+        public MotivationModel loadMotivationModel(String playerId)
+        {
+            return MotivationAssessmentHandler.Instance.getMotivationModel(playerId);
+        }
 
         #endregion Methods
     }
