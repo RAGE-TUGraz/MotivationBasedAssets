@@ -114,6 +114,7 @@ namespace MotivationAssessmentAssetNameSpace
             MotivationAssessmentHandler.Instance.addMotivationHint(hintId, playerId);
         }
 
+        //TODO: other way of transferring information?!
         /// <summary>
         /// Method for loading the motivation model for a certain player.
         /// </summary>
@@ -124,6 +125,14 @@ namespace MotivationAssessmentAssetNameSpace
         public MotivationModel loadMotivationModel(String playerId)
         {
             return MotivationAssessmentHandler.Instance.getMotivationModel(playerId);
+        }
+
+        /// <summary>
+        /// Method performing functionality test for the motivation assessment asset
+        /// </summary>
+        public void performTest()
+        {
+            MotivationAssessmentHandler.Instance.performAllTests();
         }
 
         #endregion Methods

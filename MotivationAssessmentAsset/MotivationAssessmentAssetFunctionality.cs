@@ -406,6 +406,7 @@ namespace MotivationAssessmentAssetNameSpace
             {
                 loggingMAs("ERROR: Evidence Type unknown!");
             }
+            setMotivationState(me.PlayerId, newMs);
             updateSecondaryMotivationAspects(newMs, me.PlayerId);
             newMs.print();
             setMotivationState(me.PlayerId, newMs);
@@ -587,9 +588,7 @@ namespace MotivationAssessmentAssetNameSpace
         internal void loggingMAs(String msg, Severity severity = Severity.Information)
         {
             if (doLogging)
-            {
                 getMAsA().Log(severity, "[MAsA]: " + msg);
-            }
         }
 
         /// <summary>
@@ -620,7 +619,7 @@ namespace MotivationAssessmentAssetNameSpace
             ma4.name = "motivation";
             ma4.up = "";
             ma4.down = "";
-            ma4.rule = "(motivation+confidence+attention)/3";
+            ma4.rule = "(satisfaction+confidence+attention)/3";
             MotivationAspectList mal = new MotivationAspectList();
             List<MotivationAspect> maList = new List<MotivationAspect>();
             maList.Add(ma1);
