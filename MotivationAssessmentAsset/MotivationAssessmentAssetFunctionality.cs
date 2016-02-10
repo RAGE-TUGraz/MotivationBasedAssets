@@ -178,29 +178,39 @@ namespace MotivationAssessmentAssetNameSpace
         /// <returns>
         /// MotivationModel-type coressponding to the XML-String in the file.
         /// </returns>
-        internal MotivationModel getMMFromFile(String filePath)
+        internal MotivationModel getMMFromFile(String fileId)
         {
-            try
-            {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader(filePath))
-                {
-                    // Read the stream to a string, and write the string to the console.
-                    String line = sr.ReadToEnd();
-                    MotivationModel mm = getMMFromXmlString(line);
-                    if (!validateMotivationModel(mm))
-                        loggingMAs("ERROR: Motivation model formulars not valid!");
-                    return (mm);
-                }
-            }
-            catch (Exception e)
+            IDataStorage ids = (IDataStorage)AssetManager.Instance.Bridge;
+            if (ids != null)
             {
-                loggingMAs("ERROR: The file containing the Domainmodel could not be read:");
-                loggingMAs(e.Message);
+                loggingMAs("Loading motivation model from File.");
+                return (this.getMMFromXmlString(ids.Load(fileId)));
             }
-
-            return (null);
+            else
+            {
+                loggingMAs("Loading of motivation model from file not possible.",Severity.Warning);
+                return null;
+            }
         }
 
+        /// <summary>
+        /// Method for storing a Motivation Model as XML in a file.
+        /// </summary>
+        /// <param name="fileId"> File-Id for storing the model. </param>
+        /// <param name="mm"> The Motivation model to store. </param>
+        internal void writeMMToFile(string fileId, MotivationModel mm)
+        {
+            IDataStorage ids = (IDataStorage)AssetManager.Instance.Bridge;
+            if (ids != null)
+            {
+                loggingMAs("Storing DomainModel to File.");
+                ids.Save(fileId, mm.toXmlString());
+            }
+            else
+                loggingMAs("No IDataStorage - Bridge implemented!", Severity.Error);
+        }
+
+        /*
         /// <summary>
         /// Method for requesting a XML-MotivationModel from a website and returning the coressponding MotivationModel.
         /// </summary>
@@ -226,6 +236,7 @@ namespace MotivationAssessmentAssetNameSpace
 
             return (mm);
         }
+        */
 
         /// <summary>
         /// Method for storing a MotivationModel as XML in a File.
@@ -233,13 +244,16 @@ namespace MotivationAssessmentAssetNameSpace
         /// 
         /// <param name="dm"> MotivationModel to store. </param>
         /// <param name="pathToFile"> String containing the file path. </param>
-        internal void writeMMToFile(MotivationModel mm, String pathToFile)
+        internal void writeMMToFile(MotivationModel mm, String fileId)
         {
-            String xml = mm.toXmlString();
-            using (StreamWriter file = new StreamWriter(pathToFile))
+            IDataStorage ids = (IDataStorage)AssetManager.Instance.Bridge;
+            if (ids != null)
             {
-                file.Write(xml);
+                loggingMAs("Storing motivation model to File.");
+                ids.Save(fileId, mm.toXmlString());
             }
+            else
+                loggingMAs("No IDataStorage - Bridge implemented!", Severity.Warning);
 
         }
 
@@ -404,7 +418,7 @@ namespace MotivationAssessmentAssetNameSpace
             }
             else
             {
-                loggingMAs("ERROR: Evidence Type unknown!");
+                loggingMAs("Warning: Evidence Type unknown!", Severity.Warning);
             }
             setMotivationState(me.PlayerId, newMs);
             updateSecondaryMotivationAspects(newMs, me.PlayerId);
@@ -432,7 +446,7 @@ namespace MotivationAssessmentAssetNameSpace
             }
             catch (Exception e)
             {
-                loggingMAs("ERROR: Update for primary motivation aspects not done.");
+                loggingMAs("Warning: Update for primary motivation aspects not done.", Severity.Warning);
                 loggingMAs("Exception caught: " + e.Message);
             }
         }
@@ -460,12 +474,12 @@ namespace MotivationAssessmentAssetNameSpace
                         }
                         catch (Exception e)
                         {
-                            loggingMAs("ERROR: Update for secondary motivation aspects not done.");
+                            loggingMAs("Warning: Update for secondary motivation aspects not done.", Severity.Warning);
                             loggingMAs("Exception caught: " + e.Message);
                         }
                     }
                     else
-                        loggingMAs("ERROR: Motivation aspect not found!");
+                        loggingMAs("Warning: Motivation aspect not found!",Severity.Warning);
                 }
             }
         }
@@ -492,7 +506,7 @@ namespace MotivationAssessmentAssetNameSpace
 
             if (!validHints.Contains(mh.HintId))
             {
-                loggingMAs("ERROR:  HINT ID NOT VALID - HINT IGNORED");
+                loggingMAs("Warning:  HINT ID NOT VALID - HINT IGNORED",Severity.Warning);
                 return;
             }
 
@@ -551,7 +565,6 @@ namespace MotivationAssessmentAssetNameSpace
             return ms;
         }
 
-        //TODO: set to public - for test reasons only!
         /// <summary>
         /// Method for saving a updated motivation state.
         /// </summary>
@@ -690,6 +703,7 @@ namespace MotivationAssessmentAssetNameSpace
             loggingMAs("*****************************************************************");
             loggingMAs("Calling all tests (MAsA):");
             performTest1();
+            performTest2();
             loggingMAs("Tests - done!");
             loggingMAs("*****************************************************************");
         }
@@ -787,6 +801,24 @@ namespace MotivationAssessmentAssetNameSpace
             mh13.PlayerId = testPlayer;
             addMotivationHint(mh13);
 
+        }
+
+        /// <summary>
+        /// Method performing a simple test: creating example MotivationModel - storing it in a file and reading from the file
+        /// </summary>
+        internal void performTest2()
+        {
+            loggingMAs("***************TEST 2********************");
+
+            MotivationModel mm = createExampleMM();
+            string id = "MotivationAssessmentTestId.xml";
+            writeMMToFile(mm,id);
+            MotivationModel mm2 = getMMFromFile(id);
+            if (mm.toXmlString().Equals(mm2.toXmlString()))
+                loggingMAs("MotivationModels before and after the loading are identically!");
+            else
+                loggingMAs("MotivationModels before and after the loading are NOT identically!",Severity.Error);
+            
         }
 
         #endregion TestMethods
