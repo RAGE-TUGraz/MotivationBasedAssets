@@ -9,3 +9,4 @@ c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivati
 c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\obj\Debug\TestMotivation.csprojResolveAssemblyReference.cache
 c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\obj\Debug\TestMotivation.exe
 c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\TestMotivation\obj\Debug\TestMotivation.pdb
+C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\RageAssetManager.xml

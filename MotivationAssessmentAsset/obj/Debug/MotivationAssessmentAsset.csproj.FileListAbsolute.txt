@@ -5,3 +5,4 @@ c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAs
 c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\obj\Debug\MotivationAssessmentAsset.csprojResolveAssemblyReference.cache
 c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\obj\Debug\MotivationAssessmentAsset.dll
 c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\obj\Debug\MotivationAssessmentAsset.pdb
+C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\bin\Debug\RageAssetManager.xml

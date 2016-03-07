@@ -7,3 +7,4 @@ c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAd
 c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\obj\Debug\MotivationAdaptionAsset.csprojResolveAssemblyReference.cache
 c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\obj\Debug\MotivationAdaptionAsset.dll
 c:\users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\obj\Debug\MotivationAdaptionAsset.pdb
+C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\bin\Debug\RageAssetManager.xml
