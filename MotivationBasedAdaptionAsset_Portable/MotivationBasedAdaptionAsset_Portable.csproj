@@ -7,7 +7,7 @@
     <ProjectGuid>{ACEF99D0-B010-4410-9C87-C147531C605D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MotivationAdaptionAsset_Portable</RootNamespace>
+    <RootNamespace>MotivationBasedAdaptionAsset_Portable</RootNamespace>
     <AssemblyName>MyFirstAsset_Portable_Portable</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
@@ -35,22 +35,22 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\MotivationAdaptionAsset.cs">
-      <Link>MotivationAdaptionAsset.cs</Link>
+    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\MotivationBasedAdaptionAsset.cs">
+      <Link>MotivationBasedAdaptionAsset.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\MotivationAdaptionAssetSettings.cs">
-      <Link>MotivationAdaptionAssetSettings.cs</Link>
+    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\MotivationBasedAdaptionAssetSettings.cs">
+      <Link>MotivationBasedAdaptionAssetSettings.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\Properties\AssemblyInfo.cs">
+    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\MotivationAdaptionAssetFunctionality.cs">
-      <Link>MotivationAdaptionAssetFunctionality.cs</Link>
+    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\MotivationBasedAdaptionAssetFunctionality.cs">
+      <Link>MotivationBasedAdaptionAssetFunctionality.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\Resources\MotivationAdaptionAsset.VersionAndDependencies.xml">
-      <Link>Resources\MotivationAdaptionAsset.VersionAndDependencies.xml</Link>
+    <Content Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\Resources\MotivationBasedAdaptionAsset.VersionAndDependencies.xml">
+      <Link>Resources\MotivationBasedAdaptionAsset.VersionAndDependencies.xml</Link>
     </Content>
   </ItemGroup>
   <ItemGroup>
