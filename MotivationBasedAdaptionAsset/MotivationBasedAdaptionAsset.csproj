@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AssetPackage</RootNamespace>
-    <AssemblyName>MotivationAdaptionAsset</AssemblyName>
+    <AssemblyName>MotivationBasedAdaptionAsset</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,13 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MotivationAdaptionAsset.cs" />
-    <Compile Include="MotivationAdaptionAssetFunctionality.cs" />
-    <Compile Include="MotivationAdaptionAssetSettings.cs" />
+    <Compile Include="MotivationBasedAdaptionAsset.cs" />
+    <Compile Include="MotivationBasedAdaptionAssetFunctionality.cs" />
+    <Compile Include="MotivationBasedAdaptionAssetSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\MotivationAdaptionAsset.VersionAndDependencies.xml">
+    <EmbeddedResource Include="Resources\MotivationBasedAdaptionAsset.VersionAndDependencies.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

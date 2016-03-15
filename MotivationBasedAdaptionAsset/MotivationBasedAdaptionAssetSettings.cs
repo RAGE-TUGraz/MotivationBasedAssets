@@ -28,7 +28,7 @@
   Changed on: 2016-02-22
 */
 
-namespace MotivationAdaptionAssetNameSpace
+namespace MotivationBasedAdaptionAssetNameSpace
 {
     using AssetPackage;
     using System;
@@ -40,14 +40,14 @@ namespace MotivationAdaptionAssetNameSpace
     /// 
     /// BaseSettings contains the (de-)serialization methods.
     /// </summary>
-    public class MotivationAdaptionAssetSettings : BaseSettings
+    public class MotivationBasedAdaptionAssetSettings : BaseSettings
     {
         #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the MotivationAdaptionAsset.AssetSettings class.
         /// </summary>
-        public MotivationAdaptionAssetSettings()
+        public MotivationBasedAdaptionAssetSettings()
             : base()
         {
             // Set Default values here.

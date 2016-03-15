@@ -36,13 +36,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MotivationAdaptionAssetNameSpace
+namespace MotivationBasedAdaptionAssetNameSpace
 {
 
     /// <summary>
     /// Singelton Class for handling MotivationAdaptionHandler
     /// </summary>
-    internal class MotivationAdaptionHandler
+    internal class MotivationBasedAdaptionHandler
     {
         #region Fields
 
@@ -54,12 +54,12 @@ namespace MotivationAdaptionAssetNameSpace
         /// <summary>
         /// Instance of the MotivationAdaptionAsset
         /// </summary>
-        private MotivationAdaptionAsset motivationAdaptionAsset = null;
+        private MotivationBasedAdaptionAsset motivationBasedAdaptionAsset = null;
 
         /// <summary>
         /// Instance of the class MotivationAdaptionHandler - Singelton pattern
         /// </summary>
-        private static MotivationAdaptionHandler instance;
+        private static MotivationBasedAdaptionHandler instance;
 
         /// <summary>
         /// run-time storage: to each player, intervention and instance the number of times this instance was called is stored here 
@@ -77,7 +77,7 @@ namespace MotivationAdaptionAssetNameSpace
         /// <summary>
         /// private MotivationAdaptionHandler-ctor for Singelton-pattern 
         /// </summary>
-        private MotivationAdaptionHandler() { }
+        private MotivationBasedAdaptionHandler() { }
 
         #endregion Constructors
         #region Properties
@@ -85,13 +85,13 @@ namespace MotivationAdaptionAssetNameSpace
         /// <summary>
         /// Getter for Instance of the MotivationAdaptionHandler - Singelton pattern
         /// </summary>
-        public static MotivationAdaptionHandler Instance
+        public static MotivationBasedAdaptionHandler Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new MotivationAdaptionHandler();
+                    instance = new MotivationBasedAdaptionHandler();
                 }
                 return instance;
             }
@@ -115,11 +115,11 @@ namespace MotivationAdaptionAssetNameSpace
         /// Method returning an instance of the MotivationAdaptionAsset.
         /// </summary>
         /// <returns> Instance of the MotivationAdaptionAsset </returns>
-        internal MotivationAdaptionAsset getMAdA()
+        internal MotivationBasedAdaptionAsset getMAdA()
         {
-            if (motivationAdaptionAsset == null)
-                motivationAdaptionAsset = (MotivationAdaptionAsset)AssetManager.Instance.findAssetByClass("MotivationAdaptionAsset");
-            return (motivationAdaptionAsset);
+            if (motivationBasedAdaptionAsset == null)
+                motivationBasedAdaptionAsset = (MotivationBasedAdaptionAsset)AssetManager.Instance.findAssetByClass("MotivationBasedAdaptionAsset");
+            return (motivationBasedAdaptionAsset);
         }
 
         //TODO: Loading motivation state over the motivation assesment asset - loading via player model?
@@ -292,7 +292,7 @@ namespace MotivationAdaptionAssetNameSpace
         /// <summary>
         /// Method calling all Tests of this Class.
         /// </summary>
-        public void performAllTests()
+        internal void performAllTests()
         {
             loggingMAd("*****************************************************************");
             loggingMAd("Calling all tests (MAdA):");
@@ -452,8 +452,8 @@ namespace MotivationAdaptionAssetNameSpace
         internal static Boolean eval(String expression, String playerId)
         {
             if (expression.Equals(""))
-                MotivationAdaptionHandler.Instance.loggingMAd("ERROR: Empty expression for evaluation received!");
-            MotivationAdaptionHandler.Instance.loggingMAd("FormulaInterpreter: expression to evaluate with variables=" + expression);
+                MotivationBasedAdaptionHandler.Instance.loggingMAd("ERROR: Empty expression for evaluation received!");
+            MotivationBasedAdaptionHandler.Instance.loggingMAd("FormulaInterpreter: expression to evaluate with variables=" + expression);
             System.Data.DataTable table = new System.Data.DataTable();
             return table.Compute(replaceVariables(expression, playerId), String.Empty).ToString().Equals("True") ? true : false;
         }
@@ -478,12 +478,12 @@ namespace MotivationAdaptionAssetNameSpace
             }
             */
             //NEW;
-            Dictionary<String,double> ms = MotivationAdaptionHandler.Instance.loadMotivationState(playerId);
+            Dictionary<String,double> ms = MotivationBasedAdaptionHandler.Instance.loadMotivationState(playerId);
             foreach(KeyValuePair<String,double> pair in ms)
             {
                 expression = expression.Replace(pair.Key, pair.Value.ToString());
             }
-            MotivationAdaptionHandler.Instance.loggingMAd("FormulaInterpreter: expression to evaluate without variables=" + expression);
+            MotivationBasedAdaptionHandler.Instance.loggingMAd("FormulaInterpreter: expression to evaluate without variables=" + expression);
             return expression;
         }
 

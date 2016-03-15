@@ -28,7 +28,7 @@
   Changed on: 2016-02-22
 */
 
-namespace MotivationAdaptionAssetNameSpace
+namespace MotivationBasedAdaptionAssetNameSpace
 {
     using System;
     using System.Collections.Generic;
@@ -40,14 +40,14 @@ namespace MotivationAdaptionAssetNameSpace
     /// <summary>
     /// An asset.
     /// </summary>
-    public class MotivationAdaptionAsset : BaseAsset
+    public class MotivationBasedAdaptionAsset : BaseAsset
     {
         #region Fields
 
         /// <summary>
         /// Options for controlling the operation.
         /// </summary>
-        private MotivationAdaptionAssetSettings settings = null;
+        private MotivationBasedAdaptionAssetSettings settings = null;
 
         #endregion Fields
 
@@ -56,18 +56,18 @@ namespace MotivationAdaptionAssetNameSpace
         /// <summary>
         /// Initializes a new instance of the MotivationAdaptionAsset.Asset class.
         /// </summary>
-        public MotivationAdaptionAsset()
+        public MotivationBasedAdaptionAsset()
             : base()
         {
             //! Create Settings and let it's BaseSettings class assign Defaultvalues where it can.
             // 
-            settings = new MotivationAdaptionAssetSettings();
+            settings = new MotivationBasedAdaptionAssetSettings();
 
             //preventing multiple asset creation
             if (AssetManager.Instance.findAssetsByClass(this.Class).Count > 1)
             {
-                this.Log(Severity.Error, "There is only one instance of the MotivationAdaptionAsset permitted!");
-                throw new Exception("EXCEPTION: There is only one instance of the MotivationAdaptionAsset permitted!");
+                this.Log(Severity.Error, "There is only one instance of the MotivationBasedAdaptionAsset permitted!");
+                throw new Exception("EXCEPTION: There is only one instance of the MotivationBasedAdaptionAsset permitted!");
             }
         }
 
@@ -96,15 +96,14 @@ namespace MotivationAdaptionAssetNameSpace
             }
             set
             {
-                settings = (value as MotivationAdaptionAssetSettings);
+                settings = (value as MotivationBasedAdaptionAssetSettings);
             }
         }
 
         #endregion Properties
 
         #region Methods
-
-        // Your code goes here.
+        
 
         /*
         public void test()
@@ -123,7 +122,7 @@ namespace MotivationAdaptionAssetNameSpace
         /// <returns> List containing all appropriate interventions at the moment. </returns>
         public List<String> getInterventions(String playerId)
         {
-            return MotivationAdaptionHandler.Instance.getInterventions(playerId);
+            return MotivationBasedAdaptionHandler.Instance.getInterventions(playerId);
         }
 
         /// <summary>
@@ -136,7 +135,7 @@ namespace MotivationAdaptionAssetNameSpace
         /// <returns> Intervention instance for the player. </returns>
         public String getInstance(String intervention, String playerId)
         {
-            return MotivationAdaptionHandler.Instance.getInstance(intervention, playerId);
+            return MotivationBasedAdaptionHandler.Instance.getInstance(intervention, playerId);
         }
 
         #endregion Methods

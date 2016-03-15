@@ -5,13 +5,13 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotivationAssessmentAsset", "MotivationAssessmentAsset\MotivationAssessmentAsset.csproj", "{4D1F98C7-6827-4F99-B676-F5C9AF632609}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotivationAdaptionAsset", "MotivationAdaptionAsset\MotivationAdaptionAsset.csproj", "{93BCC43C-F5B0-4CB0-89D2-6E1BFD47BC62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotivationBasedAdaptionAsset", "MotivationBasedAdaptionAsset\MotivationBasedAdaptionAsset.csproj", "{93BCC43C-F5B0-4CB0-89D2-6E1BFD47BC62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMotivation", "TestMotivation\TestMotivation.csproj", "{2B73B79D-039C-49A8-AE9E-2C989CD852DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotivationAssessmentAsset_Portable", "MotivationAssessmentAsset_Portable\MotivationAssessmentAsset_Portable.csproj", "{A441FEE9-482A-418E-B046-795B2233B910}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotivationAdaptionAsset_Portable", "MotivationAdaptionAsset_Portable\MotivationAdaptionAsset_Portable.csproj", "{ACEF99D0-B010-4410-9C87-C147531C605D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotivationBasedAdaptionAsset_Portable", "MotivationBasedAdaptionAsset_Portable\MotivationBasedAdaptionAsset_Portable.csproj", "{ACEF99D0-B010-4410-9C87-C147531C605D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -30,7 +30,7 @@
 
 using AssetManagerPackage;
 using AssetPackage;
-using MotivationAdaptionAssetNameSpace;
+using MotivationBasedAdaptionAssetNameSpace;
 using MotivationAssessmentAssetNameSpace;
 using System;
 using System.Collections.Generic;
@@ -48,7 +48,7 @@ namespace TestMotivation
             am.Bridge = new Bridge();
 
             MotivationAssessmentAsset masa = new MotivationAssessmentAsset();
-            MotivationAdaptionAsset mada = new MotivationAdaptionAsset();
+            MotivationBasedAdaptionAsset mada = new MotivationBasedAdaptionAsset();
 
             masa.performTest();
 
