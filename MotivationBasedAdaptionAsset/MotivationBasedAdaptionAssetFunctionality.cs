@@ -168,8 +168,8 @@ namespace MotivationBasedAdaptionAssetNameSpace
             {
                 if (interventions.Contains(iv.name))
                 {
-                    pos = rnd.Next(1, iv.interventionInstances.Count + 1) - 1;
-                    instances.Add(iv.interventionInstances.ElementAt(pos).instance);
+                    pos = rnd.Next(1, iv.interventionInstances.instance.Count + 1) - 1;
+                    instances.Add(iv.interventionInstances.instance.ElementAt(pos));
                 }
             }
 
@@ -222,10 +222,10 @@ namespace MotivationBasedAdaptionAssetNameSpace
         public String getInstance(String intervention, String playerId)
         {
             MotivationModel mm = loadMotivationModel(playerId);
-            List<InterventionInstance> instances = null;
+            List<String> instances = null;
             foreach (Intervention iv in mm.motivationInterventions.motivationInterventionList)
                 if (intervention.Equals(iv.name))
-                    instances = iv.interventionInstances;
+                    instances = iv.interventionInstances.instance;
             if (instances == null)
             {
                 loggingMAd("ERROR: requested instance is not part of the motivation model!");
@@ -242,8 +242,8 @@ namespace MotivationBasedAdaptionAssetNameSpace
             if (!playerHistory.ContainsKey(intervention))
             {
                 interventionCount = new Dictionary<string, int>();
-                foreach (InterventionInstance ii in instances)
-                    interventionCount[ii.instance] = 0;
+                foreach (String ii in instances)
+                    interventionCount[ii] = 0;
             }
             else
                 interventionCount = playerHistory[intervention];

@@ -24,8 +24,6 @@
   http://kti.tugraz.at/css/
 
   Created by: Matthias Maurer, TUGraz <mmaurer@tugraz.at>
-  Changed by: Matthias Maurer, TUGraz <mmaurer@tugraz.at>
-  Changed on: 2016-02-22
 */
 
 using AssetManagerPackage;
@@ -670,43 +668,39 @@ namespace MotivationAssessmentAssetNameSpace
             maList.Add(ma3);
             maList.Add(ma4);
             mal.motivationAspectList = maList;
-
-            InterventionInstance ii11 = new InterventionInstance();
-            ii11.instance = "Hey, my friend! Are you sleeping?!";
-            InterventionInstance ii12 = new InterventionInstance();
-            ii12.instance = "Sorry for interrupting you; we need to go on.";
+            
+            String ii11 = "Hey, my friend! Are you sleeping?!";
+            String ii12 = "Sorry for interrupting you; we need to go on.";
             Intervention i1 = new Intervention();
-            List<InterventionInstance> i1List = new List<InterventionInstance>();
+            List<String> i1List = new List<String>();
             i1List.Add(ii11);
             i1List.Add(ii12);
-            i1.interventionInstances = i1List;
+            i1.interventionInstances = new InterventionInstance();
+            i1.interventionInstances.instance = i1List;
             i1.name = "attention catcher";
             i1.rule = "attention < 0.4";
-
-            InterventionInstance ii21 = new InterventionInstance();
-            ii21.instance = "Once this mission is over, it's time to celebrate.";
-            InterventionInstance ii22 = new InterventionInstance();
-            ii22.instance = "By solving this task you will earn another 10000 points.";
+            
+            String ii21 = "Once this mission is over, it's time to celebrate.";
+            String ii22 = "By solving this task you will earn another 10000 points.";
             Intervention i2 = new Intervention();
-            List<InterventionInstance> i2List = new List<InterventionInstance>();
+            List<String> i2List = new List<String>();
             i2List.Add(ii21);
             i2List.Add(ii22);
-            i2.interventionInstances = i2List;
+            i2.interventionInstances = new InterventionInstance();
+            i2.interventionInstances.instance= i2List;
             i2.name = "incitation intervention";
             i2.rule = "satisfaction < 0.4";
-
-            InterventionInstance ii31 = new InterventionInstance();
-            ii31.instance = "Don't give up. Try again.";
-            InterventionInstance ii32 = new InterventionInstance();
-            ii32.instance = "It is a challenge, I know. Let's give it another trial.";
-            InterventionInstance ii33 = new InterventionInstance();
-            ii33.instance = "Go on. Practice makes perfect.";
+            
+            String ii31 = "Don't give up. Try again.";
+            String ii32 = "It is a challenge, I know. Let's give it another trial.";
+            String ii33 = "Go on. Practice makes perfect.";
             Intervention i3 = new Intervention();
-            List<InterventionInstance> i3List = new List<InterventionInstance>();
+            List<String> i3List = new List<String>();
             i3List.Add(ii31);
             i3List.Add(ii32);
             i3List.Add(ii33);
-            i3.interventionInstances = i3List;
+            i3.interventionInstances = new InterventionInstance();
+            i3.interventionInstances.instance = i3List;
             i3.name = "encouraging intervention";
             i3.rule = "confidence < 0.4";
 
@@ -854,177 +848,6 @@ namespace MotivationAssessmentAssetNameSpace
         #endregion TestMethods
 
     }
-
-    /// <summary>
-    /// Classes for Serialization
-    /// </summary>
-    #region Serialization
-
-    /// <summary>
-    /// Class containing all MotivationModel data.
-    /// </summary>
-    [XmlRoot("motivationmodel")]
-    public class MotivationModel
-    {
-        #region Fields
-
-        /// <summary>
-        /// Class storing all motivation aspects.
-        /// </summary>
-        [XmlElement("motivationaspects")]
-        public MotivationAspectList motivationAspects { get; set; }
-
-        /// <summary>
-        /// Class containing all Interventions.
-        /// </summary>
-        [XmlElement("motivationinterventions")]
-        public MotivationInterventionList motivationInterventions { get; set; }
-
-        #endregion Fields
-        #region Methods
-
-        /// <summary>
-        /// Method for converting a motivation model to a xml string.
-        /// </summary>
-        /// 
-        ///<returns>
-        /// A string representing the motivation model.
-        /// </returns>
-        public String toXmlString()
-        {
-            try
-            {
-                var xmlserializer = new XmlSerializer(typeof(MotivationModel));
-                var stringWriter = new StringWriter();
-                using (var writer = XmlWriter.Create(stringWriter))
-                {
-                    xmlserializer.Serialize(writer, this);
-                    String xml = stringWriter.ToString();
-
-                    return (xml);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("An error occurred", ex);
-            }
-        }
-
-        #endregion Methods
-    }
-
-    public class MotivationAspectList
-    {
-        #region Properties
-
-        /// <summary>
-        /// List of all motivational aspects.
-        /// </summary>
-        [XmlElement("motivationaspect")]
-        public List<MotivationAspect> motivationAspectList { get; set; }
-
-        #endregion Properties
-        #region Methods
-
-        internal MotivationAspect getMotivationAspectByName(String name)
-        {
-            foreach (MotivationAspect ma in this.motivationAspectList)
-            {
-                if (ma.name.Equals(name))
-                    return (ma);
-            }
-
-            MotivationAssessmentHandler.Instance.loggingMAs("ERROR: Requested motivation aspect name not found!");
-            return null;
-        }
-
-        #endregion Methods
-
-    }
-
-    public class MotivationAspect
-    {
-        #region Properties 
-
-        /// <summary>
-        /// Motivational Aspect name
-        /// </summary>
-        [XmlElement("name")]
-        public String name { get; set; }
-
-        /// <summary>
-        /// Rule for upgrading Motivational Aspect.
-        /// </summary>
-        [XmlElement("up")]
-        public String up { get; set; }
-
-        /// <summary>
-        /// Rule for downgrading Motivational Aspect.
-        /// </summary>
-        [XmlElement("down")]
-        public String down { get; set; }
-
-        /// <summary>
-        /// Rule for calculating Motivational Aspect.
-        /// </summary>
-        [XmlElement("rule")]
-        public String rule { get; set; }
-
-        #endregion Properties
-    }
-
-    public class MotivationInterventionList
-    {
-        #region Properties
-
-        /// <summary>
-        /// List of all motivation interventions.
-        /// </summary>
-        [XmlElement("intervention")]
-        public List<Intervention> motivationInterventionList { get; set; }
-
-        #endregion Properties
-    }
-
-    public class Intervention
-    {
-        #region Properties
-
-        /// <summary>
-        /// Intervention name
-        /// </summary>
-        [XmlElement("name")]
-        public String name { get; set; }
-
-        /// <summary>
-        /// Rule for applying Intervention.
-        /// </summary>
-        [XmlElement("rule")]
-        public String rule { get; set; }
-
-        /// <summary>
-        /// List of intervention instances.
-        /// </summary>
-        [XmlElement("instances")]
-        public List<InterventionInstance> interventionInstances { get; set; }
-
-        #endregion Properties
-    }
-
-    public class InterventionInstance
-    {
-        #region Properties
-
-        /// <summary>
-        /// Intervention instance
-        /// </summary>
-        [XmlElement("insatnce")]
-        public String instance { get; set; }
-
-        #endregion Properties
-    }
-
-    #endregion Serialization
 
     /// <summary>
     /// Class for storing Motivational State
@@ -1429,4 +1252,175 @@ namespace MotivationAssessmentAssetNameSpace
 
         #endregion Methods
     }
+
+    /// <summary>
+    /// Classes for Serialization
+    /// </summary>
+    #region Serialization
+
+    /// <summary>
+    /// Class containing all MotivationModel data.
+    /// </summary>
+    [XmlRoot("motivationmodel")]
+    public class MotivationModel
+    {
+        #region Fields
+
+        /// <summary>
+        /// Class storing all motivation aspects.
+        /// </summary>
+        [XmlElement("motivationaspects")]
+        public MotivationAspectList motivationAspects { get; set; }
+
+        /// <summary>
+        /// Class containing all Interventions.
+        /// </summary>
+        [XmlElement("motivationinterventions")]
+        public MotivationInterventionList motivationInterventions { get; set; }
+
+        #endregion Fields
+        #region Methods
+
+        /// <summary>
+        /// Method for converting a motivation model to a xml string.
+        /// </summary>
+        /// 
+        ///<returns>
+        /// A string representing the motivation model.
+        /// </returns>
+        public String toXmlString()
+        {
+            try
+            {
+                var xmlserializer = new XmlSerializer(typeof(MotivationModel));
+                var stringWriter = new StringWriter();
+                using (var writer = XmlWriter.Create(stringWriter))
+                {
+                    xmlserializer.Serialize(writer, this);
+                    String xml = stringWriter.ToString();
+
+                    return (xml);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred", ex);
+            }
+        }
+
+        #endregion Methods
+    }
+
+    public class MotivationAspectList
+    {
+        #region Properties
+
+        /// <summary>
+        /// List of all motivational aspects.
+        /// </summary>
+        [XmlElement("motivationaspect")]
+        public List<MotivationAspect> motivationAspectList { get; set; }
+
+        #endregion Properties
+        #region Methods
+
+        internal MotivationAspect getMotivationAspectByName(String name)
+        {
+            foreach (MotivationAspect ma in this.motivationAspectList)
+            {
+                if (ma.name.Equals(name))
+                    return (ma);
+            }
+
+            MotivationAssessmentHandler.Instance.loggingMAs("ERROR: Requested motivation aspect name not found!");
+            return null;
+        }
+
+        #endregion Methods
+
+    }
+
+    public class MotivationAspect
+    {
+        #region Properties 
+
+        /// <summary>
+        /// Motivational Aspect name
+        /// </summary>
+        [XmlElement("name")]
+        public String name { get; set; }
+
+        /// <summary>
+        /// Rule for upgrading Motivational Aspect.
+        /// </summary>
+        [XmlElement("up")]
+        public String up { get; set; }
+
+        /// <summary>
+        /// Rule for downgrading Motivational Aspect.
+        /// </summary>
+        [XmlElement("down")]
+        public String down { get; set; }
+
+        /// <summary>
+        /// Rule for calculating Motivational Aspect.
+        /// </summary>
+        [XmlElement("rule")]
+        public String rule { get; set; }
+
+        #endregion Properties
+    }
+
+    public class MotivationInterventionList
+    {
+        #region Properties
+
+        /// <summary>
+        /// List of all motivation interventions.
+        /// </summary>
+        [XmlElement("intervention")]
+        public List<Intervention> motivationInterventionList { get; set; }
+
+        #endregion Properties
+    }
+
+    public class Intervention
+    {
+        #region Properties
+
+        /// <summary>
+        /// Intervention name
+        /// </summary>
+        [XmlElement("name")]
+        public String name { get; set; }
+
+        /// <summary>
+        /// Rule for applying Intervention.
+        /// </summary>
+        [XmlElement("rule")]
+        public String rule { get; set; }
+
+        /// <summary>
+        /// List of intervention instances.
+        /// </summary>
+        [XmlElement("instances")]
+        public InterventionInstance interventionInstances { get; set; }
+
+        #endregion Properties
+    }
+
+    public class InterventionInstance
+    {
+        #region Properties
+
+        /// <summary>
+        /// Intervention instance
+        /// </summary>
+        [XmlElement("instance")]
+        public List<String> instance { get; set; }
+
+        #endregion Properties
+    }
+
+    #endregion Serialization
 }

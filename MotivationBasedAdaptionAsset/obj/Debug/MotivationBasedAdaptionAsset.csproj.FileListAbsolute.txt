@@ -8,3 +8,13 @@ C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAd
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\obj\Debug\MotivationBasedAdaptionAsset.csprojResolveAssemblyReference.cache
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\obj\Debug\MotivationBasedAdaptionAsset.dll
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAdaptionAsset\obj\Debug\MotivationBasedAdaptionAsset.pdb
+C:\Users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\bin\Debug\MotivationBasedAdaptionAsset.dll
+C:\Users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\bin\Debug\MotivationBasedAdaptionAsset.pdb
+C:\Users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\bin\Debug\MotivationAssessmentAsset.dll
+C:\Users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\bin\Debug\RageAssetManager.dll
+C:\Users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\bin\Debug\MotivationAssessmentAsset.pdb
+C:\Users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\bin\Debug\RageAssetManager.pdb
+C:\Users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\bin\Debug\RageAssetManager.xml
+C:\Users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\obj\Debug\MotivationBasedAdaptionAsset.csprojResolveAssemblyReference.cache
+C:\Users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\obj\Debug\MotivationBasedAdaptionAsset.dll
+C:\Users\mmaurer\documents\visual studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\obj\Debug\MotivationBasedAdaptionAsset.pdb

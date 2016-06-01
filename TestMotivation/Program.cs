@@ -24,8 +24,6 @@
   http://kti.tugraz.at/css/
 
   Created by: Matthias Maurer, TUGraz <mmaurer@tugraz.at>
-  Changed by: Matthias Maurer, TUGraz <mmaurer@tugraz.at>
-  Changed on: 2016-02-22
 */
 
 using AssetManagerPackage;
@@ -77,7 +75,7 @@ namespace TestMotivation
 
         public string Load(string fileId)
         {
-            string path = @"C:\Users\mmaurer\Desktop\" + fileId;
+            string path = @"C:\Users\mmaurer\Desktop\rageCsFiles\" + fileId;
 
             try
             {   // Open the text file using a stream reader.
@@ -98,7 +96,7 @@ namespace TestMotivation
 
         public void Save(string fileId, string fileData)
         {
-            string filePath = @"C:\Users\mmaurer\Desktop\" + fileId;
+            string filePath = @"C:\Users\mmaurer\Desktop\rageCsFiles\" + fileId;
             using (StreamWriter file = new StreamWriter(filePath))
             {
                 file.Write(fileData);
