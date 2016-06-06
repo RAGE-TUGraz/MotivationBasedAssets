@@ -24,8 +24,6 @@
   http://kti.tugraz.at/css/
 
   Created by: Matthias Maurer, TUGraz <mmaurer@tugraz.at>
-  Changed by: Matthias Maurer, TUGraz <mmaurer@tugraz.at>
-  Changed on: 2016-02-22
 */
 
 namespace MotivationAssessmentAssetNameSpace
@@ -51,9 +49,7 @@ namespace MotivationAssessmentAssetNameSpace
             : base()
         {
             // Set Default values here.
-            TestProperty = "Hello Default World";
-            TestList = new String[] { "Red", "Green", "Blue" };
-            TestPrivate = true;
+            XMLLoadingId = "MotivationModelXML.xml";
         }
 
         #endregion Constructors
@@ -68,53 +64,10 @@ namespace MotivationAssessmentAssetNameSpace
         /// The test property.
         /// </value>
         [XmlElement()]
-        public String TestProperty
+        public String XMLLoadingId
         {
             get;
             set;
-        }
-
-        /// <summary>
-        /// Gets the string[].
-        /// </summary>
-        ///
-        /// <value>
-        /// .
-        /// </value>
-        [XmlArray()]
-        [XmlArrayItem("ListItem")]
-        public String[] TestList
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the test read only.
-        /// </summary>
-        ///
-        /// <value>
-        /// true if test read only, false if not.
-        /// </value>
-        public Boolean TestReadOnly
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the test private.
-        /// </summary>
-        ///
-        /// <value>
-        /// true if test private only, false if not.
-        /// </value>
-        public Boolean TestPrivate
-        {
-            get;
-            private set;
         }
 
         #endregion Properties

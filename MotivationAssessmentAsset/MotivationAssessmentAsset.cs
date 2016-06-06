@@ -156,6 +156,15 @@ namespace MotivationAssessmentAssetNameSpace
             MotivationAssessmentHandler.Instance.performAllTests();
         }
 
+        /// <summary>
+        /// Method for receiving Asset settings
+        /// </summary>
+        /// <returns></returns>
+        internal MotivationAssessmentAssetSettings getSettings()
+        {
+            return this.settings;
+        }
+
         #endregion Methods
     }
 }

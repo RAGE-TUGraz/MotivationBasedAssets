@@ -65,7 +65,8 @@ namespace TestMotivation
 
         public bool Exists(string fileId)
         {
-            throw new NotImplementedException();
+            string filePath = @"C:\Users\mmaurer\Desktop\rageCsFiles\" + fileId;
+            return (File.Exists(filePath));
         }
 
         public string[] Files()

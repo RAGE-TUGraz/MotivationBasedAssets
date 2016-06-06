@@ -517,8 +517,32 @@ namespace MotivationAssessmentAssetNameSpace
         /// <returns></returns>
         internal MotivationModel loadDefaultMotivationModel()
         {
-            return createExampleMM();
+            //return createExampleMM();
             //throw new NotImplementedException();
+            
+            
+            loggingMAs("Loading default Domain model.");
+            MotivationAssessmentAssetSettings maas = getMAsA().getSettings();
+
+
+            IDataStorage ids = (IDataStorage)AssetManager.Instance.Bridge;
+            if (ids != null )
+            {
+                if (!ids.Exists(maas.XMLLoadingId))
+                {
+                    loggingMAs("File "+ maas.XMLLoadingId + " not found for loading Motivation model.", Severity.Error);
+                    throw new Exception("EXCEPTION: File "+ maas.XMLLoadingId + " not found for loading Motivation model.") ;
+                }
+
+                loggingMAs("Loading Motivation model from File.");
+                return (this.getMMFromXmlString(ids.Load(maas.XMLLoadingId)));
+            }
+            else
+            {
+                loggingMAs("IDataStorage bridge absent for requested local loading method of the Motivation model.", Severity.Error);
+                throw new Exception("EXCEPTION: IDataStorage bridge absent for requested local loading method of the Motivation model.");
+            }
+            
         }
 
         /// <summary>
@@ -726,7 +750,7 @@ namespace MotivationAssessmentAssetNameSpace
         internal void performTest1()
         {
             loggingMAs("***************TEST 1********************");
-            
+
             DateTime now = DateTime.Now;
 
             //reaching a new level

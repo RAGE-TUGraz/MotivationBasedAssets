@@ -112,7 +112,7 @@ function saveTextAsFile(textToWrite){
 
     //var textToWrite = document.getElementById("inputTextToSave").value;
     var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
-    var fileNameToSaveAs = "CognitiveInterventionXML.xml"
+    var fileNameToSaveAs = "MotivationModelXML.xml"
       var downloadLink = document.createElement("a");
     downloadLink.download = fileNameToSaveAs;
     downloadLink.innerHTML = "Download File";
@@ -349,7 +349,7 @@ function Menu2() {
 		for (var i = 0; i < menu.data.interventionTypes.length; i++) {
 		    xml += '<intervention>\n';
 		    xml += '<name>'+menu.data.interventionTypes[i]+'</name>\n';
-		    xml += '<rule>'+menu.data.interventionRule[i]+'</rule>\n';
+		    xml += '<rule>'+menu.data.interventionRule[i].replace(/</g, " &lt; ").replace(/>/g, " &gt; ")+'</rule>\n';
 		    xml += '<instances>\n';
 		    for (var j = 0; j < menu.data.interventionInstances[i].length; j++) {
 			    xml += '<instance>';
