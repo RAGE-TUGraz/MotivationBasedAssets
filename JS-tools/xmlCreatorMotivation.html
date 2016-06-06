@@ -1,0 +1,530 @@
+﻿<!DOCTYPE html>  
+<!--
+  Copyright 2016 TUGraz, http://www.tugraz.at/
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  This project has received funding from the European Union’s Horizon
+  2020 research and innovation programme under grant agreement No 644187.
+  You may obtain a copy of the License at
+  
+      http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  
+  This software has been created in the context of the EU-funded RAGE project.
+  Realising and Applied Gaming Eco-System (RAGE), Grant agreement No 644187, 
+  http://rageproject.eu/
+
+  Development was done by Cognitive Science Section (CSS) 
+  at Knowledge Technologies Institute (KTI)at Graz University of Technology (TUGraz).
+  http://kti.tugraz.at/css/
+
+  Created by: Matthias Maurer, TUGraz <mmaurer@tugraz.at>   
+-->
+<html>
+<head>
+<meta charset='UTF-8'> 
+<title>Motivation Model XML creator</title>
+
+<style type='text/css'>
+/* general style information */
+h1 {color:gray;}
+div#body {display:block;}
+div.menu {background-color: lightblue; border-style: solid; margin-bottom: 5px; padding: 5px; display: inline-block;}
+div#dataInputField {background-color: lightgreen; display:block; border-style: solid; padding: 5px; margin-bottom: 5px;}
+/*  menu - specific style information */
+table.tableboarder, th.tableboarder, td.tableboarder {
+    border: 1px solid black;
+    border-collapse: collapse;
+	vertical-align: top;
+}
+table#m3{
+    table-layout: fixed;
+    width: 100%;
+}
+#m5tablegraph{
+    table-layout:fixed;
+    width:100%;
+}
+th, td {
+    padding: 5px; 
+}
+div.circle {
+  width: 10px;
+  height: 10px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background: black;
+}
+div#nodeInformationDiv {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.m1div{
+    display: inline-block;
+    width: 48%;
+    padding: 5px;
+    margin: 5px;
+    vertical-align: top;
+}
+
+.centered{
+    text-align:center;
+}
+
+.hover:hover{
+    cursor: pointer;
+}
+
+select:hover{
+    cursor: pointer;
+}
+
+#selectBehaviour{
+    font-size: x-large;
+}
+
+.center{
+    text-align: center;
+}
+#m5graphDiv, #m5infoDiv{
+    vertical-align: top;
+}
+
+.m5datainputtable{
+    border: solid;
+    background-color: white;
+    padding: 1px;
+}
+</style>
+
+<script>
+//Method for storing text via the download functionality
+function saveTextAsFile(textToWrite){
+
+
+
+    //var textToWrite = document.getElementById("inputTextToSave").value;
+    var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+    var fileNameToSaveAs = "CognitiveInterventionXML.xml"
+      var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    if (window.webkitURL != null)
+    {
+        // Chrome allows the link to be clicked
+        // without actually adding it to the DOM.
+        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    }
+    else
+    {
+        // Firefox requires the link to be added to the DOM
+        // before it can be clicked.
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        //downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+    }
+
+    downloadLink.click();
+}
+
+//Method for creating the XML-string out of the information gathered from the user
+function createXML(){
+	return menu.toXML();
+}
+
+//Method initiating the download
+function startDownload() {
+	xml = createXML();
+	saveTextAsFile(xml);
+}
+
+//Method creating the data input for menu 
+function fillMenu(){
+	//recolor all menu points
+	var menuPoints = document.getElementsByClassName("menu")
+	for (var i = 0; i < menuPoints.length; i++) {
+		menuPoints[i].style.backgroundColor="lightblue";
+	}
+	document.getElementById("m"+menu.activeMenu).style.backgroundColor="lightgreen";
+	
+	//store other stuff already inputed
+	
+    //create content for the div
+	menu.fillHTML("dataInputField");
+}
+
+//perform actions when document is loaded.
+function performStartupAction(){
+	menu = new Menu();
+	var menuPoints = document.getElementsByClassName("menu")
+	for (var i = 0; i < menuPoints.length; i++) {
+		menuPoints[i].addEventListener("click",function(){
+			menu.activeMenu = this.id[1];
+			fillMenu();
+		}); 
+	}
+}
+
+//menu object - holding all information regarding all menues
+function Menu() {
+    this.activeMenu;
+    this.data = new Data();
+	this.menuArray = [];
+	this.menuArray[1] = new Menu1();
+	this.menuArray[2] = new Menu2();
+	this.menuArray[3] = new Menu3();
+	this.menuArray[4] = new Menu4();
+	this.fillHTML = function(div){
+		var html = this.menuArray[this.activeMenu].fillHTML(div);
+	};
+	this.toXML = function(){
+	    var xml = '';//'<?xml version="1.0" encoding="utf-16"?>\n';
+	    xml += '<motivationmodel>\n';
+	    xml += this.menuArray[3].toXML();
+	    xml += this.menuArray[2].toXML();
+	    return (xml + '</motivationmodel>\n');
+	};
+	this.getActiveMenu = function () {
+	    return (this.menuArray[this.activeMenu]);
+	};
+}
+
+//menu object1
+function Menu1() {
+	this.fillHTML = function (div) {
+	    var html = "<div id='m1Left' class='m1div'></div>";
+	    html += "<div id='m1Right' class='m1div'></div>";
+	    document.getElementById(div).innerHTML = html;
+
+	    this.fillDefaultValues('m1Right');
+	    this.fillToolDescription('m1Left');
+	};
+	this.toXML = function () {
+	    var xml = "";
+
+	    return (xml);
+	};
+	this.fillToolDescription = function (div) {
+	    var html = "<h3 class='centered'> About this tool:</h3>";
+	    document.getElementById(div).innerHTML = html;
+	};
+	this.fillDefaultValues = function (div) {
+	    var html = "<h4 class='centered'> Define default values:</h4>";
+	    document.getElementById(div).innerHTML = html;
+
+	};
+}
+
+//menu object2
+function Menu2() {
+	this.chosenInterventionType;
+	this.addInterventionType = function(interventionTypeId){
+		menu.data.interventionTypes.push(interventionTypeId);
+		menu.data.interventionInstances.push(["new Intervention Instance"]);
+		menu.data.interventionRule.push("enter rule here");
+	};
+	this.removeInterventionType = function (position) {
+	    var interventionTypeName = menu.data.interventionTypes[position];
+		menu.data.interventionTypes.splice(position,1);
+		menu.data.interventionInstances.splice(position, 1);
+		menu.data.interventionRule.splice(position, 1);
+	};
+	this.addInterventionInstance = function(interventionInstance){
+	    menu.data.interventionInstances[this.chosenInterventionType].push(interventionInstance);
+	};
+	this.removeInterventionInstance = function(poisitionInstance){
+	    menu.data.interventionInstances[this.chosenInterventionType].splice(poisitionInstance, 1);
+	};
+	this.fillHTML = function(div){
+		var html = "";
+		html += '<table class="tableboarder"><tr class="tableboarder"><td class="tableboarder">' + this.getInterventionTypeHTMLTable() + '</td>';
+		if (menu.data.interventionTypes.length > 0 && this.chosenInterventionType != null)
+		    html += '<td class="tableboarder">' + this.getInterventionInstanceHTMLTable(this.chosenInterventionType) + '</td>';
+		html += '</tr></table>';
+		document.getElementById(div).innerHTML = html;
+
+	    //listener for changing the rule
+		var changeInterventionRule = document.getElementsByClassName("changeInterventionRule");
+		for (var i = 0; i < changeInterventionRule.length; i++) {
+		    changeInterventionRule[i].addEventListener("change", function () {
+		        var position = this.id.substring(0, this.id.length - 23)
+		        menu.data.interventionRule[position] = this.value;
+		    });
+		}
+
+	    //color the chosen cognitive intervention type 
+		var changeTypeColor = document.getElementsByClassName("changeInterventionType")
+		for (var i = 0; i < changeTypeColor.length; i++) {
+		    changeTypeColor[i].style.backgroundColor = "lightblue";
+		    if (changeTypeColor[i].id.substring(0, changeTypeColor[i].id.length - 23) == this.chosenInterventionType) {
+		        changeTypeColor[i].style.backgroundColor = "lightgreen";
+		    }
+		}
+
+	    //set add intervention type listener
+		document.getElementById("addInterventionType").addEventListener("click", function () {
+		    menu.menuArray[menu.activeMenu].addInterventionType("new Intervention Type");
+		    fillMenu();
+		});
+	    //set delete intervention type listener 
+		var deleteType = document.getElementsByClassName("deleteInterventionType")
+		for (var i = 0; i < deleteType.length; i++) {
+		    deleteType[i].addEventListener("click", function () {
+		        menu.menuArray[menu.activeMenu].removeInterventionType(this.id.substring(0, this.id.length - 23));
+		        menu.menuArray[menu.activeMenu].chosenInterventionType = null;
+		        fillMenu();
+		    });
+		}
+	    //set change intervention type listener
+		var changeType = document.getElementsByClassName("changeInterventionType")
+		for (var i = 0; i < changeType.length; i++) {
+		    changeType[i].addEventListener("click", function () {
+		        menu.menuArray[menu.activeMenu].chosenInterventionType = this.id.substring(0, this.id.length - 23);
+		        fillMenu();
+		    });
+		}
+	    //set change intervention type name listener
+		var changeTypeName = document.getElementsByClassName("inputType")
+		for (var i = 0; i < changeTypeName.length; i++) {
+		    changeTypeName[i].addEventListener("change", function () {
+		        menu.data.interventionTypes[this.id] = this.value;
+		        fillMenu();
+		    });
+		}
+		if (menu.data.interventionTypes.length > 0 && menu.menuArray[menu.activeMenu].chosenInterventionType != null) {
+		    //set add intervention instance listener
+		    document.getElementById("addInterventionInstance").addEventListener("click", function () {
+		        menu.menuArray[menu.activeMenu].addInterventionInstance("new Intervention Instance");
+		        fillMenu();
+		    });
+		    //set delete intervention instance listener 
+		    var deleteInstance = document.getElementsByClassName("deleteInterventionInstance")
+		    for (var i = 0; i < deleteInstance.length; i++) {
+		        deleteInstance[i].addEventListener("click", function () {
+		            menu.menuArray[menu.activeMenu].removeInterventionInstance(this.id.substring(0, this.id.length - 27));
+		            fillMenu();
+		        });
+		    }
+		    //set change intervention instance listener
+		    var changeType = document.getElementsByClassName("changeInterventionInstance")
+		    for (var i = 0; i < changeType.length; i++) {
+		        changeType[i].addEventListener("change", function () {
+		            menu.data.interventionInstances[menu.menuArray[menu.activeMenu].chosenInterventionType][this.id.substring(0, this.id.length - 27)] = this.value;
+		            fillMenu();
+		        });
+		    }
+		}
+	};
+	this.getInterventionTypeHTMLTable = function(){
+	    var html ="<table class='tableboarder'>"
+	    html += '<tr class="tableboarder"><th colspan="3" class="tableboarder">Intervention Types</th></tr>';
+		for (i = 0; i < menu.data.interventionTypes.length; i++) {
+		    html += '<tr class="tableboarder"><td class="changeInterventionType hover tableboarder" id="' + i + '-' + 'changeInterventionType"><div class="circle"></div></td><td class="tableboarder">' + '<input size="40" type="text" class="inputType" id="' + i + '" value="' + menu.data.interventionTypes[i] + '" >' + '</td><td class="deleteInterventionType hover tableboarder" id="' + i + '-' + 'deleteInterventionType"> - </th><br>';
+		}
+		html += '<tr class="tableboarder"><th class="hover tableboarder" id="addInterventionType" colspan="3">+</td></tr>';
+		return(html + "</table>")
+	};
+	this.getInterventionInstanceHTMLTable = function (position) {
+	    if (position == null)
+            return("");
+	    var html ="<table class='tableboarder'>"
+	    html += '<tr class="tableboarder"><th colspan="2" class="tableboarder">Intervention Instances</th></tr>';
+	    html += '<tr class="tableboarder"><th colspan="2" class="tableboarder">triggered when: <input size="50" class="changeInterventionRule" id="'+position+'-changeInterventionRule" value="'+menu.data.interventionRule[position]+'"></th></tr>';
+		for (i = 0; i < menu.data.interventionInstances[position].length; i++) {
+		    html += '<tr class="tableboarder"><td class="tableboarder"> <input size="100" class="changeInterventionInstance" id="' + i + '-' + 'changeInterventionInstance" value="' + menu.data.interventionInstances[position][i] + '"></td><td class="deleteInterventionInstance hover tableboarder" id="' + i + '-' + 'deleteInterventionInsatnce"> - </th><br>';
+		}
+		html += '<tr class="tableboarder"><th class="hover tableboarder" id="addInterventionInstance" colspan="2">+</td></tr>';
+		return(html + "</table>")
+	};
+	this.toXML = function(){
+	    var xml = '<motivationinterventions>\n';
+		for (var i = 0; i < menu.data.interventionTypes.length; i++) {
+		    xml += '<intervention>\n';
+		    xml += '<name>'+menu.data.interventionTypes[i]+'</name>\n';
+		    xml += '<rule>'+menu.data.interventionRule[i]+'</rule>\n';
+		    xml += '<instances>\n';
+		    for (var j = 0; j < menu.data.interventionInstances[i].length; j++) {
+			    xml += '<instance>';
+			    xml += menu.data.interventionInstances[i][j];
+				xml += '</instance>\n';
+			};
+		    xml += '</instances>\n';
+			xml += '</intervention>\n';
+		}
+		return (xml + '</motivationinterventions>\n');
+	};
+}
+
+function Menu3() {
+    this.fillHTML = function (div) {
+        var html = "<h1>ENTER ASPECTS</h1>";
+        html += '<div id="aspectTableDiv">';
+        document.getElementById(div).innerHTML = html;
+
+        this.printAspectTable("aspectTableDiv");
+    };
+    this.toXML = function () {
+        var xml = "<motivationaspects>";
+        for (var i = 0; i < menu.data.aspects.length; i++) {
+            xml += '<motivationaspect>';
+            xml += '<name>' + menu.data.aspects[i] + '</name>';
+            xml += '<up>' + menu.data.aspectsup[i] + '</up>';
+            xml += '<down>' + menu.data.aspectsdown[i] + '</down>';
+            xml += '<rule>' + menu.data.aspectsrule[i] + '</rule>';
+            xml += '</motivationaspect>';
+        }
+        xml += "</motivationaspects>";
+        return(xml);
+    };
+    this.printAspectTable = function (div) {
+        var html = "<table class='tableboarder'>";
+        html += '<tr class="tableboarder"><th class="tableboarder">name</th><th class="tableboarder">up</th><th class="tableboarder">down</th><th colspan="2" class="tableboarder">rule</th></tr>';
+        for(var i=0; i<menu.data.aspects.length;i++){
+            html += '<tr class="tableboarder"><td class="tableboarder"><input class="changeAspectName" id="' + i + '" type="text" value="' + menu.data.aspects[i] + '"/></td><td class="tableboarder"><input class="changeAspectUp" id="' + i + '" type="text" value="' + menu.data.aspectsup[i] + '"/></td><td class="tableboarder"><input class="changeAspectDown" id="' + i + '" type="text" value="' + menu.data.aspectsdown[i] + '"/></td><td class="tableboarder"><input class="changeAspectRule" id="' + i + '" type="text" value="' + menu.data.aspectsrule[i] + '"/></td><td id="' + i + '" class="tableboarder hover deleteAspect">-</td></tr>';
+        }
+        html += '<tr class="tableboarder"><td colspan="5" id="addNewAspect" class="tableboarder hover">+</td></tr>';
+        html += "</table>";
+        document.getElementById(div).innerHTML = html;
+
+        document.getElementById("addNewAspect").addEventListener("click", function () {
+            menu.data.aspects.push("new Aspect");
+            menu.data.aspectsdown.push("");
+            menu.data.aspectsup.push("");
+            menu.data.aspectsrule.push("add rule here");
+            menu.getActiveMenu().printAspectTable("aspectTableDiv");
+        });
+
+        var elements = document.getElementsByClassName("deleteAspect");
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].addEventListener("click", function () {
+                menu.data.aspects.splice(this.id, 1);
+                menu.data.aspectsdown.splice(this.id, 1);
+                menu.data.aspectsup.splice(this.id, 1);
+                menu.data.aspectsrule.splice(this.id, 1);
+                menu.getActiveMenu().printAspectTable("aspectTableDiv");
+            });
+        }
+
+        var elements = document.getElementsByClassName("changeAspectName");
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].addEventListener("change", function () {
+                menu.data.aspects[this.id] = this.value;
+            });
+        }
+
+        var elements = document.getElementsByClassName("changeAspectUp");
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].addEventListener("change", function () {
+                menu.data.aspectsup[this.id] = this.value;
+            });
+        }
+
+        var elements = document.getElementsByClassName("changeAspectDown");
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].addEventListener("change", function () {
+                menu.data.aspectsdown[this.id] = this.value;
+            });
+        }
+
+        var elements = document.getElementsByClassName("changeAspectRule");
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].addEventListener("change", function () {
+                menu.data.aspectsrule[this.id] = this.value;
+            });
+        }
+
+    };
+};
+
+function Menu4() {
+    this.noLines;
+    this.fillHTML = function (div) {
+        var html = "<h3>Resulting XML structure</h3>";
+        html += "<button class='hover' type='button' onclick='startDownload()'>Download XML file.</button></br>";
+        var xml = createXML();
+        var formattedXml = this.formatXML(xml).replace(/<br>/g, "\n");
+        html += "<textarea rows='" + (this.noLines + 10) + "' cols='120' readonly>" + formattedXml;// + "</texterea>";
+        document.getElementById(div).innerHTML = html;
+    };
+    this.formatXML = function (xml) {
+        //xml = xml.replace(/ /g, "");
+        xml = xml.replace(/\n/g, "");
+        var ret = "";
+        var newComp;
+        var oldComp;
+        var noSpacing = 0;
+        this.noLines = 0;
+        while (xml.length > 0) {
+            newComp = this.getNextXMLComponent(xml);
+            //alert("!"+newComp+"!");
+            xml = xml.substring(newComp.length, xml.length);
+            if (newComp.length >= 1 && newComp[1] == "/")
+                noSpacing -= 1;
+            for (var i = 0; i < noSpacing; i++) {
+                ret += "&nbsp &nbsp &nbsp &nbsp";
+            }
+            oldComp = newComp;
+            this.noLines++;
+            ret += newComp.replace(/</g, "&lt").replace(/>/g, "&gt") + "<br>";
+            if (oldComp.length >= 1 && oldComp[1] != "/" && oldComp[0] == "<")
+                noSpacing += 1;
+        }
+        return (ret);
+    };
+    this.getNextXMLComponent = function (xml) {
+        if (xml.length == 0)
+            return ("");
+        if (xml[0] != "<")
+            return (xml.substring(0, xml.indexOf("<")));
+        else
+            return (xml.substring(0, xml.indexOf(">") + 1));
+    };
+}
+
+
+//object holding all data
+function Data() {
+    this.interventionTypes = ["test a", "test b"];
+    this.interventionInstances = [["a", "aa", "aaa"], ["b", "bb", "bbb"]];
+    this.interventionRule = ["a+2", "b-4"];
+    this.aspects = ["aspect1", "aspect2"];
+    this.aspectsup = ["+1", ""];
+    this.aspectsdown = ["-1", ""];
+    this.aspectsrule = ["", "aspect1/2"];
+    this.checkdataconsistency = function () {
+        alert("Data consistency check - not implemented yet!");
+    };
+};
+
+</script>
+
+</head>
+<body>
+<div id='body'>
+<h1>Motivation Model XML creator</h1>
+
+<p id="demo">Enter the requested information in all menus and press the download-button to get the XML file.</p>
+
+
+<div id='m1' class='menu hover'>overview</div>
+<div id='m2' class='menu hover'>interventions</div>
+<div id='m3' class='menu hover'>aspects</div>
+<div id='m4' class='menu hover'>download XML</div>
+<div id='dataInputField'>
+Chose a menu and start filling in the asset specifications.
+</div>
+
+</div>
+<script>
+	performStartupAction();
+</script>
+</body>
+</html>
