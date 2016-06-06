@@ -114,15 +114,14 @@ namespace MotivationBasedAdaptionAssetNameSpace
         */
 
         /// <summary>
-        /// Method returning all interventions appropriate for a player with given id.
+        /// Method returning all interventions appropriate for a player.
         /// </summary>
         /// 
-        /// <param name="playerId"> Identification of the player. </param>
         /// 
         /// <returns> List containing all appropriate interventions at the moment. </returns>
-        public List<String> getInterventions(String playerId)
+        public List<String> getInterventions()
         {
-            return MotivationBasedAdaptionHandler.Instance.getInterventions(playerId);
+            return MotivationBasedAdaptionHandler.Instance.getInterventions();
         }
 
         /// <summary>
@@ -130,12 +129,11 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// </summary>
         /// 
         /// <param name="intervention"> Intervention id for which the instance is requested. </param>
-        /// <param name="playerId"> Player Id for which the instance is requested. </param>
         /// 
         /// <returns> Intervention instance for the player. </returns>
-        public String getInstance(String intervention, String playerId)
+        public String getInstance(String intervention)
         {
-            return MotivationBasedAdaptionHandler.Instance.getInstance(intervention, playerId);
+            return MotivationBasedAdaptionHandler.Instance.getInstance(intervention);
         }
 
         #endregion Methods

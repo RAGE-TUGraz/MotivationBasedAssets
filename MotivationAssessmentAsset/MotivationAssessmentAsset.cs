@@ -119,9 +119,9 @@ namespace MotivationAssessmentAssetNameSpace
         /// <param name="playerId"> Identifier of the player. </param>
         /// 
         /// <returns> Motivation state of the specified player. </returns>
-        public Dictionary<string, double> getMotivationState(String playerId)
+        public Dictionary<string, double> getMotivationState()
         {
-            MotivationState ms = MotivationAssessmentHandler.Instance.getMotivationState(playerId);
+            MotivationState ms = MotivationAssessmentHandler.Instance.getMotivationState();
             return ms.getMotivation(); ;
         }
 
@@ -133,20 +133,19 @@ namespace MotivationAssessmentAssetNameSpace
         ///<param name="playerId"> String specifying the player. </param>
         public void addMotivationHint(String hintId, String playerId)
         {
-            MotivationAssessmentHandler.Instance.addMotivationHint(hintId, playerId);
+            MotivationAssessmentHandler.Instance.addMotivationHint(hintId);
         }
 
         //TODO: other way of transferring information?!
         /// <summary>
-        /// Method for loading the motivation model for a certain player.
+        /// Method for loading the motivation model for the player.
         /// </summary>
         /// 
-        /// <param name="playerId"> Identification of player for which the MM is loaded. </param>
         /// 
-        /// <returns> The motivation model for the specified player. </returns>
-        public MotivationModel loadMotivationModel(String playerId)
+        /// <returns> The motivation model for the player. </returns>
+        public MotivationModel loadMotivationModel()
         {
-            return MotivationAssessmentHandler.Instance.getMotivationModel(playerId);
+            return MotivationAssessmentHandler.Instance.getMotivationModel();
         }
 
         /// <summary>

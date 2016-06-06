@@ -107,18 +107,18 @@ namespace MotivationAssessmentAssetNameSpace
         /// <summary>
         /// Storage of all motivation hints 
         /// </summary>
-        private Dictionary<String, List<MotivationHint>> motivationHints = new Dictionary<String, List<MotivationHint>>();
+        private List<MotivationHint> motivationHints = new List<MotivationHint>();
 
         //TODO: Playermodel-storage?
         /// <summary>
-        /// Local storage for motivation states of all players.
+        /// Local storage for motivation states of the player.
         /// </summary>
-        private Dictionary<String, MotivationState> motivationStates = new Dictionary<String, MotivationState>();
+        private  MotivationState motivationState = null;
 
         /// <summary>
         /// run-time asset storage of motivation models
         /// </summary>
-        private Dictionary<String, MotivationModel> motivationModels = new Dictionary<string, MotivationModel>();
+        private MotivationModel motivationModel = null;
 
         /// <summary>
         /// If true, logging is done.
@@ -380,7 +380,6 @@ namespace MotivationAssessmentAssetNameSpace
             loggingMAs("Hint series complete - start evaluating series.");
 
             MotivationEvidence me = new MotivationEvidence();
-            me.PlayerId = mhs[0].PlayerId;
 
             if (mhs[mhs.Count - 1].HintId == "new level")
             {
@@ -421,37 +420,37 @@ namespace MotivationAssessmentAssetNameSpace
         {
             loggingMAs("Start updating motivation state.");
 
-            MotivationState currentMs = getMotivationState(me.PlayerId);
+            MotivationState currentMs = getMotivationState();
             MotivationState newMs = currentMs.getCopy();
 
             if (me.EvidenceType == EvidenceType.LevelReached)
             {
-                updatePrimaryMotivationAspect(newMs, "satisfaction", true, me.PlayerId);
+                updatePrimaryMotivationAspect(newMs, "satisfaction", true);
             }
             else if (me.EvidenceType == EvidenceType.ProblemSolved)
             {
                 if (me.FirstTryDuration < this.firstTryMinDuration)
-                    updatePrimaryMotivationAspect(newMs, "attention", false, me.PlayerId);
+                    updatePrimaryMotivationAspect(newMs, "attention", false);
                 else {
                     if (me.SolvingDuration > this.solutionMaxDuration)
-                        updatePrimaryMotivationAspect(newMs, "attention", false, me.PlayerId);
+                        updatePrimaryMotivationAspect(newMs, "attention", false);
                     else
-                        updatePrimaryMotivationAspect(newMs, "attention", true, me.PlayerId);
+                        updatePrimaryMotivationAspect(newMs, "attention", true);
 
                     if (me.NoOfErrors > this.maxNoErrors || me.NoOfHelpRequests > this.maxNoHelpRequests)
-                        updatePrimaryMotivationAspect(newMs, "confidence", false, me.PlayerId);
+                        updatePrimaryMotivationAspect(newMs, "confidence", false);
                     else
-                        updatePrimaryMotivationAspect(newMs, "confidence", true, me.PlayerId);
+                        updatePrimaryMotivationAspect(newMs, "confidence", true);
                 }
             }
             else
             {
                 loggingMAs("Warning: Evidence Type unknown!", Severity.Warning);
             }
-            setMotivationState(me.PlayerId, newMs);
-            updateSecondaryMotivationAspects(newMs, me.PlayerId);
+            setMotivationState(newMs);
+            updateSecondaryMotivationAspects(newMs);
             newMs.print();
-            setMotivationState(me.PlayerId, newMs);
+            setMotivationState(newMs);
         }
 
         /// <summary>
@@ -462,14 +461,14 @@ namespace MotivationAssessmentAssetNameSpace
         ///<param name="aspect"> String containing "attention","satisfaction" or "confidence". Describes which component gets updated. </param>
         ///<param name="direction"> Boolean - if true upgrade, else downgrade is done. </param>
         ///<param name="playerId"> Identification of the player. </param>
-        internal void updatePrimaryMotivationAspect(MotivationState ms, String aspect, Boolean direction, String playerId)
+        internal void updatePrimaryMotivationAspect(MotivationState ms, String aspect, Boolean direction)
         {
             MotivationModel mm = ms.getMotivationModel();
             MotivationAspect ma = mm.motivationAspects.getMotivationAspectByName(aspect);
             String expression = direction ? ma.up : ma.down;
             try
             {
-                double sol = FormulaInterpreter.eval(expression, playerId);
+                double sol = FormulaInterpreter.eval(expression);
                 ms.updateMotivationAspect(aspect, sol);
             }
             catch (Exception e)
@@ -484,8 +483,7 @@ namespace MotivationAssessmentAssetNameSpace
         /// </summary>
         /// 
         /// <param name="ms"> Motivation state for storing the new values. </param>
-        /// <param name="playerId"> Identification of the player. </param>
-        internal void updateSecondaryMotivationAspects(MotivationState ms, String playerId)
+        internal void updateSecondaryMotivationAspects(MotivationState ms)
         {
             MotivationModel mm = ms.getMotivationModel();
 
@@ -497,7 +495,7 @@ namespace MotivationAssessmentAssetNameSpace
                     {
                         try
                         {
-                            double sol = FormulaInterpreter.eval(ma.rule, playerId);
+                            double sol = FormulaInterpreter.eval(ma.rule);
                             ms.updateMotivationAspect(ma.name, sol);
                         }
                         catch (Exception e)
@@ -538,21 +536,15 @@ namespace MotivationAssessmentAssetNameSpace
                 return;
             }
 
-            if (motivationHints.Keys.Contains(mh.PlayerId))
-            {
-                motivationHints[mh.PlayerId].Add(mh);
-            }
-            else
-            {
-                motivationHints[mh.PlayerId] = new List<MotivationHint>();
-                motivationHints[mh.PlayerId].Add(mh);
-            }
+
+            motivationHints.Add(mh);
+
 
             if (hintEnds.Contains(mh.HintId))
             {
-                List<MotivationHint> mhs = motivationHints[mh.PlayerId];
+                List<MotivationHint> mhs = motivationHints;
                 evaluateHintSeries(mhs);
-                motivationHints.Remove(mh.PlayerId);
+                motivationHints = new List<MotivationHint>();
             }
         }
 
@@ -566,29 +558,28 @@ namespace MotivationAssessmentAssetNameSpace
         /// <param name="playerId"> Identification of player for which the MM is loaded. </param>
         /// 
         /// <returns> The motivation model for the specified player. </returns>
-        public MotivationModel getMotivationModel(String playerId)
+        public MotivationModel getMotivationModel()
         {
-            if (motivationModels.ContainsKey(playerId))
-                return motivationModels[playerId];
+            if (motivationModel != null)
+                return motivationModel;
             MotivationModel mm = loadDefaultMotivationModel();
-            motivationModels[playerId] = mm;
+            motivationModel = mm;
             return mm;
         }
 
         /// <summary>
-        /// Returns the Motivation State of a player when provided with player-Id.
+        /// Returns the Motivation State of the player 
         /// </summary>
         /// 
-        /// <param name="playerId"> Identifier of the player. </param>
         /// 
         /// <returns> Motivation state of the specified player. </returns>
-        public MotivationState getMotivationState(String playerId)
+        public MotivationState getMotivationState()
         {
             MotivationState ms;
-            if (motivationStates.ContainsKey(playerId))
-                ms = motivationStates[playerId];
+            if (motivationState != null)
+                return motivationState;
             else
-                ms = new MotivationState(getMotivationModel(playerId));
+                ms = new MotivationState(getMotivationModel());
 
             return ms;
         }
@@ -597,11 +588,10 @@ namespace MotivationAssessmentAssetNameSpace
         /// Method for saving a updated motivation state.
         /// </summary>
         /// 
-        /// <param name="playerId"> Identifier of the player. </param>
         /// <param name="ms"> MotivationState to be stored. </param>
-        public void setMotivationState(String playerId, MotivationState ms)
+        public void setMotivationState( MotivationState ms)
         {
-            motivationStates[playerId] = ms;
+            motivationState = ms;
         }
 
         /// <summary>
@@ -609,12 +599,10 @@ namespace MotivationAssessmentAssetNameSpace
         /// </summary>
         /// 
         ///<param name="hintId"> String specifying the hint. </param>
-        ///<param name="playerId"> String specifying the player. </param>
-        public void addMotivationHint(String hintId, String playerId)
+        public void addMotivationHint(String hintId)
         {
             MotivationHint mh = new MotivationHint();
             mh.HintId = hintId;
-            mh.PlayerId = playerId;
             addMotivationHint(mh);
         }
 
@@ -738,91 +726,77 @@ namespace MotivationAssessmentAssetNameSpace
         internal void performTest1()
         {
             loggingMAs("***************TEST 1********************");
-
-            String testPlayer = "testplayer";
+            
             DateTime now = DateTime.Now;
 
             //reaching a new level
             MotivationHint mh1 = new MotivationHint();
             mh1.HintId = "new level";
             mh1.OccurTime = now;
-            mh1.PlayerId = testPlayer;
             addMotivationHint(mh1);
 
             //perfect solution - 0 error - 0 help requests - 10 seconds
             MotivationHint mh2 = new MotivationHint();
             mh2.HintId = "new problem";
             mh2.OccurTime = now;
-            mh2.PlayerId = testPlayer;
             addMotivationHint(mh2);
 
             MotivationHint mh3 = new MotivationHint();
             mh3.HintId = "success";
             mh3.OccurTime = now + new TimeSpan(0, 0, 0, 10, 0);
-            mh3.PlayerId = testPlayer;
             addMotivationHint(mh3);
 
             //too early guess - 2 seconds
             MotivationHint mh4 = new MotivationHint();
             mh4.HintId = "new problem";
             mh4.OccurTime = now;
-            mh4.PlayerId = testPlayer;
             addMotivationHint(mh4);
 
             MotivationHint mh5 = new MotivationHint();
             mh5.HintId = "success";
             mh5.OccurTime = now + new TimeSpan(0, 0, 0, 2, 0);
-            mh5.PlayerId = testPlayer;
             addMotivationHint(mh5);
 
             //too many errors - 11/7 seconds - 4 errors - 0 help requests
             MotivationHint mh6 = new MotivationHint();
             mh6.HintId = "new problem";
             mh6.OccurTime = now;
-            mh6.PlayerId = testPlayer;
             addMotivationHint(mh6);
 
             MotivationHint mh7 = new MotivationHint();
             mh7.HintId = "fail";
             mh7.OccurTime = now + new TimeSpan(0, 0, 0, 7, 0);
-            mh7.PlayerId = testPlayer;
             addMotivationHint(mh7);
 
             MotivationHint mh8 = new MotivationHint();
             mh8.HintId = "fail";
             mh8.OccurTime = now + new TimeSpan(0, 0, 0, 8, 0);
-            mh8.PlayerId = testPlayer;
             addMotivationHint(mh8);
 
             MotivationHint mh9 = new MotivationHint();
             mh9.HintId = "fail";
             mh9.OccurTime = now + new TimeSpan(0, 0, 0, 9, 0);
-            mh9.PlayerId = testPlayer;
             addMotivationHint(mh9);
 
             MotivationHint mh10 = new MotivationHint();
             mh10.HintId = "fail";
             mh10.OccurTime = now + new TimeSpan(0, 0, 0, 10, 0);
-            mh10.PlayerId = testPlayer;
             addMotivationHint(mh10);
 
             MotivationHint mh11 = new MotivationHint();
             mh11.HintId = "success";
             mh11.OccurTime = now + new TimeSpan(0, 0, 0, 11, 0);
-            mh11.PlayerId = testPlayer;
             addMotivationHint(mh11);
 
             //too late solution - 15 seconds
             MotivationHint mh12 = new MotivationHint();
             mh12.HintId = "new problem";
             mh12.OccurTime = now;
-            mh12.PlayerId = testPlayer;
             addMotivationHint(mh12);
 
             MotivationHint mh13 = new MotivationHint();
             mh13.HintId = "success";
             mh13.OccurTime = now + new TimeSpan(0, 0, 0, 20, 0);
-            mh13.PlayerId = testPlayer;
             addMotivationHint(mh13);
 
         }
@@ -993,11 +967,6 @@ namespace MotivationAssessmentAssetNameSpace
         private EvidenceType evidenceType;
 
         /// <summary>
-        /// Identification of the player assoziated with the evidence.
-        /// </summary>
-        private String playerId;
-
-        /// <summary>
         /// Duration needed for solving a posted problem in seconds.
         /// </summary>
         private double solvingDuration;
@@ -1022,20 +991,6 @@ namespace MotivationAssessmentAssetNameSpace
         #endregion Constructors
         #region Properties
 
-        /// <summary>
-        /// Access of the playerId Field
-        /// </summary>
-        public String PlayerId
-        {
-            get
-            {
-                return playerId;
-            }
-            set
-            {
-                this.playerId = value;
-            }
-        }
 
         /// <summary>
         /// Access of the solvingDuration Field
@@ -1137,10 +1092,6 @@ namespace MotivationAssessmentAssetNameSpace
         /// </summary>
         private DateTime occurTime;
 
-        /// <summary>
-        /// Identifier of player producing the motivation hint.
-        /// </summary>
-        private String playerId;
 
         #endregion Fields
         #region Constructors
@@ -1156,20 +1107,6 @@ namespace MotivationAssessmentAssetNameSpace
         #endregion Constructors
         #region Properties
 
-        /// <summary>
-        /// Access to field playerId.
-        /// </summary>
-        public String PlayerId
-        {
-            get
-            {
-                return playerId;
-            }
-            set
-            {
-                this.playerId = value;
-            }
-        }
 
         /// <summary>
         /// Access to field hintId.
@@ -1218,16 +1155,15 @@ namespace MotivationAssessmentAssetNameSpace
         /// </summary>
         /// 
         /// <param name="expression"> Furmula String to interpret. </param>
-        /// <param name="playerId"> Identifier of player for which the evaluation should be done. </param>
         /// 
         /// <returns> Double value - result of the interpreted input-string.</returns>
-        internal static double eval(String expression, String playerId)
+        internal static double eval(String expression)
         {
             if (expression.Equals(""))
                 MotivationAssessmentHandler.Instance.loggingMAs("Warning: Empty expression for evaluation received!", Severity.Warning);
             MotivationAssessmentHandler.Instance.loggingMAs("FormulaInterpreter: expression to evaluate with variables=" + expression);
             System.Data.DataTable table = new System.Data.DataTable();
-            return Convert.ToDouble(table.Compute(replaceVariables(expression, playerId), String.Empty));
+            return Convert.ToDouble(table.Compute(replaceVariables(expression), String.Empty));
         }
 
         /// <summary>
@@ -1235,12 +1171,11 @@ namespace MotivationAssessmentAssetNameSpace
         /// </summary>
         /// 
         /// <param name="expression"> String for which replacement should happen. </param>
-        /// <param name="playerId"> Identifier of player for which the evaluation should be done. </param>
         /// 
         /// <returns> String without any motivation component variables. </returns>
-        private static String replaceVariables(String expression, String playerId)
+        private static String replaceVariables(String expression)
         {
-            MotivationState ms = MotivationAssessmentHandler.Instance.getMotivationState(playerId);
+            MotivationState ms = MotivationAssessmentHandler.Instance.getMotivationState();
             MotivationModel mm = ms.getMotivationModel();
             foreach (MotivationAspect ma in mm.motivationAspects.motivationAspectList)
             {

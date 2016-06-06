@@ -64,7 +64,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// <summary>
         /// run-time storage: to each player, intervention and instance the number of times this instance was called is stored here 
         /// </summary>
-        private Dictionary<String, Dictionary<String, Dictionary<String, int>>> interventionsHistory = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
+        private Dictionary<String, Dictionary<String, int>> interventionsHistory = new Dictionary<string, Dictionary<string, int>>();
 
         /// <summary>
         /// If true, logging is done.
@@ -124,15 +124,14 @@ namespace MotivationBasedAdaptionAssetNameSpace
 
         //TODO: Loading motivation state over the motivation assesment asset - loading via player model?
         /// <summary>
-        /// Method loads the motivation state of a player.
+        /// Method loads the motivation state of the player.
         /// </summary>
         /// 
-        /// <param name="playerId"> identification of the player fpr which the motivation state is loaded. </param>
         /// 
-        /// <returns> Motivation state of a player. </returns>
-        internal Dictionary<string, double> loadMotivationState(String playerId)
+        /// <returns> Motivation state of the player. </returns>
+        internal Dictionary<string, double> loadMotivationState( )
         {
-            return (getMAsA().getMotivationState(playerId));
+            return (getMAsA().getMotivationState());
         }
 
         //TODO: Where to get the MM from? currently from MotivationAssessmentHandler
@@ -140,12 +139,11 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// Method for loading the motivation model for a certain player.
         /// </summary>
         /// 
-        /// <param name="playerId"> Identification of player for which the MM is loaded. </param>
         /// 
         /// <returns> The motivation model for the specified player. </returns>
-        internal MotivationModel loadMotivationModel(String playerId)
+        internal MotivationModel loadMotivationModel()
         {
-            return getMAsA().loadMotivationModel(playerId);
+            return getMAsA().loadMotivationModel();
         }
 
         /// <summary>
@@ -153,13 +151,12 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// </summary>
         /// 
         /// <param name="interventions"> List of intervenentions provided. </param>
-        /// <param name="playerId"> Player Identification. </param>
         /// 
         /// <returns> List of intervention instances. </returns>
         internal List<String> getInterventionInstances(List<String> interventions, String playerId)
         {
             List<String> instances = new List<String>();
-            MotivationModel mm = loadMotivationModel(playerId);
+            MotivationModel mm = loadMotivationModel();
 
             Random rnd = new Random();
             int pos;
@@ -180,24 +177,22 @@ namespace MotivationBasedAdaptionAssetNameSpace
         #region PublicMethods
 
         /// <summary>
-        /// Method returning all interventions appropriate for a player with given id.
+        /// Method returning all interventions appropriate for a player.
         /// </summary>
         /// 
-        /// <param name="playerId"> Identification of the player. </param>
-        /// 
         /// <returns> List containing all appropriate interventions at the moment. </returns>
-        public List<String> getInterventions(String playerId)
+        public List<String> getInterventions()
         {
             List<String> interventions = new List<String>();
 
-            MotivationModel mm = loadMotivationModel(playerId);
+            MotivationModel mm = loadMotivationModel();
             Boolean val;
 
             foreach (Intervention iv in mm.motivationInterventions.motivationInterventionList)
             {
                 try
                 {
-                    val = FormulaInterpreterBool.eval(iv.rule, playerId);
+                    val = FormulaInterpreterBool.eval(iv.rule);
                     if (val)
                         interventions.Add(iv.name);
                 }
@@ -216,12 +211,11 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// </summary>
         /// 
         /// <param name="intervention"> Intervention id for which the instance is requested. </param>
-        /// <param name="playerId"> Player Id for which the instance is requested. </param>
         /// 
         /// <returns> Intervention instance for the player. </returns>
-        public String getInstance(String intervention, String playerId)
+        public String getInstance(String intervention )
         {
-            MotivationModel mm = loadMotivationModel(playerId);
+            MotivationModel mm = loadMotivationModel();
             List<String> instances = null;
             foreach (Intervention iv in mm.motivationInterventions.motivationInterventionList)
                 if (intervention.Equals(iv.name))
@@ -233,9 +227,9 @@ namespace MotivationBasedAdaptionAssetNameSpace
             }
 
             //create intervention history if needed
-            if (!interventionsHistory.ContainsKey(playerId))
-                interventionsHistory[playerId] = new Dictionary<string, Dictionary<string, int>>();
-            Dictionary<string, Dictionary<string, int>> playerHistory = interventionsHistory[playerId];
+            if (interventionsHistory == null)
+                interventionsHistory = new Dictionary<string, Dictionary<string, int>>();
+            Dictionary<string, Dictionary<string, int>> playerHistory = interventionsHistory;
 
             //create interventionCount if needed
             Dictionary<string, int> interventionCount;
@@ -269,7 +263,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
             String usedInstance = minUsedInstances.ElementAt(pos);
 
             interventionCount[usedInstance]++;
-            interventionsHistory[playerId][intervention] = interventionCount;
+            interventionsHistory[intervention] = interventionCount;
             return usedInstance;
         }
 
@@ -446,16 +440,15 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// </summary>
         /// 
         /// <param name="expression"> Furmula String to interpret. </param>
-        /// <param name="playerId"> Identifier of player for which the evaluation should be done. </param>
         /// 
         /// <returns> Double value - result of the interpreted input-string.</returns>
-        internal static Boolean eval(String expression, String playerId)
+        internal static Boolean eval(String expression)
         {
             if (expression.Equals(""))
                 MotivationBasedAdaptionHandler.Instance.loggingMAd("ERROR: Empty expression for evaluation received!");
             MotivationBasedAdaptionHandler.Instance.loggingMAd("FormulaInterpreter: expression to evaluate with variables=" + expression);
             System.Data.DataTable table = new System.Data.DataTable();
-            return table.Compute(replaceVariables(expression, playerId), String.Empty).ToString().Equals("True") ? true : false;
+            return table.Compute(replaceVariables(expression), String.Empty).ToString().Equals("True") ? true : false;
         }
 
         /// <summary>
@@ -463,10 +456,9 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// </summary>
         /// 
         /// <param name="expression"> String for which replacement should happen. </param>
-        /// <param name="playerId"> Identifier of player for which the evaluation should be done. </param>
         /// 
         /// <returns> String without any motivation component variables. </returns>
-        private static String replaceVariables(String expression, String playerId)
+        private static String replaceVariables(String expression)
         {
             //OLD:
             /*
@@ -478,7 +470,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
             }
             */
             //NEW;
-            Dictionary<String,double> ms = MotivationBasedAdaptionHandler.Instance.loadMotivationState(playerId);
+            Dictionary<String,double> ms = MotivationBasedAdaptionHandler.Instance.loadMotivationState();
             foreach(KeyValuePair<String,double> pair in ms)
             {
                 expression = expression.Replace(pair.Key, pair.Value.ToString());
