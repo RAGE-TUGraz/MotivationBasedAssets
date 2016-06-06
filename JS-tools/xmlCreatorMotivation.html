@@ -388,14 +388,14 @@ function Menu3() {
         var html = "<table class='tableboarder'>";
         html += '<tr class="tableboarder"><th class="tableboarder">name</th><th class="tableboarder">up</th><th class="tableboarder">down</th><th colspan="2" class="tableboarder">rule</th></tr>';
         for(var i=0; i<menu.data.aspects.length;i++){
-            html += '<tr class="tableboarder"><td class="tableboarder"><input class="changeAspectName" id="' + i + '" type="text" value="' + menu.data.aspects[i] + '"/></td><td class="tableboarder"><input class="changeAspectUp" id="' + i + '" type="text" value="' + menu.data.aspectsup[i] + '"/></td><td class="tableboarder"><input class="changeAspectDown" id="' + i + '" type="text" value="' + menu.data.aspectsdown[i] + '"/></td><td class="tableboarder"><input class="changeAspectRule" id="' + i + '" type="text" value="' + menu.data.aspectsrule[i] + '"/></td><td id="' + i + '" class="tableboarder hover deleteAspect">-</td></tr>';
+            html += '<tr class="tableboarder"><td class="tableboarder"><input class="changeAspectName" id="' + i + '" type="text" value="' + menu.data.aspects[i] + '"/></td><td class="tableboarder"><input class="changeAspectUp" id="' + i + '" type="text" size="40" value="' + menu.data.aspectsup[i] + '"/></td><td class="tableboarder"><input class="changeAspectDown" id="' + i + '" type="text" size="40" value="' + menu.data.aspectsdown[i] + '"/></td><td class="tableboarder"><input class="changeAspectRule" id="' + i + '" type="text" size="40" value="' + menu.data.aspectsrule[i] + '"/></td><td id="' + i + '" class="tableboarder hover deleteAspect">-</td></tr>';
         }
         html += '<tr class="tableboarder"><td colspan="5" id="addNewAspect" class="tableboarder hover">+</td></tr>';
         html += "</table>";
         document.getElementById(div).innerHTML = html;
 
         document.getElementById("addNewAspect").addEventListener("click", function () {
-            menu.data.aspects.push("new Aspect");
+            menu.data.aspects.push("newAspect");
             menu.data.aspectsdown.push("");
             menu.data.aspectsup.push("");
             menu.data.aspectsrule.push("add rule here");
@@ -416,7 +416,8 @@ function Menu3() {
         var elements = document.getElementsByClassName("changeAspectName");
         for (var i = 0; i < elements.length; i++) {
             elements[i].addEventListener("change", function () {
-                menu.data.aspects[this.id] = this.value;
+                menu.data.aspects[this.id] = this.value.replace(/ /g, "");
+                menu.getActiveMenu().printAspectTable("aspectTableDiv");
             });
         }
 
@@ -448,10 +449,14 @@ function Menu4() {
     this.noLines;
     this.fillHTML = function (div) {
         var html = "<h3>Resulting XML structure</h3>";
-        html += "<button class='hover' type='button' onclick='startDownload()'>Download XML file.</button></br>";
-        var xml = createXML();
-        var formattedXml = this.formatXML(xml).replace(/<br>/g, "\n");
-        html += "<textarea rows='" + (this.noLines + 10) + "' cols='120' readonly>" + formattedXml;// + "</texterea>";
+        var isDataConsistent = menu.data.checkdataconsistency();
+        if (isDataConsistent)
+        {
+            html += "<button class='hover' type='button' onclick='startDownload()'>Download XML file.</button></br>";
+            var xml = createXML();
+            var formattedXml = this.formatXML(xml).replace(/<br>/g, "\n");
+            html += "<textarea rows='" + (this.noLines + 10) + "' cols='120' readonly>" + formattedXml;// + "</texterea>";
+        }
         document.getElementById(div).innerHTML = html;
     };
     this.formatXML = function (xml) {
@@ -492,15 +497,40 @@ function Menu4() {
 
 //object holding all data
 function Data() {
-    this.interventionTypes = ["test a", "test b"];
-    this.interventionInstances = [["a", "aa", "aaa"], ["b", "bb", "bbb"]];
-    this.interventionRule = ["a+2", "b-4"];
-    this.aspects = ["aspect1", "aspect2"];
-    this.aspectsup = ["+1", ""];
-    this.aspectsdown = ["-1", ""];
-    this.aspectsrule = ["", "aspect1/2"];
+    this.interventionTypes = ["attention catcher", "encouraging intervention", "attributional intervention - failure", "attributional intervention - success", "praising intervention", "incitation intervention"];
+    this.interventionInstances = [["Hey, my friend! Are you sleeping?!", "Pay attention! Something important is going on here.", "Sorry for interrupting you; we need to go on."], ["Don't give up. Try again.", "It is a challenge, I know. Let's give it another trial.", "Go on. Practice makes perfect."], ["Don't get discouraged. Keep your effort.", "You need to give your best, here.", "To err is human.", "That was bad luck. Next time it will work."], ["I am impressed of your knowledge.", "You are really clever, you know.", "Well done, keep your effort.", "Great, you are really giving your best."], ["Wow, that was pretty good.", "Well done, go on like this!"], ["After accomplishing this mission you will get a great reward.", "By solving this task you will earn another 10000 points.", "Once this mission is over, it's time to celebrate."]];
+    this.interventionRule = ["attention<0.4", "confidence<0.4", "confidence<0.4", "satisfaction<0.4", "satisfaction<0.4", "satisfaction<0.4"];
+    this.aspects = ["attention", "confidence","satisfaction","motivation"];
+    this.aspectsup = ["attention+(1-attention)*0.5", "confidence+(1-confidence)*0.5", "satisfaction+(1-satisfaction)*0.5",""];
+    this.aspectsdown = ["attention*0.5", "confidence*0.5", "satisfaction*0.5",""];
+    this.aspectsrule = ["", "", "", "(attention+satisfaction+confidence)/3"];
     this.checkdataconsistency = function () {
-        alert("Data consistency check - not implemented yet!");
+        for(var i=0;i<this.aspects.length;i++){
+            if (this.aspectsup[i] == "") {
+                if (this.aspectsdown[i] != "" || this.aspectsrule[i] == "") {
+                    alert("Data not consistent! For Aspects either the up and down property OR the rule property must be supplied!");
+                    return false;
+                }
+            } else {
+                if (this.aspectsdown[i] == "" || this.aspectsrule[i] != "") {
+                    alert("Data not consistent! For Aspects either the up and down property OR (not both) the rule property must be supplied!");
+                    return false;
+                }
+            }
+            if (this.aspects[i] == "attention" || this.aspects[i] == "satisfaction" || this.aspects[i] == "confidence") {
+                if (this.aspectsrule[i] != "") {
+                    alert("Data not consistent! - The aspects attention, satisfaction and confidence need to be given the up and down property!");
+                    return false;
+                }
+            }
+        }
+        if (this.aspects.indexOf("attention") == -1 || this.aspects.indexOf("confidence") == -1 || this.aspects.indexOf("satisfaction") == -1) {
+            alert("Data not consistent! The aspects attention, satisfaction and confidence need to be included in each motivation model!");
+            return false;
+        }
+
+        //alert("Data consistency check - not fully implemented yet!");
+        return true;
     };
 };
 
