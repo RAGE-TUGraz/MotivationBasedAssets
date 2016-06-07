@@ -154,7 +154,6 @@ namespace MotivationAssessmentAssetNameSpace
         #endregion Properties
         //TODO: storage of data via game-engine
         //TODO: WEB-requests via AssetManager interfaces
-        //TODO: loading always the exampleMotivationModel
         #region InternalMethods
 
 
