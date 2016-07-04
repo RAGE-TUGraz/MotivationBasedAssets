@@ -46,6 +46,8 @@ namespace TestMotivation
             am.Bridge = new Bridge();
 
             MotivationAssessmentAsset masa = new MotivationAssessmentAsset();
+            Dictionary<string, double> motstate = masa.getMotivationState();
+
             MotivationBasedAdaptionAsset mada = new MotivationBasedAdaptionAsset();
 
             masa.performTest();

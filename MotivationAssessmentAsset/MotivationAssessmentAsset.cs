@@ -104,14 +104,6 @@ namespace MotivationAssessmentAssetNameSpace
 
         // Your code goes here.
 
-        /*
-        public void test()
-        {
-            Console.WriteLine("MotivationAssessment method called! - calling Tests:");
-            MotivationAssessmentHandler.Instance.performAllTests();
-        }
-        */
-
         /// <summary>
         /// Returns the Motivation State of a player when provided with player-Id.
         /// </summary>
@@ -131,7 +123,7 @@ namespace MotivationAssessmentAssetNameSpace
         /// 
         ///<param name="hintId"> String specifying the hint. </param>
         ///<param name="playerId"> String specifying the player. </param>
-        public void addMotivationHint(String hintId, String playerId)
+        public void addMotivationHint(String hintId)
         {
             MotivationAssessmentHandler.Instance.addMotivationHint(hintId);
         }

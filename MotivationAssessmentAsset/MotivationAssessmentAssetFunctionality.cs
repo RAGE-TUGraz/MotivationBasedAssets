@@ -266,6 +266,21 @@ namespace MotivationAssessmentAssetNameSpace
         */
 
         /// <summary>
+        /// Method for sending the current motivational states to the tracker
+        /// </summary>
+        internal void sendMotivationalStatesToTracker()
+        {
+            loggingMAs("Sending motivational states to the tracker.");
+
+            MotivationState ms =  getMotivationState();
+            Dictionary<string,double> motivationAspects =  ms.getMotivation();
+            foreach (string aspect in motivationAspects.Keys)
+            {
+                loggingMAs(aspect + ": " + motivationAspects[aspect]);
+            }
+        }
+
+        /// <summary>
         /// Method for storing a MotivationModel as XML in a File.
         /// </summary>
         /// 
@@ -568,6 +583,8 @@ namespace MotivationAssessmentAssetNameSpace
                 List<MotivationHint> mhs = motivationHints;
                 evaluateHintSeries(mhs);
                 motivationHints = new List<MotivationHint>();
+
+                sendMotivationalStatesToTracker();
             }
         }
 
