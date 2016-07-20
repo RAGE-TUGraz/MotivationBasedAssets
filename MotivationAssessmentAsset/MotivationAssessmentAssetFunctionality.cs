@@ -100,6 +100,11 @@ namespace MotivationAssessmentAssetNameSpace
         private MotivationAssessmentAsset motivationAssessmentAsset = null;
 
         /// <summary>
+        /// Instance of the tracker Asset
+        /// </summary>
+        private TrackerAsset tracker = null;
+
+        /// <summary>
         /// Instance of the class MotivationAssessmentHandler - Singelton pattern
         /// </summary>
         private static MotivationAssessmentHandler instance;
@@ -264,21 +269,6 @@ namespace MotivationAssessmentAssetNameSpace
             return (mm);
         }
         */
-
-        /// <summary>
-        /// Method for sending the current motivational states to the tracker
-        /// </summary>
-        internal void sendMotivationalStatesToTracker()
-        {
-            loggingMAs("Sending motivational states to the tracker.");
-
-            MotivationState ms =  getMotivationState();
-            Dictionary<string,double> motivationAspects =  ms.getMotivation();
-            foreach (string aspect in motivationAspects.Keys)
-            {
-                loggingMAs(aspect + ": " + motivationAspects[aspect]);
-            }
-        }
 
         /// <summary>
         /// Method for storing a MotivationModel as XML in a File.
@@ -465,6 +455,8 @@ namespace MotivationAssessmentAssetNameSpace
             updateSecondaryMotivationAspects(newMs);
             newMs.print();
             setMotivationState(newMs);
+
+
         }
 
         /// <summary>
@@ -584,7 +576,76 @@ namespace MotivationAssessmentAssetNameSpace
                 evaluateHintSeries(mhs);
                 motivationHints = new List<MotivationHint>();
 
-                sendMotivationalStatesToTracker();
+                //sending traces to tracker
+                sendMotivationValuesToTracker();
+            }
+        }
+
+
+        /// <summary>
+        /// Method for sending the motivation values to the tracker
+        /// </summary>
+        internal void sendMotivationValuesToTracker()
+        {
+            //get the tracker
+            if (tracker == null)
+            {
+                if (AssetManager.Instance.findAssetsByClass("TrackerAsset").Count >= 1)
+                {
+                    tracker = (TrackerAsset)AssetManager.Instance.findAssetsByClass("TrackerAsset")[0];
+                    loggingMAs("Found tracker for tracking motivation values!");
+                }
+                else
+                {
+                    loggingMAs("No tracker implemented - creating new one");
+                    tracker = TrackerAsset.Instance;
+                    TrackerAssetSettings tas = new TrackerAssetSettings();
+                    tas.BasePath = "/api/";
+                    tas.Host = "192.168.222.166";
+                    tas.TrackingCode = "5784a7c1e8c85f6e00fab465gdj3utijicin3ik9";
+                    tas.Secure = false;
+                    tas.Port = 3000;
+                    tas.StorageType = TrackerAsset.StorageTypes.net;
+                    tas.TraceFormat = TrackerAsset.TraceFormats.json;
+                    tracker.Settings = tas;
+                    /*
+                    //no tracking
+                    loggingCA("No tracker implemented - competence state is not send to the server");
+                    return;
+                    */
+                    /*
+                    //local tracking
+                    loggingCA("No tracker implemented - competence state is not send to the server - tracks are stored local!");
+                    TrackerAsset ta = TrackerAsset.Instance;
+                    TrackerAssetSettings tas = new TrackerAssetSettings();
+                    tas.StorageType = TrackerAsset.StorageTypes.local;
+                    tas.TraceFormat = TrackerAsset.TraceFormats.json;
+                    ta.Settings = tas;
+                    */
+                }
+            }
+
+            if (tracker.CheckHealth())
+            {
+                loggingMAs(tracker.Health);
+                if (tracker.Login("student", "student"))
+                {
+                    loggingMAs("logged in - tracker");
+                }
+            }
+
+            if (tracker.Connected)
+            {
+                tracker.Start();
+                Dictionary<string,double> ms =  getMotivationState().getMotivation();
+                foreach (string motivationAspect in ms.Keys)
+                    tracker.setVar(motivationAspect, ms[motivationAspect].ToString());
+                tracker.Completable.Completed("MotivationAssessmentAsset");
+                tracker.Flush();
+            }
+            else
+            {
+                loggingMAs("Not connected to tracker.");
             }
         }
 
