@@ -35,21 +35,21 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\MotivationAssessmentAsset.cs">
+    <Compile Include="..\MotivationAssessmentAsset\MotivationAssessmentAsset.cs">
       <Link>MotivationAssessmentAsset.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\MotivationAssessmentAssetSettings.cs">
+    <Compile Include="..\MotivationAssessmentAsset\MotivationAssessmentAssetSettings.cs">
       <Link>MotivationAssessmentAssetSettings.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\Properties\AssemblyInfo.cs">
+    <Compile Include="..\MotivationAssessmentAsset\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\MotivationAssessmentAssetFunctionality.cs">
+    <Compile Include="..\MotivationAssessmentAsset\MotivationAssessmentAssetFunctionality.cs">
       <Link>MotivationAssessmentAssetFunctionality.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\..\..\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\Resources\MotivationAssessmentAsset.VersionAndDependencies.xml">
+    <Content Include="..\MotivationAssessmentAsset\Resources\MotivationAssessmentAsset.VersionAndDependencies.xml">
       <Link>Resources\MotivationAssessmentAsset.VersionAndDependencies.xml</Link>
     </Content>
   </ItemGroup>
