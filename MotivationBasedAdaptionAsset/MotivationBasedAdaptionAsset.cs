@@ -24,8 +24,6 @@
   http://kti.tugraz.at/css/
 
   Created by: Matthias Maurer, TUGraz <mmaurer@tugraz.at>
-  Changed by: Matthias Maurer, TUGraz <mmaurer@tugraz.at>
-  Changed on: 2016-02-22
 */
 
 namespace MotivationBasedAdaptionAssetNameSpace
@@ -103,15 +101,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
         #endregion Properties
 
         #region Methods
-        
 
-        /*
-        public void test()
-        {
-            Console.WriteLine("MotivationAdaption method called!");
-            MotivationAdaptionHandler.Instance.performAllTests();
-        }
-        */
 
         /// <summary>
         /// Method returning all interventions appropriate for a player.

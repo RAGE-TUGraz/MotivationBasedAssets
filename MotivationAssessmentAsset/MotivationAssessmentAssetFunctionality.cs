@@ -123,7 +123,7 @@ namespace MotivationAssessmentAssetNameSpace
         /// <summary>
         /// run-time asset storage of motivation models
         /// </summary>
-        private MotivationModel motivationModel = null;
+        internal MotivationModel motivationModel = null;
 
         /// <summary>
         /// If true, logging is done.
@@ -388,9 +388,21 @@ namespace MotivationAssessmentAssetNameSpace
             if (mhs[mhs.Count - 1].HintId == "new level")
             {
                 me.EvidenceType = EvidenceType.LevelReached;
+                if (mhs.Count != 1)
+                {
+                    loggingMAs("Hint series corrupted! - no evaluation done.");
+                    return;
+                }
             }
             else if (mhs[mhs.Count - 1].HintId == "success")
             {
+                if(mhs[0].HintId != "new problem")
+                {
+                    loggingMAs("Hint series corrupted! - no evaluation done.");
+                    return;
+                }
+
+
                 me.EvidenceType = EvidenceType.ProblemSolved;
 
                 TimeSpan ts = mhs[mhs.Count - 1].OccurTime - mhs[0].OccurTime;
@@ -699,11 +711,35 @@ namespace MotivationAssessmentAssetNameSpace
         /// Method for adding a new motivation hint and processing aggregated hints in case a evidence can be calculated.
         /// </summary>
         /// 
-        ///<param name="hintId"> String specifying the hint. </param>
-        public void addMotivationHint(String hintId)
+        ///<param name="hint"> Enum specifying the hint. </param>
+        public void addMotivationHint(MotivationHintEnum hint)
         {
+            String hintIdString = "";
+            switch (hint)
+            {
+                case MotivationHintEnum.Fail:
+                    hintIdString = "fail";
+                    break;
+                case MotivationHintEnum.Help:
+                    hintIdString = "help";
+                    break;
+                case MotivationHintEnum.Success:
+                    hintIdString = "success";
+                    break;
+                case MotivationHintEnum.NewLevel:
+                    hintIdString = "new level";
+                    break;
+                case MotivationHintEnum.NewProblem:
+                    hintIdString = "new problem";
+                    break;
+                default:
+                    {
+                        throw new Exception("Motivation Hint unknown!");
+                    }
+            }
+
             MotivationHint mh = new MotivationHint();
-            mh.HintId = hintId;
+            mh.HintId = hintIdString;
             addMotivationHint(mh);
         }
 
@@ -721,6 +757,7 @@ namespace MotivationAssessmentAssetNameSpace
                 getMAsA().Log(severity, "[MAsA]: " + msg);
         }
 
+        /*
         /// <summary>
         /// Method for creating an example Motivation Model.
         /// </summary>
@@ -919,10 +956,20 @@ namespace MotivationAssessmentAssetNameSpace
                 loggingMAs("MotivationModels before and after the loading are NOT identically!",Severity.Error);
             
         }
+        */
 
         #endregion TestMethods
 
     }
+
+    public enum MotivationHintEnum
+    {
+        Help,
+        Fail,
+        Success,
+        NewLevel,
+        NewProblem
+    };
 
     /// <summary>
     /// Class for storing Motivational State

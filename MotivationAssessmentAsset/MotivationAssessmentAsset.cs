@@ -95,6 +95,7 @@ namespace MotivationAssessmentAssetNameSpace
             set
             {
                 settings = (value as MotivationAssessmentAssetSettings);
+                MotivationAssessmentHandler.Instance.motivationModel = null;
             }
         }
 
@@ -121,11 +122,10 @@ namespace MotivationAssessmentAssetNameSpace
         /// Method for adding a new motivation hint and processing aggregated hints in case a evidence can be calculated.
         /// </summary>
         /// 
-        ///<param name="hintId"> String specifying the hint. </param>
-        ///<param name="playerId"> String specifying the player. </param>
-        public void addMotivationHint(String hintId)
+        ///<param name="hint"> Enum specifying the hint. </param>
+        public void addMotivationHint(MotivationHintEnum hint)
         {
-            MotivationAssessmentHandler.Instance.addMotivationHint(hintId);
+            MotivationAssessmentHandler.Instance.addMotivationHint(hint);
         }
 
         //TODO: other way of transferring information?!
@@ -138,14 +138,6 @@ namespace MotivationAssessmentAssetNameSpace
         public MotivationModel loadMotivationModel()
         {
             return MotivationAssessmentHandler.Instance.getMotivationModel();
-        }
-
-        /// <summary>
-        /// Method performing functionality test for the motivation assessment asset
-        /// </summary>
-        public void performTest()
-        {
-            MotivationAssessmentHandler.Instance.performAllTests();
         }
 
         /// <summary>
