@@ -469,6 +469,8 @@ namespace TestMotivation
 
     class Bridge : IBridge, ILog, IDataStorage, IWebServiceRequest/*, ISerializer, IVirtualProperties*/
     {
+        string IDataStoragePath = @"C:\Users\mmaurer\Desktop\rageCsFiles\";
+
         #region IDataStorage
 
         public bool Delete(string fileId)
@@ -478,7 +480,8 @@ namespace TestMotivation
 
         public bool Exists(string fileId)
         {
-            string filePath = @"C:\Users\mmaurer\Desktop\rageCsFiles\" + fileId;
+#warning Change DataStorage-path if needed in Program.cs, Class Bridge, Variable IDataStoragePath
+            string filePath = IDataStoragePath + fileId;
             return (File.Exists(filePath));
         }
 
@@ -489,7 +492,8 @@ namespace TestMotivation
 
         public string Load(string fileId)
         {
-            string filePath = @"C:\Users\mmaurer\Desktop\rageCsFiles\" + fileId;
+#warning Change Loading-path if needed in Program.cs, Class Bridge, Variable IDataStoragePath
+            string filePath = IDataStoragePath + fileId;
             try
             {   // Open the text file using a stream reader.
                 using (StreamReader sr = new StreamReader(filePath))
@@ -501,8 +505,7 @@ namespace TestMotivation
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Error by loading the DM!");
+                Console.WriteLine("Error by loading the DM! - Maybe you need to change the path: \"" + IDataStoragePath + "\"");
             }
 
             return (null);
@@ -510,7 +513,8 @@ namespace TestMotivation
 
         public void Save(string fileId, string fileData)
         {
-            string filePath = @"C:\Users\mmaurer\Desktop\rageCsFiles\" + fileId;
+#warning Change Saving-path if needed in Program.cs, Class Bridge, Variable IDataStoragePath
+            string filePath = IDataStoragePath + fileId;
             using (StreamWriter file = new StreamWriter(filePath))
             {
                 file.Write(fileData);
@@ -518,6 +522,7 @@ namespace TestMotivation
         }
 
         #endregion IDataStorage
+
         #region ILog
 
         public void Log(Severity severity, string msg)
