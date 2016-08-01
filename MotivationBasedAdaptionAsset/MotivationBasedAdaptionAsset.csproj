@@ -7,7 +7,7 @@
     <ProjectGuid>{93BCC43C-F5B0-4CB0-89D2-6E1BFD47BC62}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AssetPackage</RootNamespace>
+    <RootNamespace>MotivationBasedAdaptionAssetNameSpace</RootNamespace>
     <AssemblyName>MotivationBasedAdaptionAsset</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
