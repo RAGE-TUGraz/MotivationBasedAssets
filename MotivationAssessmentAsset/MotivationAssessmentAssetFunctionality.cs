@@ -592,8 +592,7 @@ namespace MotivationAssessmentAssetNameSpace
                 sendMotivationValuesToTracker();
             }
         }
-
-
+        
         /// <summary>
         /// Method for sending the motivation values to the tracker
         /// </summary>
@@ -609,6 +608,7 @@ namespace MotivationAssessmentAssetNameSpace
                 }
                 else
                 {
+                    /*
                     loggingMAs("No tracker implemented - creating new one");
                     tracker = TrackerAsset.Instance;
                     TrackerAssetSettings tas = new TrackerAssetSettings();
@@ -620,11 +620,12 @@ namespace MotivationAssessmentAssetNameSpace
                     tas.StorageType = TrackerAsset.StorageTypes.net;
                     tas.TraceFormat = TrackerAsset.TraceFormats.json;
                     tracker.Settings = tas;
-                    /*
-                    //no tracking
-                    loggingCA("No tracker implemented - competence state is not send to the server");
-                    return;
                     */
+                    
+                    //no tracking
+                    loggingMAs("No tracker implemented - motivational state is not send to the server");
+                    return;
+                    
                     /*
                     //local tracking
                     loggingCA("No tracker implemented - competence state is not send to the server - tracks are stored local!");
