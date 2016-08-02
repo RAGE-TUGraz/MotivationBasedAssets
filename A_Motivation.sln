@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotivationAssessmentAsset_P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotivationBasedAdaptionAsset_Portable", "MotivationBasedAdaptionAsset_Portable\MotivationBasedAdaptionAsset_Portable.csproj", "{ACEF99D0-B010-4410-9C87-C147531C605D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestMotivation", "UnitTestMotivation\UnitTestMotivation.csproj", "{0BB2DAD2-8691-42A4-B0F3-18CD72569013}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{ACEF99D0-B010-4410-9C87-C147531C605D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACEF99D0-B010-4410-9C87-C147531C605D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACEF99D0-B010-4410-9C87-C147531C605D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BB2DAD2-8691-42A4-B0F3-18CD72569013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BB2DAD2-8691-42A4-B0F3-18CD72569013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BB2DAD2-8691-42A4-B0F3-18CD72569013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BB2DAD2-8691-42A4-B0F3-18CD72569013}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
