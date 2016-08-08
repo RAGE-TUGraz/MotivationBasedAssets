@@ -7,4 +7,3 @@ C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAs
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\bin\Debug\TrackerAsset.pdb
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\obj\Debug\MotivationAssessmentAsset.dll
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\obj\Debug\MotivationAssessmentAsset.pdb
-C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\obj\Debug\MotivationAssessmentAsset.csprojResolveAssemblyReference.cache

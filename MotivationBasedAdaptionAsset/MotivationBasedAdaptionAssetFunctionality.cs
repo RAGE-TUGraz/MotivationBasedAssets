@@ -304,8 +304,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
             if (expression.Equals(""))
                 MotivationBasedAdaptionHandler.Instance.loggingMAd("ERROR: Empty expression for evaluation received!");
             MotivationBasedAdaptionHandler.Instance.loggingMAd("FormulaInterpreter: expression to evaluate with variables=" + expression);
-            System.Data.DataTable table = new System.Data.DataTable();
-            return table.Compute(replaceVariables(expression), String.Empty).ToString().Equals("True") ? true : false;
+            return evaluateBoolean(replaceVariables(expression));
         }
 
         /// <summary>
@@ -334,6 +333,296 @@ namespace MotivationBasedAdaptionAssetNameSpace
             }
             MotivationBasedAdaptionHandler.Instance.loggingMAd("FormulaInterpreter: expression to evaluate without variables=" + expression);
             return expression;
+        }
+
+
+        private static Boolean evaluateBoolean(String str)
+        {
+            if (!checkInputBoolean(str))
+                throw new Exception("Input corrupted!");
+
+            while (str.Contains("("))
+            {
+                str = resolveBracketsBoolean(str);
+            }
+
+            return solveOperationBoolean(str).Equals("TRUE") ? true : false;
+        }
+
+        /// <summary>
+        /// Method for checking the input digits/operators
+        /// </summary>
+        /// <param name="str"> formula to evaluate</param>
+        /// <returns> true if the string contains valid characters, false otherwise</returns>
+        private static Boolean checkInputBoolean(String str)
+        {
+            str = str.Replace("||", "").Replace("&&", "").Replace("==", "").Replace("<=", "").Replace(">=", "").Replace("<", "").Replace(">", "").Replace("!=", "").Replace(" ", "");
+            String validOperators = "+-*/:().";
+            String digits = "0123456789";
+
+            for (int i = 0; i < str.Length; i++)
+                if (!validOperators.Contains(str[i].ToString()) && !digits.Contains(str[i].ToString()))
+                    return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Method for resolving one pair of brackets within a formula-string
+        /// </summary>
+        /// <param name="str"> formula with brackets</param>
+        /// <returns> String with expression instead of one pair of brackets</returns>
+        private static String resolveBracketsBoolean(String str)
+        {
+            int open = -2;
+            int nextOpen = str.IndexOf('(');
+            int close = nextOpen + 1;
+            while (nextOpen < close && nextOpen != open)
+            {
+                open = nextOpen;
+                close = 1 + open + str.Substring(open + 1).IndexOf(')');
+                nextOpen = 1 + open + str.Substring(open + 1).IndexOf('(');
+            }
+            String inBrackets = str.Substring(open + 1, close - open - 1);
+            String returnValue = str.Substring(0, open) + solveOperationBoolean(inBrackets) + str.Substring(close + 1);
+            return returnValue;
+        }
+
+        /// <summary>
+        /// Method for solving an arithmetic formula containing +,-,*,/
+        /// </summary>
+        /// <param name="str">formula to solve</param>
+        /// <returns>result of this formula</returns>
+        private static String solveOperationBoolean(String str)
+        {
+            //&& is evaluated first -> check first for || in code
+            str = str.Replace(" ", "");
+
+            if (str.Equals("TRUE") || str.Equals("FALSE"))
+                return str;
+
+            if (str.Contains("||"))
+            {
+                String str1 = str.Substring(0, str.IndexOf("||"));
+                String str2 = str.Substring(str.IndexOf("||") + 2, str.Length - str.IndexOf("||") - 2);
+                if (str1.Length == 0 || str2.Length == 0)
+                    throw new Exception("Input corrupted!");
+                return (solveOperationBoolean(str1).Equals("TRUE") || solveOperationBoolean(str2).Equals("TRUE")) ? "TRUE" : "FALSE";
+            }
+
+            if (str.Contains("&&"))
+            {
+                String str1 = str.Substring(0, str.IndexOf("&&"));
+                String str2 = str.Substring(str.IndexOf("&&") + 2, str.Length - str.IndexOf("&&") - 2);
+                if (str1.Length == 0 || str2.Length == 0)
+                    throw new Exception("Input corrupted!");
+                return (solveOperationBoolean(str1).Equals("TRUE") && solveOperationBoolean(str2).Equals("TRUE")) ? "TRUE" : "FALSE";
+            }
+
+            if (str.Contains("=="))
+            {
+                String str1 = str.Substring(0, str.IndexOf("=="));
+                String str2 = str.Substring(str.IndexOf("==") + 2, str.Length - str.IndexOf("==") - 2);
+                if (str1.Length == 0 || str2.Length == 0)
+                    throw new Exception("Input corrupted!");
+                return (solveOperation(str1) == solveOperation(str2)) ? "TRUE" : "FALSE";
+            }
+
+            if (str.Contains("<="))
+            {
+                String str1 = str.Substring(0, str.IndexOf("<="));
+                String str2 = str.Substring(str.IndexOf("<=") + 2, str.Length - str.IndexOf("<=") - 2);
+                if (str1.Length == 0 || str2.Length == 0)
+                    throw new Exception("Input corrupted!");
+                return (solveOperation(str1) <= solveOperation(str2)) ? "TRUE" : "FALSE";
+            }
+
+            if (str.Contains(">="))
+            {
+                String str1 = str.Substring(0, str.IndexOf(">="));
+                String str2 = str.Substring(str.IndexOf(">=") + 2, str.Length - str.IndexOf(">=") - 2);
+                if (str1.Length == 0 || str2.Length == 0)
+                    throw new Exception("Input corrupted!");
+                return (solveOperation(str1) >= solveOperation(str2)) ? "TRUE" : "FALSE";
+            }
+
+            if (str.Contains(">"))
+            {
+                String str1 = str.Substring(0, str.IndexOf(">"));
+                String str2 = str.Substring(str.IndexOf(">") + 1, str.Length - str.IndexOf(">") - 1);
+                if (str1.Length == 0 || str2.Length == 0)
+                    throw new Exception("Input corrupted!");
+                return (solveOperation(str1) > solveOperation(str2)) ? "TRUE" : "FALSE";
+            }
+
+            if (str.Contains("<"))
+            {
+                String str1 = str.Substring(0, str.IndexOf("<"));
+                String str2 = str.Substring(str.IndexOf("<") + 1, str.Length - str.IndexOf("<") - 1);
+                if (str1.Length == 0 || str2.Length == 0)
+                    throw new Exception("Input corrupted!");
+                return (solveOperation(str1) < solveOperation(str2)) ? "TRUE" : "FALSE";
+            }
+
+            throw new Exception("This line should never be reached! - Error when evaluation logic expression.");
+        }
+
+        /// <summary>
+        /// Evaluates a given Formula containing the operators +,*,-,/,(,)
+        /// </summary>
+        /// 
+        /// <param name="str"> Formula to interpret </param>
+        private static double evaluate(String str)
+        {
+            if (!checkInput(str))
+                throw new Exception("Input corrupted!");
+
+
+            if (isPlainNumber(str))
+            {
+                Double result;
+                if (!Double.TryParse(str, out result))
+                    throw new Exception("Input corrupted!");
+                return (result);
+            }
+
+            while (str.Contains("("))
+            {
+                str = resolveBrackets(str);
+            }
+
+            return solveOperation(str);
+        }
+
+        /// <summary>
+        /// Method for resolving one pair of brackets within a formula-string
+        /// </summary>
+        /// <param name="str"> formula with brackets</param>
+        /// <returns> String with expression instead of one pair of brackets</returns>
+        private static String resolveBrackets(String str)
+        {
+            int open = -2;
+            int nextOpen = str.IndexOf('(');
+            int close = nextOpen + 1;
+            while (nextOpen < close && nextOpen != open)
+            {
+                open = nextOpen;
+                close = 1 + open + str.Substring(open + 1).IndexOf(')');
+                nextOpen = 1 + open + str.Substring(open + 1).IndexOf('(');
+            }
+            String inBrackets = str.Substring(open + 1, close - open - 1);
+            String returnValue = str.Substring(0, open) + solveOperation(inBrackets) + str.Substring(close + 1);
+            return returnValue;
+        }
+
+        /// <summary>
+        /// Method for checking the input digits/operators
+        /// </summary>
+        /// <param name="str"> formula to evaluate</param>
+        /// <returns> true if the string contains valid characters, false otherwise</returns>
+        private static Boolean checkInput(String str)
+        {
+            String validOperators = "+-*/:().";
+            String digits = "0123456789";
+
+            for (int i = 0; i < str.Length; i++)
+                if (!validOperators.Contains(str[i].ToString()) && !digits.Contains(str[i].ToString()))
+                    return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Method for identifying strings, which can be casted to numbers
+        /// </summary>
+        /// <param name="str"> formula to evaluate</param>
+        /// <returns></returns>
+        private static Boolean isPlainNumber(String str)
+        {
+            String digits = "0123456789";
+            if (str.Length == 0 || (str.Length == 1 && str[0] == '-'))
+                return false;
+            if (str[0] == '-')
+                str = str.Substring(1, str.Length - 1);
+            if (str.Contains("-"))
+                return false;
+            if (str.Contains("."))
+            {
+                String str1 = str.Substring(0, str.IndexOf('.'));
+                String str2 = str.Substring(str.IndexOf('.') + 1, str.Length - str.IndexOf('.') - 1);
+                str = str1 + str2;
+            }
+            for (int i = 0; i < str.Length; i++)
+                if (!digits.Contains(str[i].ToString()))
+                    return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Method for solving an arithmetic formula containing +,-,*,/
+        /// </summary>
+        /// <param name="str">formula to solve</param>
+        /// <returns>result of this formula</returns>
+        private static Double solveOperation(String str)
+        {
+            str = str.Replace("-+", "-");
+            //Console.WriteLine("::"+str);
+            if (isPlainNumber(str))
+            {
+                Double result;
+                if (!Double.TryParse(str, out result))
+                    throw new Exception("Input corrupted!");
+                return (result);
+            }
+
+            if (str.Contains("+"))
+            {
+                String str1 = str.Substring(0, str.IndexOf('+'));
+                String str2 = str.Substring(str.IndexOf('+') + 1, str.Length - str.IndexOf('+') - 1);
+                if (str1[str1.Length - 1] == '*' || str1[str1.Length - 1] == '/')
+                    goto ContinuePlus;
+                if (str1.Length == 0 || str2.Length == 0)
+                    throw new Exception("Input corrupted!");
+                return (solveOperation(str1) + solveOperation(str2));
+            }
+
+            ContinuePlus:
+
+            if (str.Contains("-"))
+            {
+                String str1 = str.Substring(0, str.IndexOf('-'));
+                String str2 = str.Substring(str.IndexOf('-') + 1, str.Length - str.IndexOf('-') - 1);
+                if (str1.Length > 0 && (str1[str1.Length - 1] == '*' || str1[str1.Length - 1] == '/'))
+                    goto ContinueMinus;
+                if (str2.Length == 0)
+                    throw new Exception("Input corrupted!");
+                if (str1.Length == 0)
+                    return (-solveOperation(str2));
+                return (solveOperation(str1) - solveOperation(str2));
+            }
+
+            ContinueMinus:
+
+            if (str.Contains("*"))
+            {
+                String str1 = str.Substring(0, str.IndexOf('*'));
+                String str2 = str.Substring(str.IndexOf('*') + 1, str.Length - str.IndexOf('*') - 1);
+                if (str1.Length == 0 || str2.Length == 0)
+                    throw new Exception("Input corrupted!");
+                return (solveOperation(str1) * solveOperation(str2));
+            }
+
+            if (str.Contains("/"))
+            {
+                String str1 = str.Substring(0, str.IndexOf('/'));
+                String str2 = str.Substring(str.IndexOf('/') + 1, str.Length - str.IndexOf('/') - 1);
+                if (str1.Length == 0 || str2.Length == 0)
+                    throw new Exception("Input corrupted!");
+                return (solveOperation(str1) / solveOperation(str2));
+            }
+
+            return 0.0;
         }
 
         #endregion Methods
