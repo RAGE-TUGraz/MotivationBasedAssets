@@ -13,3 +13,6 @@ C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivati
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\TrackerAsset.pdb
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\obj\Debug\TestMotivation.exe
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\obj\Debug\TestMotivation.pdb
+C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\UnitTestMotivation.dll
+C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\UnitTestMotivation.pdb

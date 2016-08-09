@@ -63,6 +63,10 @@
       <Project>{93bcc43c-f5b0-4cb0-89d2-6e1bfd47bc62}</Project>
       <Name>MotivationBasedAdaptionAsset</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnitTestMotivation\UnitTestMotivation.csproj">
+      <Project>{0bb2dad2-8691-42a4-b0f3-18cd72569013}</Project>
+      <Name>UnitTestMotivation</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

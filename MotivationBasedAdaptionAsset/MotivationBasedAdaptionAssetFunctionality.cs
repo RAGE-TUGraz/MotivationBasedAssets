@@ -334,8 +334,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
             MotivationBasedAdaptionHandler.Instance.loggingMAd("FormulaInterpreter: expression to evaluate without variables=" + expression);
             return expression;
         }
-
-
+        
         private static Boolean evaluateBoolean(String str)
         {
             if (!checkInputBoolean(str))
