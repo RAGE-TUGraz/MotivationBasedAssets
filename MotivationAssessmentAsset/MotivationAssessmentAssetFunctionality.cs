@@ -513,6 +513,7 @@ namespace MotivationAssessmentAssetNameSpace
                     {
                         try
                         {
+
                             double sol = FormulaInterpreter.eval(ma.rule);
                             ms.updateMotivationAspect(ma.name, sol);
                         }
@@ -620,7 +621,7 @@ namespace MotivationAssessmentAssetNameSpace
                     tas.StorageType = TrackerAsset.StorageTypes.net;
                     tas.TraceFormat = TrackerAsset.TraceFormats.json;
                     tracker.Settings = tas;
-                    */
+                    //*/
                     
                     //no tracking
                     loggingMAs("No tracker implemented - motivational state is not send to the server");
@@ -1305,7 +1306,7 @@ namespace MotivationAssessmentAssetNameSpace
         private static List<String> digitsZero = new List<String>(digitsZeroArray);
 
         private static String[] operatorArray = {"-","+","*","/"};
-        private static List<String> operators = new List<string>(operators);
+        private static List<String> operators = new List<string>(operatorArray);
 
         #endregion Fields
         #region Methods
