@@ -56,12 +56,8 @@ namespace MotivationAssessmentAssetNameSpace
 
         #region Properties
 
-        /// <summary>
-        /// Gets or sets the test property.
-        /// </summary>
-        ///
         /// <value>
-        /// The test property.
+        /// Id for loading the underlying motivation data from xml
         /// </value>
         [XmlElement()]
         public String XMLLoadingId
@@ -69,6 +65,51 @@ namespace MotivationAssessmentAssetNameSpace
             get;
             set;
         }
+
+        /// <value>
+        /// Time needed for reading - solutions before are assumed to be only guesses 
+        /// </value>
+        [XmlElement()]
+        public int FirstTryMinDuration
+        {
+            get;
+            set;
+        }
+
+
+        /// <value>
+        /// Time needed for for solving the task at the longest
+        /// </value>
+        [XmlElement()]
+        public int SolutionMaxDuration
+        {
+            get;
+            set;
+        }
+
+
+        /// <value>
+        /// Descibes the maximum number of errors accepted when solving the task.
+        /// </value>
+        [XmlElement()]
+        public int MaxNoErrors
+        {
+            get;
+            set;
+        }
+
+
+        /// <value>
+        /// Descripes the maximum number of help requests accepted when solving this task.
+        /// </value>
+        [XmlElement()]
+        public int MaxNoHelpRequests
+        {
+            get;
+            set;
+        }
+
+
 
         #endregion Properties
     }
