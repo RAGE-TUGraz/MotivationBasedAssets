@@ -141,6 +141,14 @@ namespace MotivationAssessmentAssetNameSpace
         }
 
         /// <summary>
+        /// Method for satisfaction downgrade check
+        /// </summary>
+        public void checkForSatisfactionDowngrade()
+        {
+            MotivationAssessmentHandler.Instance.updateSatisfaction();
+        }
+
+        /// <summary>
         /// Method for receiving Asset settings
         /// </summary>
         /// <returns></returns>

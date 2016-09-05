@@ -71,26 +71,6 @@ namespace MotivationAssessmentAssetNameSpace
         private static string[] arrayValidHints = { "help", "fail", "success", "new level", "new problem" };
         private List<String> validHints = new List<String>(arrayValidHints);
 
-        /// <summary>
-        /// Describes the minimum needed reading-time assumed for the task in seconds. 
-        /// </summary>
-        private double firstTryMinDuration = 6;
-
-        /// <summary>
-        /// Describes the maximum needed solving time assumed for the task in seconds.
-        /// </summary>
-        private double solutionMaxDuration = 12;
-
-        /// <summary>
-        /// Descibes the maximum number of errors accepted when solving the task.
-        /// </summary>
-        private int maxNoErrors = 3;
-
-        /// <summary>
-        /// Descripes the maximum number of help requests accepted when solving this task.
-        /// </summary>
-        private int maxNoHelpRequests = 3;
-
         #endregion AlgorithParameters
         #region Fields
 
@@ -130,6 +110,11 @@ namespace MotivationAssessmentAssetNameSpace
         /// </summary>
         private Boolean doLogging = true;
 
+        /// <summary>
+        /// Last time an satisfaction update was done.
+        /// </summary>
+        private  DateTime lastTimeUpdated = DateTime.Now;
+
         #endregion Fields
         #region Constructors
 
@@ -157,8 +142,6 @@ namespace MotivationAssessmentAssetNameSpace
         }
 
         #endregion Properties
-        //TODO: storage of data via game-engine
-        //TODO: WEB-requests via AssetManager interfaces
         #region InternalMethods
 
 
@@ -428,6 +411,18 @@ namespace MotivationAssessmentAssetNameSpace
         }
 
         /// <summary>
+        /// Method downgrading satisfaction, if needed
+        /// </summary>
+        public void updateSatisfaction()
+        {
+            MotivationState currentMs = getMotivationState();
+            MotivationState newMs = currentMs.getCopy();
+
+            if(checkSatisfactionDowngrade(newMs))         
+                storeNewMotivationState(newMs);
+        }
+
+        /// <summary>
         /// Updates the motivation state of a player with an motivation evidence.
         /// </summary>
         /// 
@@ -439,21 +434,24 @@ namespace MotivationAssessmentAssetNameSpace
             MotivationState currentMs = getMotivationState();
             MotivationState newMs = currentMs.getCopy();
 
+            MotivationAssessmentAssetSettings maas = getMAsA().getSettings();
+
             if (me.EvidenceType == EvidenceType.LevelReached)
             {
                 updatePrimaryMotivationAspect(newMs, "satisfaction", true);
+                lastTimeUpdated = DateTime.Now;
             }
             else if (me.EvidenceType == EvidenceType.ProblemSolved)
             {
-                if (me.FirstTryDuration < this.firstTryMinDuration)
+                if (me.FirstTryDuration < maas.FirstTryMinDuration)
                     updatePrimaryMotivationAspect(newMs, "attention", false);
                 else {
-                    if (me.SolvingDuration > this.solutionMaxDuration)
+                    if (me.SolvingDuration > maas.SolutionMaxDuration)
                         updatePrimaryMotivationAspect(newMs, "attention", false);
                     else
                         updatePrimaryMotivationAspect(newMs, "attention", true);
 
-                    if (me.NoOfErrors > this.maxNoErrors || me.NoOfHelpRequests > this.maxNoHelpRequests)
+                    if (me.NoOfErrors > maas.MaxNoErrors || me.NoOfHelpRequests > maas.MaxNoHelpRequests)
                         updatePrimaryMotivationAspect(newMs, "confidence", false);
                     else
                         updatePrimaryMotivationAspect(newMs, "confidence", true);
@@ -463,12 +461,42 @@ namespace MotivationAssessmentAssetNameSpace
             {
                 loggingMAs("Warning: Evidence Type unknown!", Severity.Warning);
             }
+
+            //downgrade satisfaction, if too much time passed by
+            checkSatisfactionDowngrade(newMs);
+
+            //Method for storing changes
+            storeNewMotivationState(newMs);
+        }
+
+        /// <summary>
+        /// Method for storing new calculated motivation state
+        /// </summary>
+        /// <param name="newMs"> state to store</param>
+        internal void storeNewMotivationState(MotivationState newMs)
+        {
             setMotivationState(newMs);
             updateSecondaryMotivationAspects(newMs);
             newMs.print();
             setMotivationState(newMs);
+        }
 
+        /// <summary>
+        /// Method for updating the motivation state aspect satisfaction due to 'too much time no new level'
+        /// </summary>
+        /// <param name="newMs"> the new motivation state</param>
+        private bool checkSatisfactionDowngrade(MotivationState newMs)
+        {
+            MotivationAssessmentAssetSettings maas = getMAsA().getSettings();
 
+            if (lastTimeUpdated.AddSeconds(maas.SatisfactionDowngradeTime) < DateTime.Now)
+            {
+                updatePrimaryMotivationAspect(newMs, "satisfaction", false);
+                lastTimeUpdated = DateTime.Now;
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

@@ -50,6 +50,11 @@ namespace MotivationAssessmentAssetNameSpace
         {
             // Set Default values here.
             XMLLoadingId = "MotivationModelXML.xml";
+            FirstTryMinDuration = 6;
+            SolutionMaxDuration = 12;
+            MaxNoErrors = 3;
+            MaxNoHelpRequests = 3;
+            SatisfactionDowngradeTime = 30;
         }
 
         #endregion Constructors
@@ -110,6 +115,15 @@ namespace MotivationAssessmentAssetNameSpace
         }
 
 
+        /// <value>
+        /// Time needed for for solving the task at the longest
+        /// </value>
+        [XmlElement()]
+        public int SatisfactionDowngradeTime
+        {
+            get;
+            set;
+        }
 
         #endregion Properties
     }
