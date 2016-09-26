@@ -55,6 +55,8 @@ namespace MotivationAssessmentAssetNameSpace
             MaxNoErrors = 3;
             MaxNoHelpRequests = 3;
             SatisfactionDowngradeTime = 30;
+            TrackerName = "default";
+            TrackerPassword = "default";
         }
 
         #endregion Constructors
@@ -120,6 +122,28 @@ namespace MotivationAssessmentAssetNameSpace
         /// </value>
         [XmlElement()]
         public int SatisfactionDowngradeTime
+        {
+            get;
+            set;
+        }
+
+
+        /// <value>
+        /// name for registering the tracker to the infrastructure
+        /// </value>
+        [XmlElement()]
+        public String TrackerName
+        {
+            get;
+            set;
+        }
+
+
+        /// <value>
+        /// password for registering the tracker to the infrastructure
+        /// </value>
+        [XmlElement()]
+        public String TrackerPassword
         {
             get;
             set;

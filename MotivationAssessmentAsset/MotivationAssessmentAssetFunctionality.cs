@@ -34,6 +34,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -671,9 +672,14 @@ namespace MotivationAssessmentAssetNameSpace
             if (tracker.CheckHealth())
             {
                 loggingMAs(tracker.Health);
-                if (tracker.Login("student", "student"))
+                MotivationAssessmentAssetSettings maas = getMAsA().getSettings();
+                if (tracker.Login(maas.TrackerName, maas.TrackerPassword))
                 {
                     loggingMAs("logged in - tracker");
+                }
+                else
+                {
+                    loggingMAs("Maybe you forgot to store name/password for the tracker to the Motivation Assessment Asset Settings.");
                 }
             }
 
@@ -684,7 +690,12 @@ namespace MotivationAssessmentAssetNameSpace
                 foreach (string motivationAspect in ms.Keys)
                     tracker.setVar(motivationAspect, ms[motivationAspect].ToString());
                 tracker.Completable.Completed("MotivationAssessmentAsset");
-                tracker.Flush();
+                new Thread(() =>
+                {
+                    //next line: thread terminates, when all foreground threads terminate
+                    Thread.CurrentThread.IsBackground = true;
+                    tracker.Flush();
+                }).Start();
             }
             else
             {
