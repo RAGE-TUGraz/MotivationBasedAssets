@@ -135,6 +135,18 @@ function saveTextAsFile(textToWrite){
     downloadLink.click();
 }
 
+//file upload
+function openFile(event) {
+    var input = event.target;
+
+    var reader = new FileReader();
+    reader.onload = function () {
+        var text = reader.result;
+        menu.menuArray[5].readInXML(text);
+    };
+    reader.readAsText(input.files[0]);
+};
+
 //Method for creating the XML-string out of the information gathered from the user
 function createXML(){
 	return menu.toXML();
@@ -182,6 +194,7 @@ function Menu() {
 	this.menuArray[2] = new Menu2();
 	this.menuArray[3] = new Menu3();
 	this.menuArray[4] = new Menu4();
+	this.menuArray[5] = new Menu5();
 	this.fillHTML = function(div){
 		var html = this.menuArray[this.activeMenu].fillHTML(div);
 	};
@@ -214,10 +227,12 @@ function Menu1() {
 	};
 	this.fillToolDescription = function (div) {
 	    var html = "<h3 class='centered'> About this tool:</h3>";
+	    html += "<p> Coming soon ...</p>";
 	    document.getElementById(div).innerHTML = html;
 	};
 	this.fillDefaultValues = function (div) {
 	    var html = "<h4 class='centered'> Define default values:</h4>";
+	    html += "<p> Coming soon ...</p>";
 	    document.getElementById(div).innerHTML = html;
 
 	};
@@ -494,6 +509,76 @@ function Menu4() {
     };
 }
 
+function Menu5() {
+    this.fillHTML = function (div) {
+        var html = "<h3>Upload XML structure</h3>";
+        html += "<input type='file' id='selectedFile' style='display: none;' onchange='openFile(event);' />";
+        html += "<input type='button' value='Browse...' onclick=\"document.getElementById('selectedFile').click();\" />";
+        document.getElementById(div).innerHTML = html;
+    };
+    this.getParser = function (xml) {
+        if (window.DOMParser) {
+            parser = new DOMParser();
+            xmlDoc = parser.parseFromString(xml, "text/xml");
+        }
+        else // Internet Explorer
+        {
+            xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+            xmlDoc.async = false;
+            xmlDoc.loadXML(xml);
+        }
+        return (xmlDoc);
+    };
+    this.readInXML = function (xml) {
+        data = menu.data;
+
+        //delete old data
+        data.interventionTypes = [];
+        data.interventionInstances = [];
+        data.interventionRule = [];
+        /*
+        data.aspects = ["attention", "confidence", "satisfaction"];
+        data.aspectsup = ["attention+(1-attention)*0.5", "confidence+(1-confidence)*0.5", "satisfaction+(1-satisfaction)*0.5"];
+        data.aspectsdown = ["attention*0.5", "confidence*0.5", "satisfaction*0.5"];
+        data.aspectsrule = ["", "", ""];
+        */
+        data.aspects = [];
+        data.aspectsup = [];
+        data.aspectsdown = [];
+        data.aspectsrule = [];
+
+        //fill data
+        parser = this.getParser(xml);
+        var motTypes = parser.getElementsByTagName('motivationaspect');
+        for (var i = 0; i < motTypes.length; i++) {
+            data.aspects.push(motTypes[i].getElementsByTagName('name')[0].childNodes[0].nodeValue);
+            if (motTypes[i].getElementsByTagName('up')[0].childNodes[0] != null)
+                data.aspectsup.push(motTypes[i].getElementsByTagName('up')[0].childNodes[0].nodeValue);
+            else
+                data.aspectsup.push("");
+            if (motTypes[i].getElementsByTagName('down')[0].childNodes[0] != null)
+                data.aspectsdown.push(motTypes[i].getElementsByTagName('down')[0].childNodes[0].nodeValue);
+            else
+                data.aspectsdown.push("");
+            if(motTypes[i].getElementsByTagName('rule')[0].childNodes[0] != null)
+                data.aspectsrule.push(motTypes[i].getElementsByTagName('rule')[0].childNodes[0].nodeValue);
+            else
+                data.aspectsrule.push("");
+        }
+
+        var motIntervention = parser.getElementsByTagName('intervention');
+        for (var i = 0; i < motIntervention.length; i++) {
+            data.interventionTypes.push(motIntervention[i].getElementsByTagName('name')[0].childNodes[0].nodeValue);
+            data.interventionRule.push(motIntervention[i].getElementsByTagName('rule')[0].childNodes[0].nodeValue);
+            var instances = [];
+            var motInstances = motIntervention[i].getElementsByTagName('instance');
+            for (var j = 0; j < motInstances.length; j++) {
+                instances.push(motInstances[j].childNodes[0].nodeValue);
+            }
+            data.interventionInstances.push(instances);
+        }
+    };
+}
 
 //object holding all data
 function Data() {
@@ -545,9 +630,10 @@ function Data() {
 
 
 <div id='m1' class='menu hover'>overview</div>
-<div id='m2' class='menu hover'>interventions</div>
 <div id='m3' class='menu hover'>aspects</div>
+<div id='m2' class='menu hover'>interventions</div>
 <div id='m4' class='menu hover'>download XML</div>
+<div id='m5' class='menu hover'>upload XML</div>
 <div id='dataInputField'>
 Chose a menu and start filling in the asset specifications.
 </div>
