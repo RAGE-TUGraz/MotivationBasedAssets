@@ -227,12 +227,19 @@ function Menu1() {
 	};
 	this.fillToolDescription = function (div) {
 	    var html = "<h3 class='centered'> About this tool:</h3>";
-	    html += "<p> Coming soon ...</p>";
+	    html += "<p>";
+	    html += "This is an authoring tool for creating an underlying XML-File used with the ";
+	    html += " motivation assets developed within the RAGE - project.";
+	    html += "Realising and Applied Gaming Eco-System (RAGE), Grant agreement No 644187 ";
+	    html += "(http://rageproject.eu/). Development was done by Cognitive Science Section (CSS) ";
+	    html += "at Knowledge Technologies Institute (KTI) at Graz University of Technology (TUGraz - ";
+	    html += "http://kti.tugraz.at/css/)";
+	    html += "</p>";
 	    document.getElementById(div).innerHTML = html;
 	};
 	this.fillDefaultValues = function (div) {
 	    var html = "<h4 class='centered'> Define default values:</h4>";
-	    html += "<p> Coming soon ...</p>";
+	    html += "<p>At the moment no default values are used.</p>";
 	    document.getElementById(div).innerHTML = html;
 
 	};
@@ -259,7 +266,9 @@ function Menu2() {
 	    menu.data.interventionInstances[this.chosenInterventionType].splice(poisitionInstance, 1);
 	};
 	this.fillHTML = function(div){
-		var html = "";
+	    var html = "";
+	    html += "<p>This view allowes the modification of the motivation adaption behaviour. Therefore the intervention types and instances can be modified. By selecting ";
+	    html += "an intervention type (left click on the blue spot in front of the type) the intervention instances and there trigger behaviour can be accessed.</p>";
 		html += '<table class="tableboarder"><tr class="tableboarder"><td class="tableboarder">' + this.getInterventionTypeHTMLTable() + '</td>';
 		if (menu.data.interventionTypes.length > 0 && this.chosenInterventionType != null)
 		    html += '<td class="tableboarder">' + this.getInterventionInstanceHTMLTable(this.chosenInterventionType) + '</td>';
@@ -381,6 +390,7 @@ function Menu2() {
 function Menu3() {
     this.fillHTML = function (div) {
         var html = "<h1>ENTER ASPECTS</h1>";
+        html += "<p>In this view Motivation aspects can be defined and there update behaviour can be specified. This serves as the assessment aspect of the motivation asset set.</p>";
         html += '<div id="aspectTableDiv">';
         document.getElementById(div).innerHTML = html;
 
@@ -626,7 +636,7 @@ function Data() {
 <div id='body'>
 <h1>Motivation Model XML creator</h1>
 
-<p id="demo">Enter the requested information in all menus and press the download-button to get the XML file.</p>
+
 
 
 <div id='m1' class='menu hover'>overview</div>
@@ -635,7 +645,7 @@ function Data() {
 <div id='m4' class='menu hover'>download XML</div>
 <div id='m5' class='menu hover'>upload XML</div>
 <div id='dataInputField'>
-Chose a menu and start filling in the asset specifications.
+    <p id="demo">Enter the requested information in all menus and press the download-button to get the XML file.</p>
 </div>
 
 </div>
