@@ -690,12 +690,17 @@ namespace MotivationAssessmentAssetNameSpace
                 foreach (string motivationAspect in ms.Keys)
                     tracker.setVar(motivationAspect, ms[motivationAspect].ToString());
                 tracker.Completable.Completed("MotivationAssessmentAsset");
+                //TEST MULTITHREADING
+                /*
                 new Thread(() =>
                 {
-                    //next line: thread terminates, when all foreground threads terminate
+                    //next line: thread is killed after all foreground threads are dead
                     Thread.CurrentThread.IsBackground = true;
+                    //code goes here:
                     tracker.Flush();
                 }).Start();
+                */
+                tracker.Flush();
             }
             else
             {

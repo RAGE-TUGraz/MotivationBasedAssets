@@ -5,7 +5,6 @@ C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivati
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\MotivationBasedAdaptionAsset.dll
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\Newtonsoft.Json.dll
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\RageAssetManager.dll
-C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\TrackerAsset.dll
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\MotivationAssessmentAsset.pdb
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\MotivationBasedAdaptionAsset.pdb
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\Newtonsoft.Json.xml
