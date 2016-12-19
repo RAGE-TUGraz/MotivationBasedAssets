@@ -435,7 +435,7 @@ namespace MotivationAssessmentAssetNameSpace
             MotivationState currentMs = getMotivationState();
             MotivationState newMs = currentMs.getCopy();
 
-            MotivationAssessmentAssetSettings maas = getMAsA().getSettings();
+            MotivationAssessmentAssetSettings maas = (MotivationAssessmentAssetSettings) getMAsA().Settings;
 
             if (me.EvidenceType == EvidenceType.LevelReached)
             {
@@ -488,7 +488,7 @@ namespace MotivationAssessmentAssetNameSpace
         /// <param name="newMs"> the new motivation state</param>
         private bool checkSatisfactionDowngrade(MotivationState newMs)
         {
-            MotivationAssessmentAssetSettings maas = getMAsA().getSettings();
+            MotivationAssessmentAssetSettings maas = (MotivationAssessmentAssetSettings)getMAsA().Settings;
 
             if (lastTimeUpdated.AddSeconds(maas.SatisfactionDowngradeTime) < DateTime.Now)
             {
@@ -570,7 +570,7 @@ namespace MotivationAssessmentAssetNameSpace
             
             
             loggingMAs("Loading default Domain model.");
-            MotivationAssessmentAssetSettings maas = getMAsA().getSettings();
+            MotivationAssessmentAssetSettings maas = (MotivationAssessmentAssetSettings)getMAsA().Settings;
 
 
             IDataStorage ids = (IDataStorage)AssetManager.Instance.Bridge;
@@ -672,7 +672,7 @@ namespace MotivationAssessmentAssetNameSpace
             if (tracker.CheckHealth())
             {
                 loggingMAs(tracker.Health);
-                MotivationAssessmentAssetSettings maas = getMAsA().getSettings();
+                MotivationAssessmentAssetSettings maas = (MotivationAssessmentAssetSettings)getMAsA().Settings;
                 if (tracker.Login(maas.TrackerName, maas.TrackerPassword))
                 {
                     loggingMAs("logged in - tracker");

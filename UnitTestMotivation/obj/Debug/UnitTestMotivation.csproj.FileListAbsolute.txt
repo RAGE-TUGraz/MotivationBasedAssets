@@ -8,7 +8,6 @@ C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\UnitTestMoti
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\UnitTestMotivation\bin\Debug\MotivationAssessmentAsset.pdb
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\UnitTestMotivation\bin\Debug\MotivationBasedAdaptionAsset.pdb
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\UnitTestMotivation\bin\Debug\RageAssetManager.pdb
-C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\UnitTestMotivation\bin\Debug\TrackerAsset.pdb
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\UnitTestMotivation\obj\Debug\UnitTestMotivation.csprojResolveAssemblyReference.cache
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\UnitTestMotivation\obj\Debug\UnitTestMotivation.dll
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\UnitTestMotivation\obj\Debug\UnitTestMotivation.pdb

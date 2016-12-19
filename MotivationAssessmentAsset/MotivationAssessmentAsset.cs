@@ -148,15 +148,6 @@ namespace MotivationAssessmentAssetNameSpace
             MotivationAssessmentHandler.Instance.updateSatisfaction();
         }
 
-        /// <summary>
-        /// Method for receiving Asset settings
-        /// </summary>
-        /// <returns></returns>
-        internal MotivationAssessmentAssetSettings getSettings()
-        {
-            return this.settings;
-        }
-
         #endregion Methods
     }
 }
