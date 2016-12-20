@@ -88,7 +88,7 @@ namespace MotivationAssessmentAssetNameSpace
         /// <summary>
         /// Instance of the class MotivationAssessmentHandler - Singelton pattern
         /// </summary>
-        private static MotivationAssessmentHandler instance;
+        static readonly MotivationAssessmentHandler instance = new MotivationAssessmentHandler();
 
         /// <summary>
         /// Storage of all motivation hints 
@@ -134,10 +134,6 @@ namespace MotivationAssessmentAssetNameSpace
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new MotivationAssessmentHandler();
-                }
                 return instance;
             }
         }

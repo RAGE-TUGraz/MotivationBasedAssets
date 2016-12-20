@@ -57,7 +57,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// <summary>
         /// Instance of the class MotivationAdaptionHandler - Singelton pattern
         /// </summary>
-        private static MotivationBasedAdaptionHandler instance;
+        static readonly MotivationBasedAdaptionHandler instance = new MotivationBasedAdaptionHandler();
 
         /// <summary>
         /// run-time storage: to each player, intervention and instance the number of times this instance was called is stored here 
@@ -87,10 +87,6 @@ namespace MotivationBasedAdaptionAssetNameSpace
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new MotivationBasedAdaptionHandler();
-                }
                 return instance;
             }
         }
