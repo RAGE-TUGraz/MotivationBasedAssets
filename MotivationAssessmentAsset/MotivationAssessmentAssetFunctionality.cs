@@ -34,6 +34,9 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
+#if !PORTABLE
+using System.Threading;
+#endif
 
 namespace MotivationAssessmentAssetNameSpace
 {
@@ -658,17 +661,17 @@ namespace MotivationAssessmentAssetNameSpace
                 foreach (string motivationAspect in ms.Keys)
                     tracker.setVar(motivationAspect, ms[motivationAspect].ToString());
                 tracker.Completable.Completed("MotivationAssessmentAsset");
-                //TEST MULTITHREADING
-                /*
+
+#if !PORTABLE
                 new Thread(() =>
                 {
                     //next line: thread is killed after all foreground threads are dead
                     Thread.CurrentThread.IsBackground = true;
-                    //code goes here:
                     tracker.Flush();
                 }).Start();
-                */
+#else
                 tracker.Flush();
+#endif
             }
             else
             {
