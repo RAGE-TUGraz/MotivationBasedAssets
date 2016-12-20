@@ -74,8 +74,7 @@ namespace TestMotivation
         /// <param name="msg"> Message to be logged </param>
         public void log(String msg, Severity severity = Severity.Information)
         {
-            ILog logger = (ILog)AssetManager.Instance.Bridge;
-            logger.Log(severity, "[MAsA Test]" + msg);
+            AssetManager.Instance.Log(severity, "[MAsA Test]: {0}", msg);
         }
 
         /// <summary>
@@ -324,8 +323,7 @@ namespace TestMotivation
         /// <param name="msg"> Message to be logged </param>
         public void log(String msg, Severity severity = Severity.Information)
         {
-            ILog logger = (ILog)AssetManager.Instance.Bridge;
-            logger.Log(severity, "[MAdA Test]" + msg);
+            AssetManager.Instance.Log(severity, "[MAdA Test]: {0}", msg);
         }
 
         /// <summary>
