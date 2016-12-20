@@ -638,34 +638,9 @@ namespace MotivationAssessmentAssetNameSpace
                 }
                 else
                 {
-                    /*
-                    loggingMAs("No tracker implemented - creating new one");
-                    tracker = TrackerAsset.Instance;
-                    TrackerAssetSettings tas = new TrackerAssetSettings();
-                    tas.BasePath = "/api/";
-                    tas.Host = "192.168.222.167";
-                    tas.TrackingCode = "5784a7c1e8c85f6e00fab465gdj3utijicin3ik9";
-                    tas.Secure = false;
-                    tas.Port = 3000;
-                    tas.StorageType = TrackerAsset.StorageTypes.net;
-                    tas.TraceFormat = TrackerAsset.TraceFormats.xapi;
-                    tracker.Settings = tas;
-                    //*/
-                    
-                    //*no tracking
+                    //no tracking
                     loggingMAs("No tracker implemented - motivational state is not send to the server");
                     return;
-                    //*/
-                    
-                    /*
-                    //local tracking
-                    loggingCA("No tracker implemented - competence state is not send to the server - tracks are stored local!");
-                    TrackerAsset ta = TrackerAsset.Instance;
-                    TrackerAssetSettings tas = new TrackerAssetSettings();
-                    tas.StorageType = TrackerAsset.StorageTypes.local;
-                    tas.TraceFormat = TrackerAsset.TraceFormats.json;
-                    ta.Settings = tas;
-                    */
                 }
             }
 
