@@ -31,9 +31,6 @@
 namespace MotivationBasedAdaptionAssetNameSpace
 {
     using AssetPackage;
-    using System;
-    using System.ComponentModel;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// An asset settings.

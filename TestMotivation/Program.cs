@@ -32,11 +32,6 @@ using MotivationBasedAdaptionAssetNameSpace;
 using MotivationAssessmentAssetNameSpace;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Net;
-using Newtonsoft.Json;
 using System.Threading;
 using UnitTestMotivation;
 
