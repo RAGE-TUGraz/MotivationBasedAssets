@@ -65,7 +65,6 @@ namespace MotivationAssessmentAssetNameSpace
                 this.Log(Severity.Error, "There is only one instance of the MotivationAssessmentAsset permitted!");
                 throw new Exception("EXCEPTION: There is only one instance of the MotivationAssessmentAsset permitted!");
             }
-
             MotivationAssessmentHandler.Instance.motivationAssessmentAsset = this;
         }
 
@@ -125,7 +124,6 @@ namespace MotivationAssessmentAssetNameSpace
             MotivationAssessmentHandler.Instance.addMotivationHint(hint);
         }
 
-        //TODO: other way of transferring information?!
         /// <summary>
         /// Method for loading the motivation model for the player.
         /// </summary>

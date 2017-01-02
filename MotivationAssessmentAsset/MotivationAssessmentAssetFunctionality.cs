@@ -147,10 +147,6 @@ namespace MotivationAssessmentAssetNameSpace
         /// <returns> Instance of the MotivationAssessmentAsset </returns>
         internal MotivationAssessmentAsset getMAsA()
         {
-            /*
-            if (motivationAssessmentAsset == null)
-                motivationAssessmentAsset = (MotivationAssessmentAsset)AssetManager.Instance.findAssetByClass("MotivationAssessmentAsset");
-            */
             return (motivationAssessmentAsset);
         }
 
