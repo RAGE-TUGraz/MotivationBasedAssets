@@ -47,7 +47,6 @@ namespace MotivationAssessmentAssetNameSpace
         private MotivationAssessmentAssetSettings settings = null;
 
         #endregion Fields
-
         #region Constructors
 
         /// <summary>
@@ -66,10 +65,11 @@ namespace MotivationAssessmentAssetNameSpace
                 this.Log(Severity.Error, "There is only one instance of the MotivationAssessmentAsset permitted!");
                 throw new Exception("EXCEPTION: There is only one instance of the MotivationAssessmentAsset permitted!");
             }
+
+            MotivationAssessmentHandler.Instance.motivationAssessmentAsset = this;
         }
 
         #endregion Constructors
-
         #region Properties
 
         /// <summary>
@@ -99,10 +99,8 @@ namespace MotivationAssessmentAssetNameSpace
         }
 
         #endregion Properties
-
         #region Methods
-
-        // Your code goes here.
+        
 
         /// <summary>
         /// Returns the Motivation State of a player when provided with player-Id.

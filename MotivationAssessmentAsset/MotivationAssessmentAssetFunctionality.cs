@@ -78,7 +78,7 @@ namespace MotivationAssessmentAssetNameSpace
         /// <summary>
         /// Instance of the MotivationAssessmentAsset
         /// </summary>
-        private MotivationAssessmentAsset motivationAssessmentAsset = null;
+        internal MotivationAssessmentAsset motivationAssessmentAsset = null;
 
         /// <summary>
         /// Instance of the tracker Asset
@@ -147,8 +147,10 @@ namespace MotivationAssessmentAssetNameSpace
         /// <returns> Instance of the MotivationAssessmentAsset </returns>
         internal MotivationAssessmentAsset getMAsA()
         {
+            /*
             if (motivationAssessmentAsset == null)
                 motivationAssessmentAsset = (MotivationAssessmentAsset)AssetManager.Instance.findAssetByClass("MotivationAssessmentAsset");
+            */
             return (motivationAssessmentAsset);
         }
 

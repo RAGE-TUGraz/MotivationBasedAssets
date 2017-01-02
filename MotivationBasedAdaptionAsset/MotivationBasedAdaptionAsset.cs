@@ -47,7 +47,6 @@ namespace MotivationBasedAdaptionAssetNameSpace
         private MotivationBasedAdaptionAssetSettings settings = null;
 
         #endregion Fields
-
         #region Constructors
 
         /// <summary>
@@ -56,8 +55,6 @@ namespace MotivationBasedAdaptionAssetNameSpace
         public MotivationBasedAdaptionAsset()
             : base()
         {
-            //! Create Settings and let it's BaseSettings class assign Defaultvalues where it can.
-            // 
             settings = new MotivationBasedAdaptionAssetSettings();
 
             //preventing multiple asset creation
@@ -66,10 +63,11 @@ namespace MotivationBasedAdaptionAssetNameSpace
                 this.Log(Severity.Error, "There is only one instance of the MotivationBasedAdaptionAsset permitted!");
                 throw new Exception("EXCEPTION: There is only one instance of the MotivationBasedAdaptionAsset permitted!");
             }
+
+            MotivationBasedAdaptionHandler.Instance.motivationBasedAdaptionAsset = this;
         }
 
         #endregion Constructors
-
         #region Properties
 
         /// <summary>
@@ -98,7 +96,6 @@ namespace MotivationBasedAdaptionAssetNameSpace
         }
 
         #endregion Properties
-
         #region Methods
 
 

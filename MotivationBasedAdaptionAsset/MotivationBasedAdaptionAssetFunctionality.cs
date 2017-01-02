@@ -51,7 +51,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// <summary>
         /// Instance of the MotivationAdaptionAsset
         /// </summary>
-        private MotivationBasedAdaptionAsset motivationBasedAdaptionAsset = null;
+        internal MotivationBasedAdaptionAsset motivationBasedAdaptionAsset = null;
 
         /// <summary>
         /// Instance of the class MotivationAdaptionHandler - Singelton pattern
@@ -110,8 +110,6 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// <returns> Instance of the MotivationAdaptionAsset </returns>
         internal MotivationBasedAdaptionAsset getMAdA()
         {
-            if (motivationBasedAdaptionAsset == null)
-                motivationBasedAdaptionAsset = (MotivationBasedAdaptionAsset)AssetManager.Instance.findAssetByClass("MotivationBasedAdaptionAsset");
             return (motivationBasedAdaptionAsset);
         }
 
