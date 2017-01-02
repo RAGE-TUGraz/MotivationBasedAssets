@@ -140,8 +140,7 @@ namespace MotivationAssessmentAssetNameSpace
 
         #endregion Properties
         #region InternalMethods
-
-
+        
         /// <summary>
         /// Method returning an instance of the MotivationAssessmentAsset.
         /// </summary>
@@ -204,71 +203,7 @@ namespace MotivationAssessmentAssetNameSpace
                 return null;
             }
         }
-
-        /// <summary>
-        /// Method for storing a Motivation Model as XML in a file.
-        /// </summary>
-        /// <param name="fileId"> File-Id for storing the model. </param>
-        /// <param name="mm"> The Motivation model to store. </param>
-        internal void writeMMToFile(string fileId, MotivationModel mm)
-        {
-            IDataStorage ids = (IDataStorage)AssetManager.Instance.Bridge;
-            if (ids != null)
-            {
-                loggingMAs("Storing DomainModel to File.");
-                ids.Save(fileId, mm.toXmlString());
-            }
-            else
-                loggingMAs("No IDataStorage - Bridge implemented!", Severity.Error);
-        }
-
-        /*
-        /// <summary>
-        /// Method for requesting a XML-MotivationModel from a website and returning the coressponding MotivationModel.
-        /// </summary>
-        /// 
-        /// <param name="url"> Website URL containing the MotivationModel. </param>
-        ///
-        /// <returns>
-        /// MotivationModel-type coressponding to the XML-MotivationModel on the spezified website.
-        /// </returns>
-        internal MotivationModel getMMFromWeb(String url)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream resStream = response.GetResponseStream();
-
-            StreamReader reader = new StreamReader(resStream);
-            string dm = reader.ReadToEnd();
-
-            MotivationModel mm = getMMFromXmlString(dm);
-
-            if (!validateMotivationModel(mm))
-                loggingMAs("ERROR: Motivation model formulars not valid!");
-
-            return (mm);
-        }
-        */
-
-        /// <summary>
-        /// Method for storing a MotivationModel as XML in a File.
-        /// </summary>
-        /// 
-        /// <param name="dm"> MotivationModel to store. </param>
-        /// <param name="pathToFile"> String containing the file path. </param>
-        internal void writeMMToFile(MotivationModel mm, String fileId)
-        {
-            IDataStorage ids = (IDataStorage)AssetManager.Instance.Bridge;
-            if (ids != null)
-            {
-                loggingMAs("Storing motivation model to File.");
-                ids.Save(fileId, mm.toXmlString());
-            }
-            else
-                loggingMAs("No IDataStorage - Bridge implemented!", Severity.Warning);
-
-        }
-
+        
         /// <summary>
         /// This method validates the motivation model - the variables in the formulas are checked (Are they all motivation aspects?).
         /// </summary>
@@ -553,8 +488,7 @@ namespace MotivationAssessmentAssetNameSpace
                 }
             }
         }
-
-        //TODO: Where to get the MM from?
+        
         /// <summary>
         /// Method for loading default motivation model - specified by asset settings
         /// </summary>
@@ -771,208 +705,7 @@ namespace MotivationAssessmentAssetNameSpace
             if (doLogging)
                 getMAsA().Log(severity, "[MAsA]: " + msg);
         }
-
-        /*
-        /// <summary>
-        /// Method for creating an example Motivation Model.
-        /// </summary>
-        ///
-        /// <returns>
-        /// MotivationModel with example values.
-        /// </returns>
-        internal MotivationModel createExampleMM()
-        {
-            MotivationAspect ma1 = new MotivationAspect();
-            ma1.name = "attention";
-            ma1.up = "attention+(1-attention)*0.5";
-            ma1.down = "attention*0.5";
-            ma1.rule = "";
-            MotivationAspect ma2 = new MotivationAspect();
-            ma2.name = "satisfaction";
-            ma2.up = "satisfaction+(1-satisfaction)*0.5";
-            ma2.down = "satisfaction*0.5";
-            ma2.rule = "";
-            MotivationAspect ma3 = new MotivationAspect();
-            ma3.name = "confidence";
-            ma3.up = "confidence+(1-confidence)*0.5";
-            ma3.down = "confidence*0.5";
-            ma3.rule = "";
-            MotivationAspect ma4 = new MotivationAspect();
-            ma4.name = "motivation";
-            ma4.up = "";
-            ma4.down = "";
-            ma4.rule = "(satisfaction+confidence+attention)/3";
-            MotivationAspectList mal = new MotivationAspectList();
-            List<MotivationAspect> maList = new List<MotivationAspect>();
-            maList.Add(ma1);
-            maList.Add(ma2);
-            maList.Add(ma3);
-            maList.Add(ma4);
-            mal.motivationAspectList = maList;
-            
-            String ii11 = "Hey, my friend! Are you sleeping?!";
-            String ii12 = "Sorry for interrupting you; we need to go on.";
-            Intervention i1 = new Intervention();
-            List<String> i1List = new List<String>();
-            i1List.Add(ii11);
-            i1List.Add(ii12);
-            i1.interventionInstances = new InterventionInstance();
-            i1.interventionInstances.instance = i1List;
-            i1.name = "attention catcher";
-            i1.rule = "attention < 0.4";
-            
-            String ii21 = "Once this mission is over, it's time to celebrate.";
-            String ii22 = "By solving this task you will earn another 10000 points.";
-            Intervention i2 = new Intervention();
-            List<String> i2List = new List<String>();
-            i2List.Add(ii21);
-            i2List.Add(ii22);
-            i2.interventionInstances = new InterventionInstance();
-            i2.interventionInstances.instance= i2List;
-            i2.name = "incitation intervention";
-            i2.rule = "satisfaction < 0.4";
-            
-            String ii31 = "Don't give up. Try again.";
-            String ii32 = "It is a challenge, I know. Let's give it another trial.";
-            String ii33 = "Go on. Practice makes perfect.";
-            Intervention i3 = new Intervention();
-            List<String> i3List = new List<String>();
-            i3List.Add(ii31);
-            i3List.Add(ii32);
-            i3List.Add(ii33);
-            i3.interventionInstances = new InterventionInstance();
-            i3.interventionInstances.instance = i3List;
-            i3.name = "encouraging intervention";
-            i3.rule = "confidence < 0.4";
-
-
-            MotivationInterventionList mil = new MotivationInterventionList();
-            List<Intervention> iList = new List<Intervention>();
-            iList.Add(i1);
-            iList.Add(i2);
-            iList.Add(i3);
-            mil.motivationInterventionList = iList;
-
-            MotivationModel mm = new MotivationModel();
-            mm.motivationAspects = mal;
-            mm.motivationInterventions = mil;
-
-            return mm;
-        }
-
-        /// <summary>
-        /// Method for calling all tests in this Class.
-        /// </summary>
-        public void performAllTests()
-        {
-            loggingMAs("*****************************************************************");
-            loggingMAs("Calling all tests (MAsA):");
-            performTest1();
-            performTest2();
-            loggingMAs("Tests - done!");
-            loggingMAs("*****************************************************************");
-        }
-
-        /// <summary>
-        /// Method performing a simple test: creating example MotivationModel and feeding hints for a testplayer. 
-        /// </summary>
-        internal void performTest1()
-        {
-            loggingMAs("***************TEST 1********************");
-
-            DateTime now = DateTime.Now;
-
-            //reaching a new level
-            MotivationHint mh1 = new MotivationHint();
-            mh1.HintId = "new level";
-            mh1.OccurTime = now;
-            addMotivationHint(mh1);
-
-            //perfect solution - 0 error - 0 help requests - 10 seconds
-            MotivationHint mh2 = new MotivationHint();
-            mh2.HintId = "new problem";
-            mh2.OccurTime = now;
-            addMotivationHint(mh2);
-
-            MotivationHint mh3 = new MotivationHint();
-            mh3.HintId = "success";
-            mh3.OccurTime = now + new TimeSpan(0, 0, 0, 10, 0);
-            addMotivationHint(mh3);
-
-            //too early guess - 2 seconds
-            MotivationHint mh4 = new MotivationHint();
-            mh4.HintId = "new problem";
-            mh4.OccurTime = now;
-            addMotivationHint(mh4);
-
-            MotivationHint mh5 = new MotivationHint();
-            mh5.HintId = "success";
-            mh5.OccurTime = now + new TimeSpan(0, 0, 0, 2, 0);
-            addMotivationHint(mh5);
-
-            //too many errors - 11/7 seconds - 4 errors - 0 help requests
-            MotivationHint mh6 = new MotivationHint();
-            mh6.HintId = "new problem";
-            mh6.OccurTime = now;
-            addMotivationHint(mh6);
-
-            MotivationHint mh7 = new MotivationHint();
-            mh7.HintId = "fail";
-            mh7.OccurTime = now + new TimeSpan(0, 0, 0, 7, 0);
-            addMotivationHint(mh7);
-
-            MotivationHint mh8 = new MotivationHint();
-            mh8.HintId = "fail";
-            mh8.OccurTime = now + new TimeSpan(0, 0, 0, 8, 0);
-            addMotivationHint(mh8);
-
-            MotivationHint mh9 = new MotivationHint();
-            mh9.HintId = "fail";
-            mh9.OccurTime = now + new TimeSpan(0, 0, 0, 9, 0);
-            addMotivationHint(mh9);
-
-            MotivationHint mh10 = new MotivationHint();
-            mh10.HintId = "fail";
-            mh10.OccurTime = now + new TimeSpan(0, 0, 0, 10, 0);
-            addMotivationHint(mh10);
-
-            MotivationHint mh11 = new MotivationHint();
-            mh11.HintId = "success";
-            mh11.OccurTime = now + new TimeSpan(0, 0, 0, 11, 0);
-            addMotivationHint(mh11);
-
-            //too late solution - 15 seconds
-            MotivationHint mh12 = new MotivationHint();
-            mh12.HintId = "new problem";
-            mh12.OccurTime = now;
-            addMotivationHint(mh12);
-
-            MotivationHint mh13 = new MotivationHint();
-            mh13.HintId = "success";
-            mh13.OccurTime = now + new TimeSpan(0, 0, 0, 20, 0);
-            addMotivationHint(mh13);
-
-        }
-
-        /// <summary>
-        /// Method performing a simple test: creating example MotivationModel - storing it in a file and reading from the file
-        /// </summary>
-        internal void performTest2()
-        {
-            loggingMAs("***************TEST 2********************");
-
-            MotivationModel mm = createExampleMM();
-            string id = "MotivationAssessmentTestId.xml";
-            writeMMToFile(mm,id);
-            MotivationModel mm2 = getMMFromFile(id);
-            if (mm.toXmlString().Equals(mm2.toXmlString()))
-                loggingMAs("MotivationModels before and after the loading are identically!");
-            else
-                loggingMAs("MotivationModels before and after the loading are NOT identically!",Severity.Error);
-            
-        }
-        */
-
+      
         #endregion TestMethods
 
     }
@@ -1105,8 +838,7 @@ namespace MotivationAssessmentAssetNameSpace
 
         #endregion Methods
     }
-
-
+    
     /// <summary>
     /// Defining all possible EvidenceTypes for the evaluation
     /// </summary>
@@ -1115,8 +847,7 @@ namespace MotivationAssessmentAssetNameSpace
         ProblemSolved,
         LevelReached
     }
-
-
+    
     /// <summary>
     /// Class containing all information for updating the motivational state
     /// </summary>
@@ -1269,8 +1000,7 @@ namespace MotivationAssessmentAssetNameSpace
 
         #endregion Constructors
         #region Properties
-
-
+        
         /// <summary>
         /// Access to field hintId.
         /// </summary>
