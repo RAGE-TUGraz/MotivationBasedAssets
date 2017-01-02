@@ -245,6 +245,9 @@ namespace UnitTestMotivation
 
             try
             {
+                MotivationModel mm = createExampleMM();
+                setMotivationModel(mm);
+
                 DateTime now = DateTime.Now;
 
                 //reaching a new level
@@ -344,8 +347,6 @@ namespace UnitTestMotivation
                 int pos = 0;
 
                 int status = 1;
-                //String stat1 = "(new level...l, new problem...p, exit...e):";
-                //String stat2 = "(help...h, fail...f, success...s, exit...e):";
 
                 string line = "";
                 while (pos < hintArray.Length)
@@ -353,8 +354,6 @@ namespace UnitTestMotivation
                     //"help","fail","success", "new level", "new problem"
                     while (status == 1 && pos < hintArray.Length)
                     {
-                        //log("Please enter game information " + stat1);
-                        //line = Console.ReadLine();
                         if (workingTimesArray[pos] > 0)
                         {
                             log("Sleeping for " + workingTimesArray[pos] + " second(s)...");
@@ -380,8 +379,6 @@ namespace UnitTestMotivation
                     }
                     while (status == 2 && pos < hintArray.Length)
                     {
-                        //log("Please enter game information " + stat2);
-                        //line = Console.ReadLine();
                         if (workingTimesArray[pos] > 0)
                         {
                             log("Sleeping for " + workingTimesArray[pos] + " second(s)...");

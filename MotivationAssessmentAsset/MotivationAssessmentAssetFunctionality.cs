@@ -561,9 +561,6 @@ namespace MotivationAssessmentAssetNameSpace
         /// <returns></returns>
         internal MotivationModel loadDefaultMotivationModel()
         {
-            //return createExampleMM();
-            //throw new NotImplementedException();
-            
             
             loggingMAs("Loading default Domain model.");
             MotivationAssessmentAssetSettings maas = (MotivationAssessmentAssetSettings)getMAsA().Settings;

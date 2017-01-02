@@ -231,6 +231,9 @@ namespace TestMotivation
         {
             log("***************TEST 1********************");
 
+            MotivationModel mm = createExampleMM();
+            setMotivationModel(mm);
+
             DateTime now = DateTime.Now;
 
             //reaching a new level
