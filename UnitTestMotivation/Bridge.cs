@@ -38,6 +38,7 @@ namespace UnitTestMotivation
     {
         string IDataStoragePath = "./";
 
+
         #region IDataStorage
 
         public bool Delete(string fileId)
