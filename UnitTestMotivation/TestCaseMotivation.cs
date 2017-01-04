@@ -229,8 +229,8 @@ namespace UnitTestMotivation
                 AssetManager.Instance.Bridge = new Bridge();
 
                 //creating the asset
-                MotivationAssessmentAsset cia = new MotivationAssessmentAsset();
-                MotivationBasedAdaptionAsset mbaa = new MotivationBasedAdaptionAsset();
+                MotivationAssessmentAsset cia = MotivationAssessmentAsset.Instance;
+                MotivationBasedAdaptionAsset mbaa = MotivationBasedAdaptionAsset.Instance;
                 
             }
         }

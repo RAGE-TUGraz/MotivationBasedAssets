@@ -42,22 +42,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
     internal class MotivationBasedAdaptionHandler
     {
         #region Fields
-
-        /// <summary>
-        /// Instance of the MotivationAssessmentAsset
-        /// </summary>
-        private MotivationAssessmentAsset motivationAssessmentAsset = null;
-
-        /// <summary>
-        /// Instance of the MotivationAdaptionAsset
-        /// </summary>
-        internal MotivationBasedAdaptionAsset motivationBasedAdaptionAsset = null;
-
-        /// <summary>
-        /// Instance of the class MotivationAdaptionHandler - Singelton pattern
-        /// </summary>
-        static readonly MotivationBasedAdaptionHandler instance = new MotivationBasedAdaptionHandler();
-
+        
         /// <summary>
         /// run-time storage: to each player, intervention and instance the number of times this instance was called is stored here 
         /// </summary>
@@ -74,22 +59,10 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// <summary>
         /// private MotivationAdaptionHandler-ctor for Singelton-pattern 
         /// </summary>
-        private MotivationBasedAdaptionHandler() { }
+        internal MotivationBasedAdaptionHandler() { }
 
         #endregion Constructors
         #region Properties
-
-        /// <summary>
-        /// Getter for Instance of the MotivationAdaptionHandler - Singelton pattern
-        /// </summary>
-        public static MotivationBasedAdaptionHandler Instance
-        {
-            get
-            {
-                return instance;
-            }
-        }
-
         #endregion Properties
         #region InternalMethods
 
@@ -99,9 +72,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// <returns> Instance of the MotivationAssessmentAsset </returns>
         internal MotivationAssessmentAsset getMAsA()
         {
-            if (motivationAssessmentAsset == null)
-                motivationAssessmentAsset = (MotivationAssessmentAsset)AssetManager.Instance.findAssetByClass("MotivationAssessmentAsset");
-            return (motivationAssessmentAsset);
+            return MotivationAssessmentAsset.Instance;
         }
 
         /// <summary>
@@ -110,7 +81,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// <returns> Instance of the MotivationAdaptionAsset </returns>
         internal MotivationBasedAdaptionAsset getMAdA()
         {
-            return (motivationBasedAdaptionAsset);
+            return MotivationBasedAdaptionAsset.Instance;
         }
 
         //TODO: Loading motivation state over the motivation assesment asset - loading via player model?
@@ -295,8 +266,8 @@ namespace MotivationBasedAdaptionAssetNameSpace
         internal static Boolean eval(String expression)
         {
             if (expression.Equals(""))
-                MotivationBasedAdaptionHandler.Instance.loggingMAd("ERROR: Empty expression for evaluation received!");
-            MotivationBasedAdaptionHandler.Instance.loggingMAd("FormulaInterpreter: expression to evaluate with variables=" + expression);
+                MotivationBasedAdaptionAsset.Handler.loggingMAd("ERROR: Empty expression for evaluation received!");
+            MotivationBasedAdaptionAsset.Handler.loggingMAd("FormulaInterpreter: expression to evaluate with variables=" + expression);
             return evaluateBoolean(replaceVariables(expression));
         }
 
@@ -309,22 +280,12 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// <returns> String without any motivation component variables. </returns>
         private static String replaceVariables(String expression)
         {
-            //OLD:
-            /*
-            MotivationState ms = MotivationAdaptionHandler.Instance.loadMotivationState(playerId);
-            MotivationModel mm = ms.getMotivationModel();
-            foreach (MotivationAspect ma in mm.motivationAspects.motivationAspectList)
-            {
-                expression = expression.Replace(ma.name, ms.getMotivationAspectValue(ma.name).ToString());
-            }
-            */
-            //NEW;
-            Dictionary<String,double> ms = MotivationBasedAdaptionHandler.Instance.loadMotivationState();
+            Dictionary<String,double> ms = MotivationBasedAdaptionAsset.Handler.loadMotivationState();
             foreach(KeyValuePair<String,double> pair in ms)
             {
                 expression = expression.Replace(pair.Key, pair.Value.ToString());
             }
-            MotivationBasedAdaptionHandler.Instance.loggingMAd("FormulaInterpreter: expression to evaluate without variables=" + expression);
+            MotivationBasedAdaptionAsset.Handler.loggingMAd("FormulaInterpreter: expression to evaluate without variables=" + expression);
             return expression;
         }
         

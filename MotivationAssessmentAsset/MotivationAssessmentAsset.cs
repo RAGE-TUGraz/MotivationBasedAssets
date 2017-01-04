@@ -30,8 +30,6 @@ namespace MotivationAssessmentAssetNameSpace
 {
     using System;
     using System.Collections.Generic;
-
-    using AssetManagerPackage;
     using AssetPackage;
 
     /// <summary>
@@ -46,26 +44,27 @@ namespace MotivationAssessmentAssetNameSpace
         /// </summary>
         private MotivationAssessmentAssetSettings settings = null;
 
+        /// <summary>
+        /// Instance of the class MotivationAssessmentAsset - Singelton pattern
+        /// </summary>
+        static readonly MotivationAssessmentAsset instance = new MotivationAssessmentAsset();
+
+        /// <summary>
+        /// Instance of the class MotivationAssessmentHandler - Singelton pattern
+        /// </summary>
+        static internal MotivationAssessmentHandler motivationAssessmentHandler = new MotivationAssessmentHandler();
+
         #endregion Fields
         #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the MotivationAssessmentAsset.Asset class.
         /// </summary>
-        public MotivationAssessmentAsset()
+        private MotivationAssessmentAsset()
             : base()
         {
             //! Create Settings and let it's BaseSettings class assign Defaultvalues where it can.
-            // 
             settings = new MotivationAssessmentAssetSettings();
-
-            //preventing multiple asset creation
-            if (AssetManager.Instance.findAssetsByClass(this.Class).Count > 1)
-            {
-                this.Log(Severity.Error, "There is only one instance of the MotivationAssessmentAsset permitted!");
-                throw new Exception("EXCEPTION: There is only one instance of the MotivationAssessmentAsset permitted!");
-            }
-            MotivationAssessmentHandler.Instance.motivationAssessmentAsset = this;
         }
 
         #endregion Constructors
@@ -93,13 +92,35 @@ namespace MotivationAssessmentAssetNameSpace
             set
             {
                 settings = (value as MotivationAssessmentAssetSettings);
-                MotivationAssessmentHandler.Instance.motivationModel = null;
+                Handler.motivationModel = null;
+            }
+        }
+
+        /// <summary>
+        /// Getter for Instance of the MotivationAssessmentAsset - Singelton pattern
+        /// </summary>
+        public static MotivationAssessmentAsset Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
+        /// <summary>
+        /// Getter for Instance of the MotivationAssessmentHandler
+        /// </summary>
+        internal static MotivationAssessmentHandler Handler
+        {
+            get
+            {
+                return motivationAssessmentHandler;
             }
         }
 
         #endregion Properties
         #region Methods
-        
+
 
         /// <summary>
         /// Returns the Motivation State of a player when provided with player-Id.
@@ -110,7 +131,7 @@ namespace MotivationAssessmentAssetNameSpace
         /// <returns> Motivation state of the specified player. </returns>
         public Dictionary<string, double> getMotivationState()
         {
-            MotivationState ms = MotivationAssessmentHandler.Instance.getMotivationState();
+            MotivationState ms = Handler.getMotivationState();
             return ms.getMotivation(); ;
         }
 
@@ -121,7 +142,7 @@ namespace MotivationAssessmentAssetNameSpace
         ///<param name="hint"> Enum specifying the hint. </param>
         public void addMotivationHint(MotivationHintEnum hint)
         {
-            MotivationAssessmentHandler.Instance.addMotivationHint(hint);
+            Handler.addMotivationHint(hint);
         }
 
         /// <summary>
@@ -132,7 +153,7 @@ namespace MotivationAssessmentAssetNameSpace
         /// <returns> The motivation model for the player. </returns>
         public MotivationModel loadMotivationModel()
         {
-            return MotivationAssessmentHandler.Instance.getMotivationModel();
+            return Handler.getMotivationModel();
         }
 
         /// <summary>
@@ -140,7 +161,7 @@ namespace MotivationAssessmentAssetNameSpace
         /// </summary>
         public void checkForSatisfactionDowngrade()
         {
-            MotivationAssessmentHandler.Instance.updateSatisfaction();
+            Handler.updateSatisfaction();
         }
 
         #endregion Methods

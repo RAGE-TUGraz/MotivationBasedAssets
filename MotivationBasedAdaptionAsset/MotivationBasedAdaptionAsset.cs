@@ -30,8 +30,6 @@ namespace MotivationBasedAdaptionAssetNameSpace
 {
     using System;
     using System.Collections.Generic;
-
-    using AssetManagerPackage;
     using AssetPackage;
 
     /// <summary>
@@ -46,25 +44,26 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// </summary>
         private MotivationBasedAdaptionAssetSettings settings = null;
 
+        /// <summary>
+        /// Instance of the class MotivationBasedAdaptionAsset - Singelton pattern
+        /// </summary>
+        static readonly MotivationBasedAdaptionAsset instance = new MotivationBasedAdaptionAsset();
+
+        /// <summary>
+        /// Instance of the class MotivationAdaptionHandler 
+        /// </summary>
+        static internal MotivationBasedAdaptionHandler motivationBasedAdaptionHandler = new MotivationBasedAdaptionHandler();
+
         #endregion Fields
         #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the MotivationAdaptionAsset.Asset class.
         /// </summary>
-        public MotivationBasedAdaptionAsset()
+        private MotivationBasedAdaptionAsset()
             : base()
         {
             settings = new MotivationBasedAdaptionAssetSettings();
-
-            //preventing multiple asset creation
-            if (AssetManager.Instance.findAssetsByClass(this.Class).Count > 1)
-            {
-                this.Log(Severity.Error, "There is only one instance of the MotivationBasedAdaptionAsset permitted!");
-                throw new Exception("EXCEPTION: There is only one instance of the MotivationBasedAdaptionAsset permitted!");
-            }
-
-            MotivationBasedAdaptionHandler.Instance.motivationBasedAdaptionAsset = this;
         }
 
         #endregion Constructors
@@ -95,10 +94,31 @@ namespace MotivationBasedAdaptionAssetNameSpace
             }
         }
 
+        /// <summary>
+        /// Getter for Instance of the MotivationAdaptionAsset - Singelton pattern
+        /// </summary>
+        public static MotivationBasedAdaptionAsset Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
+        /// <summary>
+        /// Getter for Instance of the MotivationAdaptionHandler 
+        /// </summary>
+        internal static MotivationBasedAdaptionHandler Handler
+        {
+            get
+            {
+                return motivationBasedAdaptionHandler;
+            }
+        }
+
         #endregion Properties
         #region Methods
-
-
+        
         /// <summary>
         /// Method returning all interventions appropriate for a player.
         /// </summary>
@@ -107,7 +127,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// <returns> List containing all appropriate interventions at the moment. </returns>
         public List<String> getInterventions()
         {
-            return MotivationBasedAdaptionHandler.Instance.getInterventions();
+            return Handler.getInterventions();
         }
 
         /// <summary>
@@ -119,7 +139,7 @@ namespace MotivationBasedAdaptionAssetNameSpace
         /// <returns> Intervention instance for the player. </returns>
         public String getInstance(String intervention)
         {
-            return MotivationBasedAdaptionHandler.Instance.getInstance(intervention);
+            return Handler.getInstance(intervention);
         }
 
         #endregion Methods

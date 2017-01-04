@@ -44,8 +44,8 @@ namespace TestMotivation
             AssetManager am = AssetManager.Instance;
             am.Bridge = new Bridge();
 
-            MotivationAssessmentAsset masa = new MotivationAssessmentAsset();
-            MotivationBasedAdaptionAsset mada = new MotivationBasedAdaptionAsset();
+            MotivationAssessmentAsset masa = MotivationAssessmentAsset.Instance;
+            MotivationBasedAdaptionAsset mada = MotivationBasedAdaptionAsset.Instance;
 
             TestMotivationAssessmentAsset tmasa = new TestMotivationAssessmentAsset();
             tmasa.performAllTests();

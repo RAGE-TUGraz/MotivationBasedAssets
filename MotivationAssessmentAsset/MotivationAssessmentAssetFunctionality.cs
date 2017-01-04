@@ -86,11 +86,6 @@ namespace MotivationAssessmentAssetNameSpace
         private TrackerAsset tracker = null;
 
         /// <summary>
-        /// Instance of the class MotivationAssessmentHandler - Singelton pattern
-        /// </summary>
-        static readonly MotivationAssessmentHandler instance = new MotivationAssessmentHandler();
-
-        /// <summary>
         /// Storage of all motivation hints 
         /// </summary>
         private List<MotivationHint> motivationHints = new List<MotivationHint>();
@@ -122,22 +117,10 @@ namespace MotivationAssessmentAssetNameSpace
         /// <summary>
         /// private MotivationAssessmentHandler-ctor for Singelton-pattern 
         /// </summary>
-        private MotivationAssessmentHandler() { }
+        internal MotivationAssessmentHandler() { }
 
         #endregion Constructors
         #region Properties
-
-        /// <summary>
-        /// Getter for Instance of the MotivationAssessmentHandler - Singelton pattern
-        /// </summary>
-        public static MotivationAssessmentHandler Instance
-        {
-            get
-            {
-                return instance;
-            }
-        }
-
         #endregion Properties
         #region InternalMethods
         
@@ -147,7 +130,7 @@ namespace MotivationAssessmentAssetNameSpace
         /// <returns> Instance of the MotivationAssessmentAsset </returns>
         internal MotivationAssessmentAsset getMAsA()
         {
-            return (motivationAssessmentAsset);
+            return MotivationAssessmentAsset.Instance;
         }
 
         /// <summary>
@@ -750,12 +733,12 @@ namespace MotivationAssessmentAssetNameSpace
             foreach (MotivationAspect ma in mm.motivationAspects.motivationAspectList)
             {
                 motivation[ma.name] = 0.5;
-                if (MotivationAssessmentHandler.Instance.getPrimaryMotivationAspects().Contains(ma.name))
+                if (MotivationAssessmentAsset.Handler.getPrimaryMotivationAspects().Contains(ma.name))
                     counter++;
             }
 
-            if (counter != MotivationAssessmentHandler.Instance.getPrimaryMotivationAspects().Count)
-                MotivationAssessmentHandler.Instance.loggingMAs("Warning: MotivationalModel corrupted - at least one primary motivation aspect is missing!", Severity.Warning);
+            if (counter != MotivationAssessmentAsset.Handler.getPrimaryMotivationAspects().Count)
+                MotivationAssessmentAsset.Handler.loggingMAs("Warning: MotivationalModel corrupted - at least one primary motivation aspect is missing!", Severity.Warning);
 
         }
 
@@ -831,7 +814,7 @@ namespace MotivationAssessmentAssetNameSpace
             {
                 msg += "|" + entry.Key + "=" + entry.Value.ToString();
             }
-            MotivationAssessmentHandler.Instance.loggingMAs(msg);
+            MotivationAssessmentAsset.Handler.loggingMAs(msg);
         }
 
         #endregion Methods
@@ -1062,8 +1045,8 @@ namespace MotivationAssessmentAssetNameSpace
         internal static double eval(String expression)
         {
             if (expression.Equals(""))
-                MotivationAssessmentHandler.Instance.loggingMAs("Warning: Empty expression for evaluation received!", Severity.Warning);
-            MotivationAssessmentHandler.Instance.loggingMAs("FormulaInterpreter: expression to evaluate with variables=" + expression);
+                MotivationAssessmentAsset.Handler.loggingMAs("Warning: Empty expression for evaluation received!", Severity.Warning);
+            MotivationAssessmentAsset.Handler.loggingMAs("FormulaInterpreter: expression to evaluate with variables=" + expression);
             string mathExpression = replaceVariables(expression).Replace(":","/");
             return evaluate(mathExpression);
         }
@@ -1077,13 +1060,13 @@ namespace MotivationAssessmentAssetNameSpace
         /// <returns> String without any motivation component variables. </returns>
         private static String replaceVariables(String expression)
         {
-            MotivationState ms = MotivationAssessmentHandler.Instance.getMotivationState();
+            MotivationState ms = MotivationAssessmentAsset.Handler.getMotivationState();
             MotivationModel mm = ms.getMotivationModel();
             foreach (MotivationAspect ma in mm.motivationAspects.motivationAspectList)
             {
                 expression = expression.Replace(ma.name, ms.getMotivationAspectValue(ma.name).ToString());
             }
-            MotivationAssessmentHandler.Instance.loggingMAs("FormulaInterpreter: expression to evaluate without variables=" + expression);
+            MotivationAssessmentAsset.Handler.loggingMAs("FormulaInterpreter: expression to evaluate without variables=" + expression);
             return expression;
         }
 
@@ -1327,7 +1310,7 @@ namespace MotivationAssessmentAssetNameSpace
                     return (ma);
             }
 
-            MotivationAssessmentHandler.Instance.loggingMAs("ERROR: Requested motivation aspect name not found!");
+            MotivationAssessmentAsset.Handler.loggingMAs("ERROR: Requested motivation aspect name not found!");
             return null;
         }
 
