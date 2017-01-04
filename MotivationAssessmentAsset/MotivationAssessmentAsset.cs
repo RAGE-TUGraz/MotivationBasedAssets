@@ -28,7 +28,6 @@
 
 namespace MotivationAssessmentAssetNameSpace
 {
-    using System;
     using System.Collections.Generic;
     using AssetPackage;
 

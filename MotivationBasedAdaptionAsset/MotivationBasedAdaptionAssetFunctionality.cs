@@ -26,7 +26,6 @@
   Created by: Matthias Maurer, TUGraz <mmaurer@tugraz.at>
 */
 
-using AssetManagerPackage;
 using AssetPackage;
 using MotivationAssessmentAssetNameSpace;
 using System;

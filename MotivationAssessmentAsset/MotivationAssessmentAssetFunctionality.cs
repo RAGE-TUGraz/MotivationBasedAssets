@@ -74,12 +74,7 @@ namespace MotivationAssessmentAssetNameSpace
 
         #endregion AlgorithParameters
         #region Fields
-
-        /// <summary>
-        /// Instance of the MotivationAssessmentAsset
-        /// </summary>
-        internal MotivationAssessmentAsset motivationAssessmentAsset = null;
-
+        
         /// <summary>
         /// Instance of the tracker Asset
         /// </summary>
@@ -172,7 +167,7 @@ namespace MotivationAssessmentAssetNameSpace
         /// </returns>
         internal MotivationModel getMMFromFile(String fileId)
         {
-            IDataStorage ids = (IDataStorage)AssetManager.Instance.Bridge;
+            IDataStorage ids = MotivationAssessmentAsset.Instance.getInterfaceFromAsset<IDataStorage>();
             if (ids != null)
             {
                 loggingMAs("Loading motivation model from File.");
@@ -479,9 +474,8 @@ namespace MotivationAssessmentAssetNameSpace
             
             loggingMAs("Loading default Domain model.");
             MotivationAssessmentAssetSettings maas = (MotivationAssessmentAssetSettings)getMAsA().Settings;
-
-
-            IDataStorage ids = (IDataStorage)AssetManager.Instance.Bridge;
+            
+            IDataStorage ids = MotivationAssessmentAsset.Instance.getInterfaceFromAsset<IDataStorage>();
             if (ids != null )
             {
                 if (!ids.Exists(maas.XMLLoadingId))
