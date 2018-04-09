@@ -19,3 +19,14 @@ C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationBa
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\obj\Debug\MotivationBasedAdaptionAsset.csprojResolveAssemblyReference.cache
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\obj\Debug\MotivationBasedAdaptionAsset.dll
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationBasedAdaptionAsset\obj\Debug\MotivationBasedAdaptionAsset.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationBasedAdaptionAsset\bin\Debug\MotivationBasedAdaptionAsset.dll
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationBasedAdaptionAsset\bin\Debug\MotivationBasedAdaptionAsset.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationBasedAdaptionAsset\bin\Debug\MotivationAssessmentAsset.dll
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationBasedAdaptionAsset\bin\Debug\RageAssetManager.dll
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationBasedAdaptionAsset\bin\Debug\TrackerAsset.dll
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationBasedAdaptionAsset\bin\Debug\MotivationAssessmentAsset.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationBasedAdaptionAsset\bin\Debug\RageAssetManager.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationBasedAdaptionAsset\bin\Debug\RageAssetManager.xml
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationBasedAdaptionAsset\obj\Debug\MotivationBasedAdaptionAsset.csprojResolveAssemblyReference.cache
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationBasedAdaptionAsset\obj\Debug\MotivationBasedAdaptionAsset.dll
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationBasedAdaptionAsset\obj\Debug\MotivationBasedAdaptionAsset.pdb

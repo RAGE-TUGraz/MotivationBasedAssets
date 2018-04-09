@@ -11,3 +11,16 @@ C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\UnitTestMoti
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\UnitTestMotivation\obj\Debug\UnitTestMotivation.csprojResolveAssemblyReference.cache
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\UnitTestMotivation\obj\Debug\UnitTestMotivation.dll
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\UnitTestMotivation\obj\Debug\UnitTestMotivation.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\bin\Debug\UnitTestMotivation.dll
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\bin\Debug\UnitTestMotivation.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\bin\Debug\MotivationAssessmentAsset.dll
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\bin\Debug\MotivationBasedAdaptionAsset.dll
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\bin\Debug\RageAssetManager.dll
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\bin\Debug\TrackerAsset.dll
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\bin\Debug\MotivationAssessmentAsset.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\bin\Debug\MotivationBasedAdaptionAsset.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\bin\Debug\RageAssetManager.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\obj\Debug\UnitTestMotivation.csprojResolveAssemblyReference.cache
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\obj\Debug\UnitTestMotivation.dll
+C:\Users\mojaW\git\MotivationBasedAssets\UnitTestMotivation\obj\Debug\UnitTestMotivation.pdb

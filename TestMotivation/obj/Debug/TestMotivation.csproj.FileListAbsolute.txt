@@ -12,3 +12,17 @@ C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivati
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\UnitTestMotivation.dll
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\TestMotivation\bin\Debug\UnitTestMotivation.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\bin\Debug\TestMotivation.exe
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\bin\Debug\TestMotivation.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\bin\Debug\MotivationAssessmentAsset.dll
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\bin\Debug\MotivationBasedAdaptionAsset.dll
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\bin\Debug\RageAssetManager.dll
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\bin\Debug\UnitTestMotivation.dll
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\bin\Debug\MotivationAssessmentAsset.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\bin\Debug\MotivationBasedAdaptionAsset.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\bin\Debug\UnitTestMotivation.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\bin\Debug\RageAssetManager.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\obj\Debug\TestMotivation.csprojResolveAssemblyReference.cache
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\obj\Debug\TestMotivation.exe
+C:\Users\mojaW\git\MotivationBasedAssets\TestMotivation\obj\Debug\TestMotivation.pdb

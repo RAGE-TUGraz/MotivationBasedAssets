@@ -6,3 +6,11 @@ C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAs
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\obj\Debug\MotivationAssessmentAsset.dll
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\obj\Debug\MotivationAssessmentAsset.pdb
 C:\Users\mmaurer\Documents\Visual Studio 2015\Projects\A_Motivation\MotivationAssessmentAsset\obj\Debug\MotivationAssessmentAsset.csprojResolveAssemblyReference.cache
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationAssessmentAsset\bin\Debug\MotivationAssessmentAsset.dll
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationAssessmentAsset\bin\Debug\MotivationAssessmentAsset.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationAssessmentAsset\bin\Debug\RageAssetManager.dll
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationAssessmentAsset\bin\Debug\RageAssetManager.pdb
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationAssessmentAsset\bin\Debug\RageAssetManager.xml
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationAssessmentAsset\obj\Debug\MotivationAssessmentAsset.csprojResolveAssemblyReference.cache
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationAssessmentAsset\obj\Debug\MotivationAssessmentAsset.dll
+C:\Users\mojaW\git\MotivationBasedAssets\MotivationAssessmentAsset\obj\Debug\MotivationAssessmentAsset.pdb

@@ -481,7 +481,8 @@ namespace MotivationAssessmentAssetNameSpace
                 if (!ids.Exists(maas.XMLLoadingId))
                 {
                     loggingMAs("File "+ maas.XMLLoadingId + " not found for loading Motivation model.", Severity.Error);
-                    throw new Exception("EXCEPTION: File "+ maas.XMLLoadingId + " not found for loading Motivation model.") ;
+                    //throw new Exception("EXCEPTION: File "+ maas.XMLLoadingId + " not found for loading Motivation model.") ;
+                    return null;
                 }
 
                 loggingMAs("Loading Motivation model from File.");
@@ -490,7 +491,8 @@ namespace MotivationAssessmentAssetNameSpace
             else
             {
                 loggingMAs("IDataStorage bridge absent for requested local loading method of the Motivation model.", Severity.Error);
-                throw new Exception("EXCEPTION: IDataStorage bridge absent for requested local loading method of the Motivation model.");
+                //throw new Exception("EXCEPTION: IDataStorage bridge absent for requested local loading method of the Motivation model.");
+                return null;
             }
             
         }
@@ -658,7 +660,9 @@ namespace MotivationAssessmentAssetNameSpace
                     break;
                 default:
                     {
-                        throw new Exception("Motivation Hint unknown!");
+                        loggingMAs("Motivation Hint unknown!", Severity.Error);
+                        //throw new Exception("Motivation Hint unknown!");
+                        return;
                     }
             }
 
@@ -1072,14 +1076,22 @@ namespace MotivationAssessmentAssetNameSpace
         public static double evaluate(String str)
         {
             if (!checkInput(str))
-                throw new Exception("Input corrupted!");
+            {
+                MotivationAssessmentAsset.Handler.loggingMAs("Input corrupted!");
+                //throw new Exception("Input corrupted!");
+                return 0;
+            }
 
 
             if (isPlainNumber(str))
             {
                 Double result;
                 if (!Double.TryParse(str, out result))
-                    throw new Exception("Input corrupted!");
+                {
+                    MotivationAssessmentAsset.Handler.loggingMAs("Input corrupted!");
+                    //throw new Exception("Input corrupted!");
+                    return 0;
+                }
                 return (result);
             }
 
